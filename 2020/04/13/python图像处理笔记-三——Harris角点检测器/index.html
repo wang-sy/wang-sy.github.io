@@ -449,11 +449,11 @@ $$\begin{align*}<br>
 E(u,v) &amp;= \Sigma_{x,y}w(x,y) [I(x+u,y+v) - I(x,y)]^2\<br>
 &amp;=w(x,y)\Sigma_{x,y}[I(x,y)+uI_x(x,y)+vI_y(x,y) - I(x,y)]^2\<br>
 &amp;=w(x,y)\Sigma_{x,y}[uI_x(x,y)+vI_y(x,y)]^2\<br>
-&amp;=w(x,y)\Sigma_{x,y}[u<sup>2I_x(x,y)</sup>2+v<sup>2I_y(x,y)</sup>2+2uvI_x(x,y)I_y(x,y)]\</p>
+&amp;=w(x,y)\Sigma_{x,y}[u^2I_x(x,y)^2+v^2I_y(x,y)^2+2uvI_x(x,y)I_y(x,y)]\</p>
 <p>\end{align*}$$<br>
 将最终的结果简写一下，就可以得到:<br>
 $$<br>
-E(u,v) = \Sigma_{x,y}w(x,y) (u<sup>2I_x</sup>2+v<sup>2I_y</sup>2+2uvI_xI_y)<br>
+E(u,v) = \Sigma_{x,y}w(x,y) (u^2I_x^2+v^2I_y^2+2uvI_xI_y)<br>
 $$</p>
 <h5 id="矩阵表示">矩阵表示</h5>
 <p>这里$I_x,I_y$代表图像在水平、垂直方向上的梯度，我们将这个式子用矩阵来表示（从现在开始就是书上写的了）：<br>
@@ -572,12 +572,12 @@ v’<br>
 \end{matrix}<br>
 \right]<br>
 \<br>
-&amp;= \lambda_1(u’)<sup>2+\lambda_2(v’)</sup>2\<br>
-&amp;= \frac{u’<sup>2}{\frac{1}{\lambda_1}}+\frac{v’</sup>2}{\frac{1}{\lambda_21}}<br>
+&amp;= \lambda_1(u’)^2+\lambda_2(v’)^2\<br>
+&amp;= \frac{u’^2}{\frac{1}{\lambda_1}}+\frac{v’^2}{\frac{1}{\lambda_21}}<br>
 \end{array}<br>
 \end{align}<br>
 $$<br>
-好的，到了这里大家打眼一看就知道了，这是椭圆公式啊！那么我们对比一下原来椭圆的公式：$\frac{x<sup>2}{a</sup>2}+\frac{y<sup>2}{b</sup>2}$在这里我们可以写为：$a^2 = \frac{1}{\lambda_1}$那么我们就可以知道$a = \lambda_1^{-\frac{1}{2}}$，同理可得$b = \lambda_2^{-\frac{1}{2}}$</p>
+好的，到了这里大家打眼一看就知道了，这是椭圆公式啊！那么我们对比一下原来椭圆的公式：$\frac{x^2}{a^2}+\frac{y^2}{b^2}$在这里我们可以写为：$a^2 = \frac{1}{\lambda_1}$那么我们就可以知道$a = \lambda_1^{-\frac{1}{2}}$，同理可得$b = \lambda_2^{-\frac{1}{2}}$</p>
 <img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412152559928.png" alt="image-20200412152559928" style="zoom:67%;" />
 <h4 id="回到问题本身">回到问题本身</h4>
 <p>我们看一些图</p>

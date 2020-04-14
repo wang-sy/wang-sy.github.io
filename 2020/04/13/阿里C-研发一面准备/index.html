@@ -388,7 +388,7 @@
 <p>参考资料： <a href="https://blog.csdn.net/reasonyuanrobot/article/details/100022574" target="_blank" rel="noopener">this one</a></p>
 <p>nullptr是在C++11中才出现的，首先我们来看一下nullptr解决了什么问题：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<p>在C<ins>中不允许(void*)类型进行隐式转换，所以在C语言中，NULL被定义为(void*)0,而在C</ins>语言中，NULL则被定义为整数0，也就是说，NULL是一个整型变量，这样的设计带来了如下的问题:</p>
+<p>在C++中不允许(void*)类型进行隐式转换，所以在C语言中，NULL被定义为(void*)0,而在C++语言中，NULL则被定义为整数0，也就是说，NULL是一个整型变量，这样的设计带来了如下的问题:</p>
 <ul>
 <li>
 <pre><code class="language-C++">char* a =&quot; Hello&quot;;
@@ -493,7 +493,7 @@ foo(a);
 <ul>
 <li>父类指针可以指向子类对象</li>
 </ul>
-<p>那么虚函数有什么用处呢？这里我们和java对比着来说，众所周知，Java中可以override，也就是说将函数重写，这样来达到多态。父类指针指向的子类，可以调用子类中重写过的方法。但是C<ins>在默认情况下不可以，所以C</ins>引入了virtual。</p>
+<p>那么虚函数有什么用处呢？这里我们和java对比着来说，众所周知，Java中可以override，也就是说将函数重写，这样来达到多态。父类指针指向的子类，可以调用子类中重写过的方法。但是C++在默认情况下不可以，所以C++引入了virtual。</p>
 <h3 id="多态">多态:</h3>
 <p>不同类的对象堆同一消息的不同响应。俺会了，⑧谈了</p>
 <h3 id="动态绑定">动态绑定</h3>
