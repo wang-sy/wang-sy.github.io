@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="图像处理笔记(一) 直方图均衡化 参考文档 [1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码 12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直">
+<meta name="description" content="图像处理笔记(一)直方图均衡化参考文档[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直方图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python图像处理笔记(一)">
 <meta property="og:url" content="http://yoursite.com/2020/04/07/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%80/index.html">
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
-<meta property="og:description" content="图像处理笔记(一) 直方图均衡化 参考文档 [1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码 12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直">
+<meta property="og:description" content="图像处理笔记(一)直方图均衡化参考文档[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直方图">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuY25ibG9ncy5jb20vY25ibG9nc19jb20vU2l2aWxUYXJhbS8xNTEwNDg1L29faW1hZ2UtMTMtY29udi1jbm4uZ2lm">
@@ -392,79 +392,57 @@
       
 
       
-        <h1>图像处理笔记(一)</h1>
-<h2 id="直方图均衡化">直方图均衡化</h2>
-<h3 id="参考文档">参考文档</h3>
-<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
+        <h1 id="图像处理笔记-一"><a href="#图像处理笔记-一" class="headerlink" title="图像处理笔记(一)"></a>图像处理笔记(一)</h1><h2 id="直方图均衡化"><a href="#直方图均衡化" class="headerlink" title="直方图均衡化"></a>直方图均衡化</h2><h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
 <p>[2] 直方图均衡化</p>
-<h3 id="代码">代码</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直方图均衡化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">histeq</span><span class="params">(im, nbr_bins = <span class="number">256</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对一副灰度图像进行直方图均衡化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 计算图像的直方图</span></span><br><span class="line">    imhist, bins = histogram(im.flatten(), nbr_bins, normed = <span class="literal">True</span>)</span><br><span class="line">    cdf = imhist.cumsum()</span><br><span class="line">    cdf = <span class="number">255</span> * cdf / cdf[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 使用累积分布函数的线性插值，计算新的像素值</span></span><br><span class="line">    im2 = interp(im.flatten(), bins[:<span class="number">-1</span>], cdf)</span><br><span class="line">    <span class="keyword">return</span> im2.reshape(im.shape), cdf</span><br></pre></td></tr></table></figure>
-<h3 id="讲解">讲解</h3>
-<h4 id="解决的问题">解决的问题</h4>
-<p><img src="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>通常，暗图像直方图的分量集中在灰度较低的一端，而亮图像直方图分量偏向于灰度较高的一端。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直方图均衡化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">histeq</span><span class="params">(im, nbr_bins = <span class="number">256</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对一副灰度图像进行直方图均衡化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 计算图像的直方图</span></span><br><span class="line">    imhist, bins = histogram(im.flatten(), nbr_bins, normed = <span class="literal">True</span>)</span><br><span class="line">    cdf = imhist.cumsum()</span><br><span class="line">    cdf = <span class="number">255</span> * cdf / cdf[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 使用累积分布函数的线性插值，计算新的像素值</span></span><br><span class="line">    im2 = interp(im.flatten(), bins[:<span class="number">-1</span>], cdf)</span><br><span class="line">    <span class="keyword">return</span> im2.reshape(im.shape), cdf</span><br></pre></td></tr></table></figure>
+<h3 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h3><h4 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h4><p><img src="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p> 通常，暗图像直方图的分量集中在灰度较低的一端，而亮图像直方图分量偏向于灰度较高的一端。</p>
 <p>从图中可以得到这样的结论：如果一幅图像的灰度直方图几乎覆盖了整个灰度的取值范围，并且除了个别灰度值的个数较为突出，整个灰度值分布近似于均匀分布，那么这幅图像就具有较大的灰度动态范围和较高的对比度，同时图像的细节更为丰富。已经证明，仅仅依靠输入图像的直方图信息，就可以得到一个变换函数，利用该变换函数可以将输入图像达到上述效果，该过程就是直方图均衡化。</p>
 <p>一句话说，就是直方图的值都聚在一块不清楚，均衡化之后能清除很多。</p>
-<h3 id="方法">方法</h3>
-<p>将图像中的灰度级均匀的映射到整个灰度级范围，具体的方法如下：</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>将图像中的灰度级均匀的映射到整个灰度级范围，具体的方法如下：</p>
 <ul>
 <li>前提假设：在一张有N个像素点的图片中，有灰度值的取值范围是0~M，你希望映射到的范围是$[x,y]$</li>
 <li>第一步：统计每一个灰度值出现的次数$t_i$，其中$i$代表灰度，$t_i$代表其出现的次数</li>
 <li>第二步：计算每一种灰度值对应的像素点个数在总体中占比$P_i = \frac{t_i}{N}$</li>
-<li>第三步：计算累计占比$\sigma P_i=\Sigma_{i=0}^{i}P_i$</li>
-<li>第四步：计算映射后的灰度值$final_i=\sigma P_i*(y-x+1)$</li>
+<li>第三步：计算累计占比$\sigma P<em>i=\Sigma</em>{i=0}^{i}P_i$</li>
+<li>第四步：计算映射后的灰度值$final_i=\sigma P_i*(y-x+1)$ </li>
 </ul>
-<h2 id="图像平均">图像平均</h2>
-<h3 id="代码-2">代码</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_average</span><span class="params">(imList)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算图像列表的平均图像</span></span><br><span class="line"><span class="string">    imList ： 一个列表，里面包含很多图像</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 打开一张图像，将其存放在浮点数类型数组中</span></span><br><span class="line">    averageim = array(Image.open(imlist[<span class="number">0</span>]), <span class="string">'f'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> imname <span class="keyword">in</span> imlist[<span class="number">1</span>:]:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            averageim += array(Image.open(imname))</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            print(imname + <span class="string">'...skipped'</span>)</span><br><span class="line">    averageim /= len(imlist)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> array(averageim, <span class="string">'uint8'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="讲解-2">讲解</h3>
-<p>没啥好讲的，把一堆图拉到一块，平均一下即可。这个方法可以用于降噪， 但是我们也会发现，这个方法要把所有图片都拉到内存里，如果要平均很多的图片的话，我们需要拉很多的内存，不过又有一种方法就是可以每次平均一张也就是每次新引入一张，也可以。</p>
-<h2 id="图像的主成分分析（PCA）">图像的主成分分析（PCA）</h2>
-<h3 id="参考资料">参考资料</h3>
-<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
-<p>[2] <a href="https://www.bilibili.com/video/BV1F441187rd?from=search&amp;seid=4973130116529586818" target="_blank" rel="noopener">机器学习经典算法：PCA降维与SVD矩阵分解</a>—— <a href="https://space.bilibili.com/410704854" target="_blank" rel="noopener">自兴人工智能教育</a></p>
+<h2 id="图像平均"><a href="#图像平均" class="headerlink" title="图像平均"></a>图像平均</h2><h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_average</span><span class="params">(imList)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算图像列表的平均图像</span></span><br><span class="line"><span class="string">    imList ： 一个列表，里面包含很多图像</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 打开一张图像，将其存放在浮点数类型数组中</span></span><br><span class="line">    averageim = array(Image.open(imlist[<span class="number">0</span>]), <span class="string">'f'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> imname <span class="keyword">in</span> imlist[<span class="number">1</span>:]:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            averageim += array(Image.open(imname))</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            print(imname + <span class="string">'...skipped'</span>)</span><br><span class="line">    averageim /= len(imlist)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> array(averageim, <span class="string">'uint8'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="讲解-1"><a href="#讲解-1" class="headerlink" title="讲解"></a>讲解</h3><p>没啥好讲的，把一堆图拉到一块，平均一下即可。这个方法可以用于降噪， 但是我们也会发现，这个方法要把所有图片都拉到内存里，如果要平均很多的图片的话，我们需要拉很多的内存，不过又有一种方法就是可以每次平均一张也就是每次新引入一张，也可以。</p>
+<h2 id="图像的主成分分析（PCA）"><a href="#图像的主成分分析（PCA）" class="headerlink" title="图像的主成分分析（PCA）"></a>图像的主成分分析（PCA）</h2><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
+<p>[2] <a href="https://www.bilibili.com/video/BV1F441187rd?from=search&amp;seid=4973130116529586818" target="_blank" rel="noopener">机器学习经典算法：PCA降维与SVD矩阵分解</a>—— <a href="https://space.bilibili.com/410704854" target="_blank" rel="noopener">自兴人工智能教育</a> </p>
 <p>主成分分析法，老朋友了。这个目前已知的有两种用法：</p>
 <ul>
 <li>降低数据维度</li>
 <li>求每一个值在总体中的客观权重（重要程度）</li>
 </ul>
 <p>利用这个可以做图像的缩略图，它的优点是能在降维的时候，同时尽量多的保持训练数据的信息，这就很nb了。</p>
-<h3 id="代码-3">代码</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># PCA</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pca</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    主成分分析法：</span></span><br><span class="line"><span class="string">    输入： 矩阵X，其中该矩阵中储存训练数据，每一行为一条训练数据</span></span><br><span class="line"><span class="string">    返回：投影矩阵（按维度的重要性排序）、方差和均值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 转化成numpy.array矩阵</span></span><br><span class="line">    X = np.array(X)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取维度</span></span><br><span class="line">    num_data, dim = X.shape</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 数据中心化</span></span><br><span class="line">    mean_X = X.mean(axis = <span class="number">0</span>)</span><br><span class="line">    X = X - mean_X</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(dim &gt; num_data):</span><br><span class="line">        <span class="comment"># PCA - 使用紧致技巧</span></span><br><span class="line">        M = dot(X,X.T) <span class="comment"># 协方差矩阵</span></span><br><span class="line">        e, EV = linalg.eigh(M) <span class="comment"># 特征值和特征向量</span></span><br><span class="line">        tmp = dot(X.T, EV).T <span class="comment">#紧致技巧？？？说实话我还是不懂</span></span><br><span class="line">        V = tmp[::<span class="number">-1</span>]<span class="comment"># 由于最后的特征向量是我们所需要的，所以要将它逆转</span></span><br><span class="line">        S = sqrt(e)[::<span class="number">-1</span>]<span class="comment"># 由于特征值是按照递增顺序排列的，所以需要将其逆转</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(V.shape[<span class="number">1</span>]):</span><br><span class="line">            V[:, i] /= S</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        <span class="comment"># PCA- 使用SVD方法</span></span><br><span class="line">        U, S, V = linalg.svd(X)</span><br><span class="line">        V = V[:num_data] <span class="comment"># 仅仅返回前num_data 维的数据才合理</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> V, S, mean_X</span><br></pre></td></tr></table></figure>
-<h3 id="原理">原理</h3>
-<h4 id="PCA">PCA</h4>
-<h5 id="PCA做了什么？">PCA做了什么？</h5>
-<p>众所周知，PCA可以用来降维，举例来说，如果现在由一组数据，规格是100*4的，也就是说，有100组数据，每组数据有4个特征，现在我们想把它的每一组特征的数目降到2，变化完成后，变成100*2的矩阵，那么这个变化需要什么呢？学过线代的同学都懂了，这里需要在乘上个4*2的矩阵就可以完成这种变化，那么求这个4*2的矩阵，就是PCA的主要任务。</p>
-<h5 id="操作流程">操作流程</h5>
-<ul>
-<li>
-<p>第一步：先对数据进行标准化操作</p>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># PCA</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pca</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    主成分分析法：</span></span><br><span class="line"><span class="string">    输入： 矩阵X，其中该矩阵中储存训练数据，每一行为一条训练数据</span></span><br><span class="line"><span class="string">    返回：投影矩阵（按维度的重要性排序）、方差和均值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 转化成numpy.array矩阵</span></span><br><span class="line">    X = np.array(X)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取维度</span></span><br><span class="line">    num_data, dim = X.shape</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 数据中心化</span></span><br><span class="line">    mean_X = X.mean(axis = <span class="number">0</span>)</span><br><span class="line">    X = X - mean_X</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(dim &gt; num_data):</span><br><span class="line">        <span class="comment"># PCA - 使用紧致技巧</span></span><br><span class="line">        M = dot(X,X.T) <span class="comment"># 协方差矩阵</span></span><br><span class="line">        e, EV = linalg.eigh(M) <span class="comment"># 特征值和特征向量</span></span><br><span class="line">        tmp = dot(X.T, EV).T <span class="comment">#紧致技巧？？？说实话我还是不懂</span></span><br><span class="line">        V = tmp[::<span class="number">-1</span>]<span class="comment"># 由于最后的特征向量是我们所需要的，所以要将它逆转</span></span><br><span class="line">        S = sqrt(e)[::<span class="number">-1</span>]<span class="comment"># 由于特征值是按照递增顺序排列的，所以需要将其逆转</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(V.shape[<span class="number">1</span>]):</span><br><span class="line">            V[:, i] /= S</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        <span class="comment"># PCA- 使用SVD方法</span></span><br><span class="line">        U, S, V = linalg.svd(X)</span><br><span class="line">        V = V[:num_data] <span class="comment"># 仅仅返回前num_data 维的数据才合理</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> V, S, mean_X</span><br></pre></td></tr></table></figure>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><h4 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h4><h5 id="PCA做了什么？"><a href="#PCA做了什么？" class="headerlink" title="PCA做了什么？"></a>PCA做了什么？</h5><p>众所周知，PCA可以用来降维，举例来说，如果现在由一组数据，规格是100*4的，也就是说，有100组数据，每组数据有4个特征，现在我们想把它的每一组特征的数目降到2，变化完成后，变成100*2的矩阵，那么这个变化需要什么呢？学过线代的同学都懂了，这里需要在乘上个4*2的矩阵就可以完成这种变化，那么求这个4*2的矩阵，就是PCA的主要任务。</p>
+<h5 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h5><ul>
+<li><p>第一步：先对数据进行标准化操作</p>
 </li>
-<li>
-<p>第二步：计算协方差矩阵</p>
+<li><p>第二步：计算协方差矩阵</p>
 <p>什么是协方差：</p>
-<p>协方差：$\sigma_{jk}=\frac{1}{n-1}\Sigma_{i=1}^n(x_{ij}-x_{j}.mean)(x_{ik}-x_k.mean)$</p>
+<p>协方差：$\sigma<em>{jk}=\frac{1}{n-1}\Sigma</em>{i=1}^n(x<em>{ij}-x</em>{j}.mean)(x_{ik}-x_k.mean)$</p>
 <p>协方差代表着两个数据之间的相关性，相关性越大，协方差越大</p>
 <p>协方差矩阵蕴含着任意两个变量之间的协方差</p>
 <p>协方差矩阵的计算：$\Sigma=\frac{1}{n-1}((X-x.mean^T(X-x.mean))$</p>
 </li>
-<li>
-<p>对协方差矩阵求特征值和特征向量：</p>
+<li><p>对协方差矩阵求特征值和特征向量：</p>
 <p>什么是特征值和特征向量?</p>
 <p>线性代数学了一年多了，现在只记得加减乘和转置了，取个逆都是高端操作了，特征值和特征向量是啥来着？不记得了。</p>
 <p>直接看定义：$A$ 是$n$阶方阵，若存在数$\lambda$和非零向量x使得$Ax = \lambda x$那么称$\lambda$是A的一个特征值，$x$为A的对应于特征值$\lambda$的特征向量。</p>
-<p>我们现在有一个这样的矩阵：<br>
-$$<br>
-a = \left[<br>
-\begin{matrix}<br>
-1 &amp; 2&amp;3&amp;4\<br>
-2&amp;1&amp;5&amp;6\<br>
-3&amp;5&amp;1&amp;7\<br>
-4&amp;6&amp;7&amp;1<br>
-\end{matrix}<br>
-\right]<br>
-$$<br>
-我们使用语句：np.linalg.eig(a)，得到了以下结果</p>
+<p>我们现在有一个这样的矩阵：</p>
+<script type="math/tex; mode=display">
+a = \left[
+\begin{matrix}
+1 & 2&3&4\\
+2&1&5&6\\
+3&5&1&7\\
+4&6&7&1
+\end{matrix}
+\right]</script><p>我们使用语句：np.linalg.eig(a)，得到了以下结果</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">9</span>]: a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>],[<span class="number">3</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">7</span>],[<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>]])</span><br><span class="line">In [<span class="number">10</span>]: b,c = np.linalg.eig(a)</span><br><span class="line">In [<span class="number">11</span>]: b, c</span><br><span class="line">Out[<span class="number">11</span>]:</span><br><span class="line">(array([<span class="number">15.01698746</span>, <span class="number">-0.67469831</span>, <span class="number">-4.04123361</span>, <span class="number">-6.30105553</span>]),</span><br><span class="line"> array([[ <span class="number">0.35249192</span>,  <span class="number">0.89949656</span>, <span class="number">-0.21038586</span>, <span class="number">-0.14964351</span>],</span><br><span class="line">        [ <span class="number">0.49287878</span>, <span class="number">-0.40507255</span>, <span class="number">-0.72842863</span>, <span class="number">-0.24975682</span>],</span><br><span class="line">        [ <span class="number">0.54203206</span>, <span class="number">-0.15251679</span>,  <span class="number">0.63351659</span>, <span class="number">-0.53065677</span>],</span><br><span class="line">        [ <span class="number">0.58225527</span>, <span class="number">-0.05967247</span>,  <span class="number">0.15422794</span>,  <span class="number">0.79600989</span>]]))</span><br></pre></td></tr></table></figure>
 <p>我们根据刚才的定义进行检验：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">26</span>]: b[<span class="number">0</span>]*c[:,<span class="number">0</span>]</span><br><span class="line">Out[<span class="number">26</span>]: array([<span class="number">5.29336674</span>, <span class="number">7.40155453</span>, <span class="number">8.13968862</span>, <span class="number">8.74372006</span>])</span><br><span class="line">In [<span class="number">27</span>]: np.dot(a,c[:,<span class="number">0</span>])</span><br><span class="line">Out[<span class="number">27</span>]: array([<span class="number">5.29336674</span>, <span class="number">7.40155453</span>, <span class="number">8.13968862</span>, <span class="number">8.74372006</span>])</span><br></pre></td></tr></table></figure>
@@ -474,58 +452,47 @@ $$<br>
 </li>
 </ul>
 <p><img src="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>可以看到，后两个特征值都太小了，而且我们的任务是把这个100*4的矩阵转化成100*2的矩阵，所以我们需要选取两个特征向量，所以呢我们就去选最大的两个特征值所对应的特征向量，也就是特征向量0和1。</p>
-<p>将他们合成一个4*2的矩阵，计算原矩阵与他们的矩阵乘法，就可以得到新的特征矩阵了。</p>
-<h4 id="SVD矩阵分裂">SVD矩阵分裂</h4>
-<h5 id="目标">目标</h5>
-<p>将一个矩阵A分解三个矩阵的乘积：</p>
+<p>  可以看到，后两个特征值都太小了，而且我们的任务是把这个100*4的矩阵转化成100*2的矩阵，所以我们需要选取两个特征向量，所以呢我们就去选最大的两个特征值所对应的特征向量，也就是特征向量0和1。</p>
+<p>  将他们合成一个4*2的矩阵，计算原矩阵与他们的矩阵乘法，就可以得到新的特征矩阵了。</p>
+<h4 id="SVD矩阵分裂"><a href="#SVD矩阵分裂" class="headerlink" title="SVD矩阵分裂"></a>SVD矩阵分裂</h4><h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><p>将一个矩阵A分解三个矩阵的乘积：</p>
 <p>如下:</p>
 <pre class="mermaid">graph LR
 A[A m*n] -->u[u m*m]
 A[A m*n] -->S[S m*n]
 A[A m*n] -->V[V n*n]</pre>
+
 <p>我们的目标是将一个m*n的矩阵A拆分成u*S*V的形式，他们的形状如上图所示。</p>
 <p>其中S是一个对角矩阵，对角矩阵就是只有主对角线上的元素不是零的矩阵，你还看不懂什么叫对角矩阵的话建议百度。</p>
-<p>剩下的看这篇博客 <a href="https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg</a></p>
-<h2 id="使用pickle模块">使用pickle模块</h2>
-<p>pickle可以接受几乎所有python的对象，并且将其转换成字符串表示，这个过程叫做<strong>封装(pickling)</strong>。从字符串表示中重构该对象，成为<strong>拆封(unpickling)</strong>。这些字符串表示可以方便的储存和传输。</p>
-<h3 id="储存">储存</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'wb'</span>)</span><br><span class="line">pickle.dump(immean,f)</span><br><span class="line">pickle.dump(V,f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<p>剩下的看这篇博客 <a href="https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg</a> </p>
+<h2 id="使用pickle模块"><a href="#使用pickle模块" class="headerlink" title="使用pickle模块"></a>使用pickle模块</h2><p>pickle可以接受几乎所有python的对象，并且将其转换成字符串表示，这个过程叫做<strong>封装(pickling)</strong>。从字符串表示中重构该对象，成为<strong>拆封(unpickling)</strong>。这些字符串表示可以方便的储存和传输。</p>
+<h3 id="储存"><a href="#储存" class="headerlink" title="储存"></a>储存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'wb'</span>)</span><br><span class="line">pickle.dump(immean,f)</span><br><span class="line">pickle.dump(V,f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 <p>在上述的例子中，许多对象可以保存到同一文件中。pickle模块中有很多不同协议可以生成.pkl文件，如果不确定的话，最好以二进制文件的形式去读取、写入。在其他python会话中载入数据，只需要使用load()方法。</p>
-<h3 id="读取">读取</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'rb'</span>)</span><br><span class="line">immean = pickle.load(f)</span><br><span class="line">V = pickle.load(f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<h3 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'rb'</span>)</span><br><span class="line">immean = pickle.load(f)</span><br><span class="line">V = pickle.load(f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，dump的顺序和load的顺序必须一样，当然，与文件相关的读写操作可以用with语句完成，这样可以避免文件开关导致的错误。</p>
-<h3 id="使用with的保存和载入">使用with的保存和载入</h3>
-<h4 id="保存">保存</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(immean,f)</span><br><span class="line">	pickle.dump(V,f)</span><br></pre></td></tr></table></figure>
-<h4 id="载入">载入</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    immean = pickle.load(f)</span><br><span class="line">	V = pickle.load(f)</span><br></pre></td></tr></table></figure>
+<h3 id="使用with的保存和载入"><a href="#使用with的保存和载入" class="headerlink" title="使用with的保存和载入"></a>使用with的保存和载入</h3><h4 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(immean,f)</span><br><span class="line">	pickle.dump(V,f)</span><br></pre></td></tr></table></figure>
+<h4 id="载入"><a href="#载入" class="headerlink" title="载入"></a>载入</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'font_pca_modules.pkl'</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    immean = pickle.load(f)</span><br><span class="line">	V = pickle.load(f)</span><br></pre></td></tr></table></figure>
 <p>从本质上说这两种方法没什么不同的，就是在with的作用域中，f是开的，出了with的作用域后，f就会自动关闭，当然我本人是不喜欢这种代码形式的，但是为了让自己的代码风格尽量规范，我决定适应这一形式。</p>
-<h2 id="Scipy">Scipy</h2>
-<h3 id="图像模糊">图像模糊</h3>
-<p>作者在这里又不经意的抛出了一个重点。。</p>
+<h2 id="Scipy"><a href="#Scipy" class="headerlink" title="Scipy"></a>Scipy</h2><h3 id="图像模糊"><a href="#图像模糊" class="headerlink" title="图像模糊"></a>图像模糊</h3><p>作者在这里又不经意的抛出了一个重点。。</p>
 <p>图像的<strong>高斯模糊</strong>的实质就是灰度图像I和一个高斯核进行卷积的操作。</p>
-<p>这里给没有入门的兄弟萌讲一下，什么叫卷积，数学上两个函数的卷积，我目前还没有学（大二下）。图的卷积只是借了一个概念而已，简单地讲：假如有一个$n \times n$的矩阵A ，还有一个$3 \times3$的滤波器B。不要纠结什么叫滤波器，下面会讲清楚的。他们现在分别长这个样子：<br>
-$$<br>
-A =<br>
-\left[<br>
-\begin{matrix}<br>
-a_{1,1} &amp; a_{1,2} &amp;… &amp; a_{1,n} \<br>
-a_{2,1} &amp; a_{2,2} &amp;… &amp; a_{2,n} \<br>
-…  &amp;…&amp; &amp;… \<br>
-a_{n,1} &amp;a_{n,2}&amp;… &amp;a_{n,n}<br>
-\end{matrix}<br>
-\right],<br>
-B =<br>
-\left[<br>
-\begin{matrix}<br>
--1&amp;0&amp;1\<br>
--1&amp;0&amp;1\<br>
--1&amp;0&amp;1<br>
-\end{matrix}<br>
-\right]<br>
-$$<br>
-A和B进行卷积操作，生成了个什么玩意呢?很简单，生成了一个新的矩阵，这个矩阵的每一个元素就像是下面的图片里一样（特殊说明：下面的图片是我在<a href="https://www.cnblogs.com/SivilTaram/p/graph_neural_network_2.html" target="_blank" rel="noopener">这个网站</a>上面直接拿的）</p>
+<p>这里给没有入门的兄弟萌讲一下，什么叫卷积，数学上两个函数的卷积，我目前还没有学（大二下）。图的卷积只是借了一个概念而已，简单地讲：假如有一个$n \times n$的矩阵A ，还有一个$3 \times3$的滤波器B。不要纠结什么叫滤波器，下面会讲清楚的。他们现在分别长这个样子：</p>
+<script type="math/tex; mode=display">
+A = 
+\left[
+\begin{matrix}
+a_{1,1} & a_{1,2} &... & a_{1,n} \\
+a_{2,1} & a_{2,2} &... & a_{2,n} \\
+...  &...& &... \\
+a_{n,1} &a_{n,2}&... &a_{n,n}
+\end{matrix}
+\right],
+B = 
+\left[
+\begin{matrix}
+-1&0&1\\
+-1&0&1\\
+-1&0&1
+\end{matrix}
+\right]</script><p>A和B进行卷积操作，生成了个什么玩意呢?很简单，生成了一个新的矩阵，这个矩阵的每一个元素就像是下面的图片里一样（特殊说明：下面的图片是我在<a href="https://www.cnblogs.com/SivilTaram/p/graph_neural_network_2.html" target="_blank" rel="noopener">这个网站</a>上面直接拿的）</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuY25ibG9ncy5jb20vY25ibG9nc19jb20vU2l2aWxUYXJhbS8xNTEwNDg1L29faW1hZ2UtMTMtY29udi1jbm4uZ2lm" alt=""></p>
 <p>所以我们可以做一个联想，卷积就是拿着一个放大镜把这个图扫一遍生成一张新的图，放大镜(也就是滤波器)不一样，得到的结果也不一样。</p>
 <p>下面我们来看一下如何对一张图片进行高斯模糊。talk is free，代码来了：</p>
@@ -547,68 +514,57 @@ A和B进行卷积操作，生成了个什么玩意呢?很简单，生成了一�
 <p>我们可以理解，因为图像中的红色被模糊的较少，比较强烈，而蓝色和绿色被模糊的程度较大，无法保持原来的亚子，所以红色的框架被显现出来。</p>
 <p>将模糊值调节到i*20，我们会发现， 这变成了一张具有魔幻现实主义的图片😂</p>
 <p><img src="https://img-blog.csdnimg.cn/2020040723382746.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="图像导数">图像导数</h3>
-<h5 id="参考资料-2">参考资料</h5>
-<p>[1] <a href="https://www.cnblogs.com/molakejin/p/5683372.html" target="_blank" rel="noopener">边缘检测的各种微分算子比较</a></p>
+<h3 id="图像导数"><a href="#图像导数" class="headerlink" title="图像导数"></a>图像导数</h3><h5 id="参考资料-1"><a href="#参考资料-1" class="headerlink" title="参考资料"></a>参考资料</h5><p>[1] <a href="https://www.cnblogs.com/molakejin/p/5683372.html" target="_blank" rel="noopener">边缘检测的各种微分算子比较</a></p>
 <p>从书中可以看出来，在很多应用中图像强度的变化情况是非常重要的信息。强度的变化可以用灰度图像$I$的$x$和$y$方向导数$I_x$和$I_y$进行描述。</p>
 <p>梯度之中包含两个信息：</p>
 <ul>
-<li>
-<p><strong>梯度的大小</strong>：</p>
+<li><p><strong>梯度的大小</strong>：</p>
 <p>$|\Delta I| = \sqrt{I_x^2 + I_y^2}$</p>
 <p>他描述了图像变化的强弱</p>
 </li>
-<li>
-<p><strong>梯度的角度</strong>：</p>
+<li><p><strong>梯度的角度</strong>：</p>
 <p>$\alpha = arctan2(I_y,I_x)$</p>
 <p>描述了图像中在每一个点上强度变化的最大方向。</p>
 </li>
 </ul>
-<p>我们可以使用离散点近似的方式来计算图像的导数。图像的导数可以通过卷积简单地实现：<br>
-$$<br>
-I_x = I * D_x ,I_y = I*D_y<br>
-$$<br>
-对于$D_x$和$D_y$，通常选择 Prewitt 滤波器：<br>
-$$<br>
-D_x = \left[<br>
-\begin{matrix}<br>
--1&amp;0&amp;1\<br>
--1&amp;0&amp;1\<br>
--1&amp;0&amp;1<br>
-\end{matrix}<br>
-\right],<br>
-D_y = \left[<br>
-\begin{matrix}<br>
--1&amp;-1&amp;-1\<br>
-0&amp;0&amp;0\<br>
-1&amp;1&amp;1<br>
-\end{matrix}<br>
-\right]<br>
-$$<br>
-或者是 Sobel 滤波器：<br>
-$$<br>
-D_x = \left[<br>
-\begin{matrix}<br>
--1&amp;0&amp;1\<br>
--2&amp;0&amp;2\<br>
--1&amp;0&amp;1<br>
-\end{matrix}<br>
-\right],<br>
-D_y = \left[<br>
-\begin{matrix}<br>
--1&amp;-2&amp;-1\<br>
-0&amp;0&amp;0\<br>
-1&amp;2&amp;1<br>
-\end{matrix}<br>
-\right]<br>
-$$</p>
-<p>如果你看懂了上一节像关于<strong>什么是滤波器</strong>的问题的话，这里应该不难理解，如果你没看懂，那大概率是我没有讲清楚，你可以去网上搜集一些视频教程或是博客帮助自己理解。这两种滤波器的区别是： 据经验得知Sobel要比Prewitt更能准确检测图像边缘。</p>
+<p>我们可以使用离散点近似的方式来计算图像的导数。图像的导数可以通过卷积简单地实现：</p>
+<script type="math/tex; mode=display">
+I_x = I * D_x ,I_y = I*D_y</script><p>对于$D_x$和$D_y$，通常选择 Prewitt 滤波器：</p>
+<script type="math/tex; mode=display">
+D_x = \left[
+\begin{matrix}
+-1&0&1\\
+-1&0&1\\
+-1&0&1
+\end{matrix}
+\right],
+D_y = \left[
+\begin{matrix}
+-1&-1&-1\\
+0&0&0\\
+1&1&1
+\end{matrix}
+\right]</script><p>或者是 Sobel 滤波器：</p>
+<script type="math/tex; mode=display">
+D_x = \left[
+\begin{matrix}
+-1&0&1\\
+-2&0&2\\
+-1&0&1
+\end{matrix}
+\right],
+D_y = \left[
+\begin{matrix}
+-1&-2&-1\\
+0&0&0\\
+1&2&1
+\end{matrix}
+\right]</script><p>如果你看懂了上一节像关于<strong>什么是滤波器</strong>的问题的话，这里应该不难理解，如果你没看懂，那大概率是我没有讲清楚，你可以去网上搜集一些视频教程或是博客帮助自己理解。这两种滤波器的区别是： 据经验得知Sobel要比Prewitt更能准确检测图像边缘。 </p>
 <p>下面看一下效果:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>).convert(<span class="string">"L"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sobel</span></span><br><span class="line">imx = zeros(im.shape)</span><br><span class="line">filters.sobel(im,<span class="number">1</span>,imx)</span><br><span class="line"></span><br><span class="line">imy = zeros(im.shape)</span><br><span class="line">filters.sobel(im,<span class="number">0</span>,imy)</span><br><span class="line"></span><br><span class="line">magnitude = sqrt(imx**<span class="number">2</span> + imy**<span class="number">2</span>)</span><br><span class="line">compare(im, magnitude)</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20200407233841758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>上面展示的是最后提取的X轴和Y轴综合的梯度图</p>
-<p><img src="https://img-blog.csdnimg.cn/20200407233849490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
-上面两张分别是X轴和Y轴检测的。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200407233849490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>上面两张分别是X轴和Y轴检测的。</p>
 <p>今天先到这里。</p>
 
       
@@ -806,7 +762,7 @@ $$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">图像处理笔记(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#直方图均衡化"><span class="nav-number">1.1.</span> <span class="nav-text">直方图均衡化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-number">1.1.1.</span> <span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解"><span class="nav-number">1.1.3.</span> <span class="nav-text">讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解决的问题"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">解决的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">1.1.4.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像平均"><span class="nav-number">1.2.</span> <span class="nav-text">图像平均</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-2"><span class="nav-number">1.2.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解-2"><span class="nav-number">1.2.2.</span> <span class="nav-text">讲解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像的主成分分析（PCA）"><span class="nav-number">1.3.</span> <span class="nav-text">图像的主成分分析（PCA）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.3.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-3"><span class="nav-number">1.3.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.3.3.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PCA"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PCA做了什么？"><span class="nav-number">1.3.3.1.1.</span> <span class="nav-text">PCA做了什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#操作流程"><span class="nav-number">1.3.3.1.2.</span> <span class="nav-text">操作流程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVD矩阵分裂"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">SVD矩阵分裂</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标"><span class="nav-number">1.3.3.2.1.</span> <span class="nav-text">目标</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用pickle模块"><span class="nav-number">1.4.</span> <span class="nav-text">使用pickle模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#储存"><span class="nav-number">1.4.1.</span> <span class="nav-text">储存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取"><span class="nav-number">1.4.2.</span> <span class="nav-text">读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用with的保存和载入"><span class="nav-number">1.4.3.</span> <span class="nav-text">使用with的保存和载入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">保存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#载入"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">载入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scipy"><span class="nav-number">1.5.</span> <span class="nav-text">Scipy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像模糊"><span class="nav-number">1.5.1.</span> <span class="nav-text">图像模糊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像导数"><span class="nav-number">1.5.2.</span> <span class="nav-text">图像导数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#参考资料-2"><span class="nav-number">1.5.2.0.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像处理笔记-一"><span class="nav-number">1.</span> <span class="nav-text">图像处理笔记(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#直方图均衡化"><span class="nav-number">1.1.</span> <span class="nav-text">直方图均衡化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-number">1.1.1.</span> <span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解"><span class="nav-number">1.1.3.</span> <span class="nav-text">讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解决的问题"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">解决的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">1.1.4.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像平均"><span class="nav-number">1.2.</span> <span class="nav-text">图像平均</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">讲解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像的主成分分析（PCA）"><span class="nav-number">1.3.</span> <span class="nav-text">图像的主成分分析（PCA）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.3.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">1.3.3.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PCA"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PCA做了什么？"><span class="nav-number">1.3.3.1.1.</span> <span class="nav-text">PCA做了什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#操作流程"><span class="nav-number">1.3.3.1.2.</span> <span class="nav-text">操作流程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVD矩阵分裂"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">SVD矩阵分裂</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标"><span class="nav-number">1.3.3.2.1.</span> <span class="nav-text">目标</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用pickle模块"><span class="nav-number">1.4.</span> <span class="nav-text">使用pickle模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#储存"><span class="nav-number">1.4.1.</span> <span class="nav-text">储存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取"><span class="nav-number">1.4.2.</span> <span class="nav-text">读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用with的保存和载入"><span class="nav-number">1.4.3.</span> <span class="nav-text">使用with的保存和载入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#保存"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">保存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#载入"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">载入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scipy"><span class="nav-number">1.5.</span> <span class="nav-text">Scipy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像模糊"><span class="nav-number">1.5.1.</span> <span class="nav-text">图像模糊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像导数"><span class="nav-number">1.5.2.</span> <span class="nav-text">图像导数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#参考资料-1"><span class="nav-number">1.5.2.0.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

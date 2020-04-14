@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="Ubuntu下使用Hexo+GitHub+nexT搭建个人博客 一、下载nodejs和npm 打开 Node.js官网，下载源代码，解压后进行编译、安装。 解压后进入文件夹，输入: 12sudo make -j 12#使用12线程编译，可以视情况而定sudo make install 至此为止Node.js, npm下载完成，输入语句 12node -vnpm -v 检验是否安装成功。 二、下载H">
+<meta name="description" content="Ubuntu下使用Hexo+GitHub+nexT搭建个人博客一、下载nodejs和npm打开 Node.js官网，下载源代码，解压后进行编译、安装。 解压后进入文件夹，输入: 12sudo make -j 12#使用12线程编译，可以视情况而定sudo make install 至此为止Node.js, npm下载完成，输入语句 12node -vnpm -v 检验是否安装成功。 二、下载Hex">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu下Hexo+NexT博客搭建">
 <meta property="og:url" content="http://yoursite.com/2020/03/29/Ubuntu%E4%B8%8BHexo-NexT%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
-<meta property="og:description" content="Ubuntu下使用Hexo+GitHub+nexT搭建个人博客 一、下载nodejs和npm 打开 Node.js官网，下载源代码，解压后进行编译、安装。 解压后进入文件夹，输入: 12sudo make -j 12#使用12线程编译，可以视情况而定sudo make install 至此为止Node.js, npm下载完成，输入语句 12node -vnpm -v 检验是否安装成功。 二、下载H">
+<meta property="og:description" content="Ubuntu下使用Hexo+GitHub+nexT搭建个人博客一、下载nodejs和npm打开 Node.js官网，下载源代码，解压后进行编译、安装。 解压后进入文件夹，输入: 12sudo make -j 12#使用12线程编译，可以视情况而定sudo make install 至此为止Node.js, npm下载完成，输入语句 12node -vnpm -v 检验是否安装成功。 二、下载Hex">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200329213651340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2020032921370616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200329213805633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
@@ -393,16 +393,13 @@
       
 
       
-        <h1>Ubuntu下使用Hexo+GitHub+nexT搭建个人博客</h1>
-<h2 id="一、下载nodejs和npm">一、下载nodejs和npm</h2>
-<p>打开 <a href="http://nodejs.cn/" target="_blank" rel="noopener">Node.js</a>官网，下载源代码，解压后进行编译、安装。</p>
+        <h1 id="Ubuntu下使用Hexo-GitHub-nexT搭建个人博客"><a href="#Ubuntu下使用Hexo-GitHub-nexT搭建个人博客" class="headerlink" title="Ubuntu下使用Hexo+GitHub+nexT搭建个人博客"></a>Ubuntu下使用Hexo+GitHub+nexT搭建个人博客</h1><h2 id="一、下载nodejs和npm"><a href="#一、下载nodejs和npm" class="headerlink" title="一、下载nodejs和npm"></a>一、下载nodejs和npm</h2><p>打开 <a href="http://nodejs.cn/" target="_blank" rel="noopener">Node.js</a>官网，下载源代码，解压后进行编译、安装。</p>
 <p>解压后进入文件夹，输入:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo make -j 12#使用12线程编译，可以视情况而定</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
 <p>至此为止Node.js, npm下载完成，输入语句</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
 <p>检验是否安装成功。</p>
-<h2 id="二、下载Hexo并在本地搭建博客">二、下载Hexo并在本地搭建博客</h2>
-<p>先安装Hexo</p>
+<h2 id="二、下载Hexo并在本地搭建博客"><a href="#二、下载Hexo并在本地搭建博客" class="headerlink" title="二、下载Hexo并在本地搭建博客"></a>二、下载Hexo并在本地搭建博客</h2><p>先安装Hexo</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install hexo -g</span><br></pre></td></tr></table></figure>
 <p>使用下方语句检验是否安装成功:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
@@ -410,68 +407,53 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo hexo init blog  # blog可以替换成你喜欢的名字，该操作可以在任何文件夹下进行</span><br><span class="line">cd blog</span><br><span class="line">sudo npm install </span><br><span class="line">sudo hexo clean</span><br><span class="line">sudo hexo g</span><br><span class="line">sudo hexo d</span><br></pre></td></tr></table></figure>
 <p>操作完成后会出现如下信息：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INFO  Deploy done: git</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
-<p>这时候我们将上面的网址复制到浏览器中，进入即可，进入后可以看到如下画面：<br>
-<img src="https://img-blog.csdnimg.cn/20200329213651340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>这时候我们将上面的网址复制到浏览器中，进入即可，进入后可以看到如下画面：<br><img src="https://img-blog.csdnimg.cn/20200329213651340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>至此，hexo本地部署完成</p>
-<h2 id="三、-将Hexo博客Push到GitHub">三、 将Hexo博客Push到GitHub</h2>
-<p>进入GitHub，如果没有账号，那么自行注册。</p>
+<h2 id="三、-将Hexo博客Push到GitHub"><a href="#三、-将Hexo博客Push到GitHub" class="headerlink" title="三、 将Hexo博客Push到GitHub"></a>三、 将Hexo博客Push到GitHub</h2><p>进入GitHub，如果没有账号，那么自行注册。</p>
 <p>进入个人主页，新建一个仓库，仓库的名字是且必须是：</p>
 <blockquote>
-<h3 id="xxxxxx-github-io"><a href="http://xxxxxx.github.io" target="_blank" rel="noopener">xxxxxx.github.io</a></h3>
-</blockquote>
-<p>以我为例，我的账号是wang-sy，<a href="http://xn--wang-sy-nu9k862bk6cjq2bp5k6w5c5d9d4dg.github.io" target="_blank" rel="noopener">在这里我填写的是wang-sy.github.io</a>，以后我们也将通过这个网址来访问我们的博客。</p>
+<h3 id="xxxxxx-github-io"><a href="#xxxxxx-github-io" class="headerlink" title="xxxxxx.github.io"></a>xxxxxx.github.io</h3></blockquote>
+<p>以我为例，我的账号是wang-sy，在这里我填写的是wang-sy.github.io，以后我们也将通过这个网址来访问我们的博客。</p>
 <p>进入我们之前创建的blog文件夹，对_config.yml进行编辑，修改最后面的内容，修改为:</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/wang-sy/wang-sy.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
 <p>修改完成后保存，我们将初始化的博客部署到github中，在控制台中输入如下代码：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd blog#进入你定义的博客文件夹</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>等待一段时间后，在浏览器中输入，<a href="http://xn--xxx-x69dz97dqw7atxq.github.io" target="_blank" rel="noopener">你自己的xxx.github.io</a>，即可查看博客，如下：</p>
+<p>等待一段时间后，在浏览器中输入，你自己的xxx.github.io，即可查看博客，如下：</p>
 <p><img src="https://img-blog.csdnimg.cn/2020032921370616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>值得注意的是，<strong>将内容push到GitHub后需要等待一段时间后，你的改动才能有效</strong>。所以说如果到了这步，你不能通过xxx.github.io访问自己的博客的话，不妨稍等片刻（不超过五分钟）再重新尝试一下。</p>
 <p>到此为止我们部署的博客，不仅可以在本地供自己查看，也可以在云端供所有人查看，博客的基础搭建完成，在后面的章节中我们会引入nexT对博客进行美化。</p>
-<h2 id="四、使用Next主题进行美化">四、使用Next主题进行美化</h2>
-<p>进入上面的界面后，我感觉非常的赏心悦目，但是坐在一旁的女朋友却并不这么想，于是问题就来了，难道只能用一种主题么？答案显然是否。Hexo拥有许多可配置的选项，其中就包括了更改<strong>主题</strong>，Next是使用人数最多的主题之一，所以出现问题的时候上网搜解决方案比较容易一些，所以我们使用了Next主题，在这一节中，我们介绍如何下载并更换主题，我们以Next为例。</p>
-<h4 id="下载Next">下载Next</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd blog/themes</span><br><span class="line">git clone https://github.com/iissnan/hexo-theme-next.git next</span><br></pre></td></tr></table></figure>
-<h4 id="启用主题">启用主题</h4>
-<p>进入blog文件夹，并且使用vim编辑_config.yml文件，将主题选项改为next</p>
+<h2 id="四、使用Next主题进行美化"><a href="#四、使用Next主题进行美化" class="headerlink" title="四、使用Next主题进行美化"></a>四、使用Next主题进行美化</h2><p>进入上面的界面后，我感觉非常的赏心悦目，但是坐在一旁的女朋友却并不这么想，于是问题就来了，难道只能用一种主题么？答案显然是否。Hexo拥有许多可配置的选项，其中就包括了更改<strong>主题</strong>，Next是使用人数最多的主题之一，所以出现问题的时候上网搜解决方案比较容易一些，所以我们使用了Next主题，在这一节中，我们介绍如何下载并更换主题，我们以Next为例。</p>
+<h4 id="下载Next"><a href="#下载Next" class="headerlink" title="下载Next"></a>下载Next</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd blog/themes</span><br><span class="line">git clone https://github.com/iissnan/hexo-theme-next.git next</span><br></pre></td></tr></table></figure>
+<h4 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h4><p>进入blog文件夹，并且使用vim编辑_config.yml文件，将主题选项改为next</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd blog</span><br><span class="line">sudo vim _config.yml</span><br></pre></td></tr></table></figure>
 <p>值得注意的是，在以后的修改中我们不仅要修改blog文件夹下的_config.yml，也要修改主题包中的_config.yml：</p>
 <ul>
-<li>
-<p>位于站点根目录下的_config.yml，主要包含 Hexo 本身的配置</p>
+<li><p>位于站点根目录下的_config.yml，主要包含 Hexo 本身的配置</p>
 </li>
-<li>
-<p>另一份位于主题目录下的_config.yml，这份配置由主题作者提供，主要用于配置主题相关的选项</p>
+<li><p>另一份位于主题目录下的_config.yml，这份配置由主题作者提供，主要用于配置主题相关的选项</p>
 </li>
 </ul>
-<h4 id="重新更新">重新更新</h4>
-<p>注意，每次更新搞这几步就可以了，你也可以把它写成一个shell脚本，以后每次同步直接运行shell脚本即可。</p>
+<h4 id="重新更新"><a href="#重新更新" class="headerlink" title="重新更新"></a>重新更新</h4><p>注意，每次更新搞这几步就可以了，你也可以把它写成一个shell脚本，以后每次同步直接运行shell脚本即可。</p>
 <p>当然，你也可以每次都运行下面的所有语句，脚本如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/blog</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br><span class="line">hexo s</span><br><span class="line">ehco "ok"</span><br></pre></td></tr></table></figure>
 <p>运行完成后我们打开 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 查看使用next主题的博客，效果如下</p>
 <p><img src="https://img-blog.csdnimg.cn/20200329213805633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>emmm，为什么感觉还不如原来的好看呢（逃</p>
-<h3 id="五、让它变得好看">五、让它变得好看</h3>
-<p>我们同样是Next，别人的长这个样子：从这里进入，<a href="http://blog.maroom.cn/" target="_blank" rel="noopener">我的next安装就是借鉴的他的</a></p>
+<h3 id="五、让它变得好看"><a href="#五、让它变得好看" class="headerlink" title="五、让它变得好看"></a>五、让它变得好看</h3><p>我们同样是Next，别人的长这个样子：从这里进入，<a href="http://blog.maroom.cn/" target="_blank" rel="noopener">我的next安装就是借鉴的他的</a></p>
 <p><img src="https://img-blog.csdnimg.cn/20200329213726210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>那肯定不得行，我们也要把自己的博客搞漂亮点，我们先对未来进行规划，以我自己为例：</p>
 <ul>
-<li>
-<p>博客需要分类，我在同时学习不同方向的知识，需要分类功能才能有序的检索</p>
+<li><p>博客需要分类，我在同时学习不同方向的知识，需要分类功能才能有序的检索</p>
 </li>
-<li>
-<p>我的博客不能叫Hexo，要叫SaiyuWang’s Blog</p>
+<li><p>我的博客不能叫Hexo，要叫SaiyuWang’s Blog</p>
 </li>
-<li>
-<p>我要上面那种两栏的，不要这种中间一条的</p>
+<li><p>我要上面那种两栏的，不要这种中间一条的</p>
 </li>
-<li>
-<p>我要搞个小头像，下面还要放段话</p>
+<li><p>我要搞个小头像，下面还要放段话</p>
 </li>
 </ul>
 <p>有了需求之后，我们开工，开工之前，我们再次重申<strong>如果过程中出现问题，你又不想找错的话，可以直接干掉blog文件夹从头再来，如果你害怕这种事情发生，那么你可以将过程中的操作写入shell脚本中，以达到一键回到上一步的目的。</strong></p>
-<h4 id="调整主题">调整主题</h4>
-<p>正如我们上文所说，我们不想要中间一大条的，我们想要的是像上面那张图里一样的，于是我们需要更改NexT的主题，来达到我们的目的。</p>
+<h4 id="调整主题"><a href="#调整主题" class="headerlink" title="调整主题"></a>调整主题</h4><p>正如我们上文所说，我们不想要中间一大条的，我们想要的是像上面那张图里一样的，于是我们需要更改NexT的主题，来达到我们的目的。</p>
 <p>通过阅读文档，我们知道Next支持三种主题：</p>
 <ul>
 <li>Muse - 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白</li>
@@ -487,30 +469,24 @@
 <p>语句来对相应字符串进行搜索。更改完成后我们进行更新查看。</p>
 <p><img src="https://img-blog.csdnimg.cn/20200329213832142.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>这样的布局基本上符合我们的要求。</p>
-<h4 id="设置语言">设置语言</h4>
-<p>打开blog文件夹下的_config.yml，对语言进行设定。</p>
+<h4 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h4><p>打开blog文件夹下的_config.yml，对语言进行设定。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/blog</span><br><span class="line">sudo vim _config.yml</span><br></pre></td></tr></table></figure>
 <p>将<code>language</code> 设置成你所需要的语言，我们将语言设置为简体中文。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">language: zh-Hans</span><br></pre></td></tr></table></figure>
 <p>如果需要繁体中文，那么将zh-Hans更改为zh-tw或zh-hk即可（PS：我怀疑这个语言包的作者有台独意向 ）</p>
-<h4 id="设置菜单">设置菜单</h4>
-<h5 id="添加属性">添加属性</h5>
-<p>正如前面所说，我们希望左边栏中的内容丰富起来，至少包括分类、Home、等功能，下面我们将通过修改themes/next文件夹下的_config.yml文件来达到丰富菜单的目的。</p>
+<h4 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h4><h5 id="添加属性"><a href="#添加属性" class="headerlink" title="添加属性"></a>添加属性</h5><p>正如前面所说，我们希望左边栏中的内容丰富起来，至少包括分类、Home、等功能，下面我们将通过修改themes/next文件夹下的_config.yml文件来达到丰富菜单的目的。</p>
 <p>我们先打开themes/next中的_config.yml进行编辑：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd themes/next</span><br><span class="line">sudo vim _config.yml</span><br></pre></td></tr></table></figure>
 <p>首先，我们设置主页和归档，进入_config.yml后，无需翻页直接对menu项目下面的属性进行更改，我们将该属性改为下面的样子：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="comment">#tags: /tags/ || tags</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
 <p>保存后重新开始服务，可以看到网页变成了中文版，并且左边框中有了主页和归档两个选项。</p>
 <p><img src="https://img-blog.csdnimg.cn/20200329213856960.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>归档即我们博客更新的时间线，如下：<br>
-<img src="https://img-blog.csdnimg.cn/20200329213905278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>归档即我们博客更新的时间线，如下：<br><img src="https://img-blog.csdnimg.cn/20200329213905278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>接下来我们添加剩下的两个界面：</p>
 <ul>
-<li>
-<p>标签页</p>
+<li><p>标签页</p>
 </li>
-<li>
-<p>分类页</p>
+<li><p>分类页</p>
 </li>
 </ul>
 <p>首先，在themes/next文件夹下的_config.yml中，进行如下更改：</p>
@@ -549,8 +525,7 @@
 <p>重启，进入标签页面，我们可以看到新做出的改变。</p>
 <p><img src="https://img-blog.csdnimg.cn/20200329213953608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>进入相应标签就可以找到相应的文章了。</p>
-<h5 id="添加图标">添加图标</h5>
-<p>最后，我们发现左边的这些栏目都没有图标，所以我们需要给他们加上图标：打开themes/next文件夹下的配置文件进行修改：</p>
+<h5 id="添加图标"><a href="#添加图标" class="headerlink" title="添加图标"></a>添加图标</h5><p>最后，我们发现左边的这些栏目都没有图标，所以我们需要给他们加上图标：打开themes/next文件夹下的配置文件进行修改：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd themes/next</span><br><span class="line">sudo vim _config.yml</span><br></pre></td></tr></table></figure>
 <p>找到menu_icon，进行修改：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu_icons:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Icon Mapping.</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">home</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">th</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">archive</span></span><br></pre></td></tr></table></figure>
@@ -559,34 +534,27 @@
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/||</span> <span class="string">home</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/||</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/||</span> <span class="string">th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
 <p>原来这是因为在新版的next中，图标也在menu一栏进行设置，重启服务后，效果如下：</p>
 <p><img src="https://img-blog.csdnimg.cn/20200329214008348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h5 id="给自己的博客换名字、写标题等等">给自己的博客换名字、写标题等等</h5>
-<p>首先先准备好图片，我在网上找了只皮卡丘，并且放到了图床中，使用的是<a href="https://imgchr.com/" target="_blank" rel="noopener">路过图床</a>，这只皮卡丘图像的连接是：<a href="https://imgchr.com/i/GZ3vOe" target="_blank" rel="noopener">https://imgchr.com/i/GZ3vOe</a></p>
+<h5 id="给自己的博客换名字、写标题等等"><a href="#给自己的博客换名字、写标题等等" class="headerlink" title="给自己的博客换名字、写标题等等"></a>给自己的博客换名字、写标题等等</h5><p>首先先准备好图片，我在网上找了只皮卡丘，并且放到了图床中，使用的是<a href="https://imgchr.com/" target="_blank" rel="noopener">路过图床</a>，这只皮卡丘图像的连接是：<a href="https://imgchr.com/i/GZ3vOe" target="_blank" rel="noopener">https://imgchr.com/i/GZ3vOe</a></p>
 <p>这次我们要编辑的是blog文件夹下的配置文件，打开编辑</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~\blog</span><br><span class="line">sudo vim _config.yml</span><br></pre></td></tr></table></figure>
 <p>找到avatar属性，进行修改，将刚刚生成的图像链接加入</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sidebar Avatar</span></span><br><span class="line"><span class="comment"># in theme directory(source/images): /images/avatar.gif</span></span><br><span class="line"><span class="comment"># in site  directory(source/uploads): /uploads/avatar.gif</span></span><br><span class="line"><span class="attr">avatar:</span> <span class="string">https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg</span></span><br></pre></td></tr></table></figure>
-<p>重新生成后我们的主页上出现了一只可爱的皮卡丘<br>
-<img src="https://img-blog.csdnimg.cn/20200329214014773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h4 id="填写自己的信息和标语">填写自己的信息和标语</h4>
-<p>我们发现，我们的博客还是叫Hexo，我们的名字还是叫John Doe，这显然是不合理的，所以我们要填写自己的信息；</p>
+<p>重新生成后我们的主页上出现了一只可爱的皮卡丘<br><img src="https://img-blog.csdnimg.cn/20200329214014773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="填写自己的信息和标语"><a href="#填写自己的信息和标语" class="headerlink" title="填写自己的信息和标语"></a>填写自己的信息和标语</h4><p>我们发现，我们的博客还是叫Hexo，我们的名字还是叫John Doe，这显然是不合理的，所以我们要填写自己的信息；</p>
 <p>我们打开blog下的配置文件，对其中的内容进行修改，我做出的修改如下</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">SaiyuWang's</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">'淡黄色长裙，蓬松的头发'</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">''</span></span><br><span class="line"><span class="attr">keywords:</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Saiyu</span> <span class="string">Wang</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-Hans</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">''</span></span><br></pre></td></tr></table></figure>
 <p>到了这里，看到语言，又想diss一下这个作者，为什么繁体中文是zh-tw和zh-hk？？？</p>
 <p>ok到此为止上面的所有需求都完成了。</p>
-<h4 id="最后的需求：填写自己的社交账号">最后的需求：填写自己的社交账号</h4>
-<p>添加社交账号到左边栏</p>
+<h4 id="最后的需求：填写自己的社交账号"><a href="#最后的需求：填写自己的社交账号" class="headerlink" title="最后的需求：填写自己的社交账号"></a>最后的需求：填写自己的社交账号</h4><p>添加社交账号到左边栏</p>
 <p>我们打开themes/next文件夹下的配置文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd themes/next</span><br><span class="line">sudo vim _config.yml</span><br></pre></td></tr></table></figure>
 <p>找到social属性进行更改</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">social:</span></span><br><span class="line">  <span class="attr">GitHub:</span> <span class="string">https://github.com/wang-sy</span> <span class="string">||</span> <span class="string">github</span></span><br><span class="line">  <span class="attr">E-Mail:</span> <span class="string">mailto:wangsaiyu@cqu.edu.cn</span> <span class="string">||</span> <span class="string">envelope</span></span><br><span class="line">  <span class="comment">#Google: https://plus.google.com/yourname || goo</span></span><br></pre></td></tr></table></figure>
 <p>重启查看</p>
 <p><img src="https://img-blog.csdnimg.cn/2020032921402096.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="六、未完成部分">六、未完成部分</h3>
-<p>好了，至此位置，美化的部分基本上全部结束，接下来再加一些其他的功能，如评论、流量监测等等功能，这些功能我会在以后慢慢加。</p>
+<h3 id="六、未完成部分"><a href="#六、未完成部分" class="headerlink" title="六、未完成部分"></a>六、未完成部分</h3><p>好了，至此位置，美化的部分基本上全部结束，接下来再加一些其他的功能，如评论、流量监测等等功能，这些功能我会在以后慢慢加。</p>
 <p>经过观察，markdown中的数学公式渲染仍然有问题，目前还没有寻求解决方案。</p>
-<h3 id="七、补充">七、补充</h3>
-<p>发布之后发现，右边好大一长串，于是赶紧上网找解决方法：<br>
-打开next下的配置文件，将auto_excerpt下的enable: 属性改为true即可.</p>
+<h3 id="七、补充"><a href="#七、补充" class="headerlink" title="七、补充"></a>七、补充</h3><p>发布之后发现，右边好大一长串，于是赶紧上网找解决方法：<br>打开next下的配置文件，将auto_excerpt下的enable: 属性改为true即可.</p>
 
       
     </div>
@@ -781,7 +749,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu下使用Hexo+GitHub+nexT搭建个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、下载nodejs和npm"><span class="nav-number">1.1.</span> <span class="nav-text">一、下载nodejs和npm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、下载Hexo并在本地搭建博客"><span class="nav-number">1.2.</span> <span class="nav-text">二、下载Hexo并在本地搭建博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-将Hexo博客Push到GitHub"><span class="nav-number">1.3.</span> <span class="nav-text">三、 将Hexo博客Push到GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xxxxxx-github-io"><span class="nav-number">1.3.1.</span> <span class="nav-text">xxxxxx.github.io</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、使用Next主题进行美化"><span class="nav-number">1.4.</span> <span class="nav-text">四、使用Next主题进行美化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载Next"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">下载Next</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启用主题"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">启用主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重新更新"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">重新更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、让它变得好看"><span class="nav-number">1.4.1.</span> <span class="nav-text">五、让它变得好看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调整主题"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">调整主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置语言"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置菜单"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">设置菜单</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加属性"><span class="nav-number">1.4.1.3.1.</span> <span class="nav-text">添加属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加图标"><span class="nav-number">1.4.1.3.2.</span> <span class="nav-text">添加图标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#给自己的博客换名字、写标题等等"><span class="nav-number">1.4.1.3.3.</span> <span class="nav-text">给自己的博客换名字、写标题等等</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#填写自己的信息和标语"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">填写自己的信息和标语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后的需求：填写自己的社交账号"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">最后的需求：填写自己的社交账号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、未完成部分"><span class="nav-number">1.4.2.</span> <span class="nav-text">六、未完成部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、补充"><span class="nav-number">1.4.3.</span> <span class="nav-text">七、补充</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu下使用Hexo-GitHub-nexT搭建个人博客"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu下使用Hexo+GitHub+nexT搭建个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、下载nodejs和npm"><span class="nav-number">1.1.</span> <span class="nav-text">一、下载nodejs和npm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、下载Hexo并在本地搭建博客"><span class="nav-number">1.2.</span> <span class="nav-text">二、下载Hexo并在本地搭建博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-将Hexo博客Push到GitHub"><span class="nav-number">1.3.</span> <span class="nav-text">三、 将Hexo博客Push到GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xxxxxx-github-io"><span class="nav-number">1.3.1.</span> <span class="nav-text">xxxxxx.github.io</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、使用Next主题进行美化"><span class="nav-number">1.4.</span> <span class="nav-text">四、使用Next主题进行美化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载Next"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">下载Next</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启用主题"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">启用主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重新更新"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">重新更新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、让它变得好看"><span class="nav-number">1.4.1.</span> <span class="nav-text">五、让它变得好看</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调整主题"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">调整主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置语言"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置菜单"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">设置菜单</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加属性"><span class="nav-number">1.4.1.3.1.</span> <span class="nav-text">添加属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加图标"><span class="nav-number">1.4.1.3.2.</span> <span class="nav-text">添加图标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#给自己的博客换名字、写标题等等"><span class="nav-number">1.4.1.3.3.</span> <span class="nav-text">给自己的博客换名字、写标题等等</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#填写自己的信息和标语"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">填写自己的信息和标语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后的需求：填写自己的社交账号"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">最后的需求：填写自己的社交账号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、未完成部分"><span class="nav-number">1.4.2.</span> <span class="nav-text">六、未完成部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、补充"><span class="nav-number">1.4.3.</span> <span class="nav-text">七、补充</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
