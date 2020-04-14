@@ -1800,7 +1800,7 @@ $$<br>
 <p>在这里我们选定的基变量为：$$(x_3,x_4,x_5)$$</p>
 <p>选定的基矩阵为单位矩阵$$I_3$$</p>
 <p>找到的基本可行解：</p>
-<p>$$\left[ \begin{matrix}x_B\x_N \end{matrix} \right]  = \left[ \begin{matrix}B^{-1}b\0 \end{matrix} \right]$$</p>
+<p>$$\left[ \begin{matrix}x_B &amp; x_N \end{matrix} \right]  = \left[ \begin{matrix}B^{-1}b\ 0 \end{matrix} \right]$$</p>
 <p>即：$$x_1,x_2,x_3,x_4,x_5 = 0,0,8,16,12$$</p>
 <p>Q:为什么要找单位阵?</p>
 <p>A:我们都学过《线性代数》，线代告诉我们，一个矩阵能够被化作单位矩阵和这个矩阵可逆是等价的，有根据上一节讲的，在求解过程中需要对基去逆，所以综上所述，需要找一个单位阵/可以化成单位阵的。</p>
