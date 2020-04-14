@@ -99,7 +99,7 @@
 <meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412165729281.png">
 <meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412170009129.png">
 <meta property="article:published_time" content="2020-04-12T17:22:45.000Z">
-<meta property="article:modified_time" content="2020-04-14T09:12:54.172Z">
+<meta property="article:modified_time" content="2020-04-14T10:17:22.266Z">
 <meta property="article:author" content="Saiyu Wang">
 <meta property="article:tag" content="图像处理">
 <meta property="article:tag" content="python">
@@ -445,12 +445,14 @@ f(x+u,y+v) \approx f(x,y) +uf_x(x,y)+vf_y(x,y)<br>
 $$<br>
 上面的式子是二变量函数的一阶展开，细心如你能发现上面的式子里表示中心增加偏移后的灰度值的式子可以使用泰勒展开！经过一番计算之后可以得到这样一个式子。</p>
 <p>计算过程也是非常简单的：<br>
-$$\begin{align*}<br>
+$$<br>
+\begin{align*}<br>
 E(u,v) &amp;= \Sigma_{x,y}w(x,y) [I(x+u,y+v) - I(x,y)]^2\<br>
 &amp;=w(x,y)\Sigma_{x,y}[I(x,y)+uI_x(x,y)+vI_y(x,y) - I(x,y)]^2\<br>
 &amp;=w(x,y)\Sigma_{x,y}[uI_x(x,y)+vI_y(x,y)]^2\<br>
 &amp;=w(x,y)\Sigma_{x,y}[u^2I_x(x,y)^2+v^2I_y(x,y)^2+2uvI_x(x,y)I_y(x,y)]\</p>
-<p>\end{align*}$$<br>
+<p>\end{align*}<br>
+$$<br>
 将最终的结果简写一下，就可以得到:<br>
 $$<br>
 E(u,v) = \Sigma_{x,y}w(x,y) (u^2I_x^2+v^2I_y^2+2uvI_xI_y)<br>
@@ -474,9 +476,9 @@ u\<br>
 v<br>
 \end{matrix}<br>
 \right]<br>
-$$<br>
-最后再来个特殊表示：<br>
-$$<br>
+$$</p>
+<p>最后再来个特殊表示：</p>
+<p>$$<br>
 E(u,v) =<br>
 \left[<br>
 \begin{matrix}<br>
@@ -490,14 +492,14 @@ u\<br>
 v<br>
 \end{matrix}<br>
 \right]<br>
-$$<br>
-那么问题来了，我们做了这么多东西，不就是用泰勒展开了一下Moravec的式子，然后用矩阵表示了一下么？我们到底是怎么消除其旋转不变性的呢？</p>
+$$</p>
+<p>那么问题来了，我们做了这么多东西，不就是用泰勒展开了一下Moravec的式子，然后用矩阵表示了一下么？我们到底是怎么消除其旋转不变性的呢？</p>
 <p>下面来到了这个算法的关键步骤：</p>
 <h5 id="相似对角化">相似对角化</h5>
 <p>我们看到上面的式子$E(u,v) =\left[\begin{matrix} u &amp; v \end{matrix}\right]M_I\left[\begin{matrix} u\v\end{matrix}\right]$我们使用矩阵相似对角化就可以得到下面的式子：<br>
-$$<br>
-E(u,v) = \left[    \begin{matrix}        u &amp; v    \end{matrix}\right]P\left[    \begin{matrix}        \lambda_1 &amp; 0\        0 &amp; \lambda_2\    \end{matrix}\right]P^{-1}\left[    \begin{matrix}        u\       	v    \end{matrix}\right]<br>
 $$</p>
+<p>E(u,v) = \left[    \begin{matrix}        u &amp; v    \end{matrix}\right]P\left[    \begin{matrix}        \lambda_1 &amp; 0\        0 &amp; \lambda_2\    \end{matrix}\right]P^{-1}\left[    \begin{matrix}        u\       	v    \end{matrix}\right]</p>
+<p>$$</p>
 <h6 id="什么是相似对角化？">什么是相似对角化？</h6>
 <p>那么在此之前，我们来复习一下到底什么是矩阵相似对角化呢？（我也忘了）</p>
 <ul>
