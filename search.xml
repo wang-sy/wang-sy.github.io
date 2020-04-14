@@ -255,8 +255,7 @@ F --> |是|G(结束)</pre>
 <p>y = 0.y_1y_2y_3...y_n</p>
 <p>$$</p>
 <p>我们可以将<span class="math inline">\(x·y\)</span>表示成下面的式子：</p>
-<p>$$</p>
-<p><span class="math display">\[\begin{align}
+<p>$$ <span class="math display">\[\begin{align}
 
     \begin{array}
 
@@ -266,8 +265,7 @@ F --> |是|G(结束)</pre>
 
     \end{array}
 
-\end{align}\]</span></p>
-<p>$$</p>
+\end{align}\]</span> $$</p>
 <p>据此我们可以得到一个通项公式:</p>
 <p>$$</p>
 <p><span class="math display">\[\begin{align}
@@ -377,9 +375,9 @@ G --> |否,小于33次|B</pre>
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -1529,9 +1527,9 @@ B^{-1}b\\
         <category>最优化技术</category>
       </categories>
       <tags>
+        <tag>最优化技术</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>最优化技术</tag>
       </tags>
   </entry>
   <entry>
@@ -1625,9 +1623,9 @@ B^{-1}b\\
         <category>最优化技术</category>
       </categories>
       <tags>
+        <tag>最优化技术</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>最优化技术</tag>
       </tags>
   </entry>
   <entry>
@@ -1723,9 +1721,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -2138,9 +2136,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -2505,9 +2503,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
