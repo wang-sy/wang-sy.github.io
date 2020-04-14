@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="最优化技术——单纯形法说明这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。 单纯形法的流程介绍 直观的去看这个流程，有一点点像前面的一些函数的优化方法。但是在枚举的过程中，有一些问题值得关注：  枚举的起点？ 如何判断当前已经是最优解了？ 如何在当前解的前提下找到一个更好的解？">
+<meta name="description" content="最优化技术——单纯形法 说明 这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。 单纯形法的流程介绍  直观的去看这个流程，有一点点像前面的一些函数的优化方法。但是在枚举的过程中，有一些问题值得关注：  枚举的起点？ 如何判断当前已经是最优解了？ 如何在当前解的前提下找到一个更好的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最优化技术——单纯形法">
 <meta property="og:url" content="http://yoursite.com/2020/04/03/%E6%9C%80%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E2%80%94%E2%80%94%E5%8D%95%E7%BA%AF%E5%BD%A2%E6%B3%95/index.html">
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
-<meta property="og:description" content="最优化技术——单纯形法说明这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。 单纯形法的流程介绍 直观的去看这个流程，有一点点像前面的一些函数的优化方法。但是在枚举的过程中，有一些问题值得关注：  枚举的起点？ 如何判断当前已经是最优解了？ 如何在当前解的前提下找到一个更好的解？">
+<meta property="og:description" content="最优化技术——单纯形法 说明 这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。 单纯形法的流程介绍  直观的去看这个流程，有一点点像前面的一些函数的优化方法。但是在枚举的过程中，有一些问题值得关注：  枚举的起点？ 如何判断当前已经是最优解了？ 如何在当前解的前提下找到一个更好的">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200402192453767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200402192500440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200402192511691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
@@ -386,31 +386,42 @@
       
 
       
-        <h1 id="最优化技术——单纯形法"><a href="#最优化技术——单纯形法" class="headerlink" title="最优化技术——单纯形法"></a>最优化技术——单纯形法</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。</p>
-<h2 id="单纯形法的流程介绍"><a href="#单纯形法的流程介绍" class="headerlink" title="单纯形法的流程介绍"></a>单纯形法的流程介绍</h2><p><img src="https://img-blog.csdnimg.cn/20200402192453767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+        <h1>最优化技术——单纯形法</h1>
+<h2 id="说明">说明</h2>
+<p>这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。</p>
+<h2 id="单纯形法的流程介绍">单纯形法的流程介绍</h2>
+<p><img src="https://img-blog.csdnimg.cn/20200402192453767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>直观的去看这个流程，有一点点像前面的一些函数的优化方法。但是在枚举的过程中，有一些问题值得关注：</p>
 <ul>
 <li>枚举的起点？</li>
 <li>如何判断当前已经是最优解了？</li>
 <li>如何在当前解的前提下找到一个更好的解？</li>
 </ul>
-<h2 id="单纯形法的迭代原理"><a href="#单纯形法的迭代原理" class="headerlink" title="单纯形法的迭代原理"></a>单纯形法的迭代原理</h2><p>通过一个例子来讲解单纯形法的基本原理</p>
+<h2 id="单纯形法的迭代原理">单纯形法的迭代原理</h2>
+<p>通过一个例子来讲解单纯形法的基本原理</p>
 <p>我们这样一个线性规划问题：</p>
 <p><img src="https://img-blog.csdnimg.cn/20200402192500440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>因为这里主要讨论单纯形法，所以我们不再纠结怎么化成标准型。</p>
 <ol>
-<li><p>选择初始基，确定基本可行解</p>
+<li>
+<p>选择初始基，确定基本可行解</p>
 <p>这里使用的是观察法(我：？？？)，观察系数矩阵中是否含有现成的单位阵，如果有的话就直接用现成的单位阵作为基。</p>
-<p>在这里我们选定的基变量为：<script type="math/tex">(x_3,x_4,x_5)</script></p>
-<p>选定的基矩阵为单位矩阵<script type="math/tex">I_3</script></p>
+<p>在这里我们选定的基变量为：$$(x_3,x_4,x_5)$$</p>
+<p>选定的基矩阵为单位矩阵$$I_3$$</p>
 <p>找到的基本可行解：</p>
-<script type="math/tex; mode=display">\left[ \begin{matrix}x_B & x_N \end{matrix} \right]  = \left[ \begin{matrix}B^{-1}b\ 0 \end{matrix} \right]</script><p>即：<script type="math/tex">x_1,x_2,x_3,x_4,x_5 = 0,0,8,16,12</script></p>
-<p>Q:为什么要找单位阵? </p>
+<p>$$\left[ \begin{matrix}x_B &amp; x_N \end{matrix} \right]  = \left[ \begin{matrix}B^{-1}b\ 0 \end{matrix} \right]$$</p>
+<p>即：$$x_1,x_2,x_3,x_4,x_5 = 0,0,8,16,12$$</p>
+<p>Q:为什么要找单位阵?</p>
 <p>A:我们都学过《线性代数》，线代告诉我们，一个矩阵能够被化作单位矩阵和这个矩阵可逆是等价的，有根据上一节讲的，在求解过程中需要对基去逆，所以综上所述，需要找一个单位阵/可以化成单位阵的。</p>
 </li>
-<li><p>判断当前解是否为最优解</p>
-<p>将基变量使用非基变量表示，使用非基变量表示目标函数。  </p>
-<script type="math/tex; mode=display">x_3 = 8 - x_1 - 2x_2</script><script type="math/tex; mode=display">x_4 = 16 - 4x_1</script><script type="math/tex; mode=display">x_5 = 12 - 4x_2</script><script type="math/tex; mode=display">Z = 2x_1 +3x_2</script><p>我们的非基变量向上增加，目标函数<script type="math/tex">Z</script>的值也是增加的，所以说现在的基本可行解的取值不是最优的。那么什么时候它的取值才是最优的呢？</p>
+<li>
+<p>判断当前解是否为最优解</p>
+<p>将基变量使用非基变量表示，使用非基变量表示目标函数。</p>
+<p>$$ x_3 = 8 - x_1 - 2x_2$$</p>
+<p>$$ x_4 = 16 - 4x_1$$</p>
+<p>$$x_5 = 12 - 4x_2$$</p>
+<p>$$Z = 2x_1 +3x_2$$</p>
+<p>我们的非基变量向上增加，目标函数$$Z$$的值也是增加的，所以说现在的基本可行解的取值不是最优的。那么什么时候它的取值才是最优的呢？</p>
 <p>当非基变量的值增加，而目标函数的值不增加的时候，就是最优的。</p>
 <p>也就是说当目标函数中的系数也就是检验数都小于等于0时，就是最优解，这里包括两种情况：</p>
 <ul>
@@ -418,41 +429,59 @@
 <li>检验数为1：是唯一的最优解</li>
 </ul>
 </li>
-<li><p>如何转到下一个基本可行解</p>
+<li>
+<p>如何转到下一个基本可行解</p>
 <p>回到我们的目标函数：</p>
-<script type="math/tex; mode=display">Z = 2x_1 + 3 x_2</script><p>从这个目标函数中我们可以看出，$x_2$对目标函数的贡献比$x_1$大。要让$x_2$的取值从0变成正值，所以$x_2$从非基变量转为基变量，称作<strong>进基变量</strong>。</p>
+<p>$$Z = 2x_1 + 3 x_2$$</p>
+<p>从这个目标函数中我们可以看出，$x_2$对目标函数的贡献比$x_1$大。要让$x_2$的取值从0变成正值，所以$x_2$从非基变量转为基变量，称作<strong>进基变量</strong>。</p>
 <p>这里就有一个问题，有一个变量从非基变量变成基变量，就意味着会有一个基变量变成非基变量，这个变成非基变量的变量叫做<strong>离基变量</strong>。</p>
 <p><strong>离基变量的选择：</strong></p>
 <p>这里我们需要回到用非基变量表示基变量的那一步：</p>
-<script type="math/tex; mode=display">x_3 = 8 - x_1 - 2x_2</script><script type="math/tex; mode=display">x_4 = 16 - 4x_1</script><script type="math/tex; mode=display">x_5 = 12 - 4x_2</script><p>那么在挑选离基变量的时候，我们将收敛的最快的（当进基变量增大时，最先到0的）拿出去。</p>
+<p>$$ x_3 = 8 - x_1 - 2x_2$$</p>
+<p>$$ x_4 = 16 - 4x_1$$</p>
+<p>$$x_5 = 12 - 4x_2$$</p>
+<p>那么在挑选离基变量的时候，我们将收敛的最快的（当进基变量增大时，最先到0的）拿出去。</p>
 <p>按照这个方法，我们新的基变量是$(x_2,x_3,x_4)$，非基变量是：$(x_1,x_5)$</p>
 <p>然后再回到第一步开始检验，直到得到最优解为止。</p>
 </li>
 </ol>
-<h2 id="单纯形表"><a href="#单纯形表" class="headerlink" title="单纯形表"></a>单纯形表</h2><h3 id="单纯形表的构建"><a href="#单纯形表的构建" class="headerlink" title="单纯形表的构建"></a>单纯形表的构建</h3><p><img src="https://img-blog.csdnimg.cn/20200402192511691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="单纯形表">单纯形表</h2>
+<h3 id="单纯形表的构建">单纯形表的构建</h3>
+<p><img src="https://img-blog.csdnimg.cn/20200402192511691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>这里我们不再关注怎么加松弛变量之类的问题了</p>
-<p><img src="https://img-blog.csdnimg.cn/20200402192518476.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>单纯形表中：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200402192518476.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+单纯形表中：</p>
 <ul>
-<li><p>$X_B$：表示当前的基变量，初始挑选单位阵为初始基，构成向量B</p>
+<li>
+<p>$X_B$：表示当前的基变量，初始挑选单位阵为初始基，构成向量B</p>
 </li>
-<li><p>$C_B$：代表当前基变量在目标函数中的系数向量</p>
+<li>
+<p>$C_B$：代表当前基变量在目标函数中的系数向量</p>
 </li>
-<li><p>$b_j$：代表约束条件的右端的b值</p>
+<li>
+<p>$b_j$：代表约束条件的右端的b值</p>
 </li>
-<li><p>$c_j$：代表目标函数的系数，在这里<script type="math/tex">c= （3，4，0，0）</script></p>
+<li>
+<p>$c_j$：代表目标函数的系数，在这里$$c= （3，4，0，0）$$</p>
 </li>
-<li><p>$x_1,x_2…$下面的数字：约束条件的系数矩阵</p>
+<li>
+<p>$x_1,x_2…$下面的数字：约束条件的系数矩阵</p>
 </li>
-<li><p>$\sigma<em>j$：检验数，$$\sigma_j = c_j-\Sigma c_ia</em>{ij}$$ ，这里的$a_{ij}$是系数矩阵</p>
+<li>
+<p>$\sigma_j$：检验数，$$\sigma_j = c_j-\Sigma c_ia_{ij}$$ ，这里的$a_{ij}$是系数矩阵</p>
 <p>以$\sigma_1$为例，$\sigma_1 = 3-( 2<em>0+1</em>0)=3$</p>
 </li>
 </ul>
-<h3 id="找到入基变量"><a href="#找到入基变量" class="headerlink" title="找到入基变量"></a>找到入基变量</h3><p>方法：找检验数最大的，再上一张表里面，$x_2$的检验数最大，所以将作为入基变量</p>
-<h3 id="找到出基变量"><a href="#找到出基变量" class="headerlink" title="找到出基变量"></a>找到出基变量</h3><p>方法：找$\theta$，我们顺着上面来，我们现在确定了$x_2$就是所谓的入基变量，下面，开始计算：</p>
-<script type="math/tex; mode=display">\theta =  \frac{b_j}{x_2}</script><p>在上面的表中，<script type="math/tex">\theta_3= 40,\theta_4 = 10</script></p>
+<h3 id="找到入基变量">找到入基变量</h3>
+<p>方法：找检验数最大的，再上一张表里面，$x_2$的检验数最大，所以将作为入基变量</p>
+<h3 id="找到出基变量">找到出基变量</h3>
+<p>方法：找$\theta$，我们顺着上面来，我们现在确定了$x_2$就是所谓的入基变量，下面，开始计算：</p>
+<p>$$ \theta =  \frac{b_j}{x_2}  $$</p>
+<p>在上面的表中，$$\theta_3= 40,\theta_4 = 10 $$</p>
 <p>值得注意的是：当$x_2$的值为负值的时候，就不需要求$\theta$了。</p>
 <p>到此为止，谁的$\theta$值越小就选谁当出基变量</p>
-<h3 id="总体操作"><a href="#总体操作" class="headerlink" title="总体操作"></a>总体操作</h3><p>找到入基变量，出基变量之后，列一张新的单纯形表，并且以此往复即可。当所有非基变量都为负数或零时停止，这时最优解就是：基变量取得到的值，非基变量取0.</p>
+<h3 id="总体操作">总体操作</h3>
+<p>找到入基变量，出基变量之后，列一张新的单纯形表，并且以此往复即可。当所有非基变量都为负数或零时停止，这时最优解就是：基变量取得到的值，非基变量取0.</p>
 
       
     </div>
@@ -651,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最优化技术——单纯形法"><span class="nav-number">1.</span> <span class="nav-text">最优化技术——单纯形法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单纯形法的流程介绍"><span class="nav-number">1.2.</span> <span class="nav-text">单纯形法的流程介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单纯形法的迭代原理"><span class="nav-number">1.3.</span> <span class="nav-text">单纯形法的迭代原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单纯形表"><span class="nav-number">1.4.</span> <span class="nav-text">单纯形表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单纯形表的构建"><span class="nav-number">1.4.1.</span> <span class="nav-text">单纯形表的构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到入基变量"><span class="nav-number">1.4.2.</span> <span class="nav-text">找到入基变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到出基变量"><span class="nav-number">1.4.3.</span> <span class="nav-text">找到出基变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总体操作"><span class="nav-number">1.4.4.</span> <span class="nav-text">总体操作</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">最优化技术——单纯形法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单纯形法的流程介绍"><span class="nav-number">1.2.</span> <span class="nav-text">单纯形法的流程介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单纯形法的迭代原理"><span class="nav-number">1.3.</span> <span class="nav-text">单纯形法的迭代原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单纯形表"><span class="nav-number">1.4.</span> <span class="nav-text">单纯形表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单纯形表的构建"><span class="nav-number">1.4.1.</span> <span class="nav-text">单纯形表的构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到入基变量"><span class="nav-number">1.4.2.</span> <span class="nav-text">找到入基变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到出基变量"><span class="nav-number">1.4.3.</span> <span class="nav-text">找到出基变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总体操作"><span class="nav-number">1.4.4.</span> <span class="nav-text">总体操作</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

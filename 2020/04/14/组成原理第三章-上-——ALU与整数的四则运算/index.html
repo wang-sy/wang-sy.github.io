@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="计算机组成原理—第三章参考资料 《计算机组成与设计：硬件&#x2F;软件接口》——机械工业出版社  《Arithmetic for Computers》——Jiang Zhong   授课内容 —— 吴长泽老师   ALU的构建ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子 逻辑的与、或 可以看到，这里有两个输入，a、b，他们分别连接到了一个与门和一个或门，他们分别与和或的结">
+<meta name="description" content="计算机组成原理—第三章 参考资料   《计算机组成与设计：硬件&#x2F;软件接口》——机械工业出版社   《Arithmetic for Computers》——Jiang Zhong   授课内容 —— 吴长泽老师   ALU的构建 ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子 逻辑的与、或  可以看到，这里有两个输入，a、b，他们分别连接到了一个与门和一个或门，他们分">
 <meta property="og:type" content="article">
 <meta property="og:title" content="组成原理第三章(上)——ALU与整数的四则运算">
 <meta property="og:url" content="http://yoursite.com/2020/04/14/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%B8%8A-%E2%80%94%E2%80%94ALU%E4%B8%8E%E6%95%B4%E6%95%B0%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97/index.html">
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
-<meta property="og:description" content="计算机组成原理—第三章参考资料 《计算机组成与设计：硬件&#x2F;软件接口》——机械工业出版社  《Arithmetic for Computers》——Jiang Zhong   授课内容 —— 吴长泽老师   ALU的构建ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子 逻辑的与、或 可以看到，这里有两个输入，a、b，他们分别连接到了一个与门和一个或门，他们分别与和或的结">
+<meta property="og:description" content="计算机组成原理—第三章 参考资料   《计算机组成与设计：硬件&#x2F;软件接口》——机械工业出版社   《Arithmetic for Computers》——Jiang Zhong   授课内容 —— 吴长泽老师   ALU的构建 ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子 逻辑的与、或  可以看到，这里有两个输入，a、b，他们分别连接到了一个与门和一个或门，他们分">
 <meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413025641380.png">
 <meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413030612265.png">
 <meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413030758347.png">
@@ -409,18 +409,26 @@
       
 
       
-        <h1 id="计算机组成原理—第三章"><a href="#计算机组成原理—第三章" class="headerlink" title="计算机组成原理—第三章"></a>计算机组成原理—第三章</h1><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><p>《计算机组成与设计：硬件/软件接口》——机械工业出版社</p>
+        <h1>计算机组成原理—第三章</h1>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>
+<p>《计算机组成与设计：硬件/软件接口》——机械工业出版社</p>
 </li>
-<li><p>《Arithmetic for Computers》——Jiang Zhong </p>
+<li>
+<p>《Arithmetic for Computers》——Jiang Zhong</p>
 </li>
-<li><p>授课内容 —— 吴长泽老师</p>
+<li>
+<p>授课内容 —— 吴长泽老师</p>
 </li>
 </ul>
-<h2 id="ALU的构建"><a href="#ALU的构建" class="headerlink" title="ALU的构建"></a>ALU的构建</h2><p>ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子</p>
-<h3 id="逻辑的与、或"><a href="#逻辑的与、或" class="headerlink" title="逻辑的与、或"></a>逻辑的与、或</h3><p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413025641380.png" alt="image-20200413025641380" style="zoom:50%;" /></p>
+<h2 id="ALU的构建">ALU的构建</h2>
+<p>ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子</p>
+<h3 id="逻辑的与、或">逻辑的与、或</h3>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413025641380.png" alt="image-20200413025641380" style="zoom:50%;" />
 <p>可以看到，这里有两个输入，a、b，他们分别连接到了一个与门和一个或门，他们分别与和或的结果又连接到了一个多路选择器上，Select用于控制到底是做与运算还是做或运算，Select = 0时，做与，Select = 1的时候我们就做或运算。</p>
-<h3 id="回归正题，加法——半加器"><a href="#回归正题，加法——半加器" class="headerlink" title="回归正题，加法——半加器"></a>回归正题，加法——半加器</h3><p>为了达到计算的目的，我们需要构建最基础的运算单元，那就是半加器。半加器是什么？半加器可以接收两个相加的数，然后给出他们相加的和以及他们的进位，但是他没有接受低位的进位，所以它叫半加器。</p>
+<h3 id="回归正题，加法——半加器">回归正题，加法——半加器</h3>
+<p>为了达到计算的目的，我们需要构建最基础的运算单元，那就是半加器。半加器是什么？半加器可以接收两个相加的数，然后给出他们相加的和以及他们的进位，但是他没有接受低位的进位，所以它叫半加器。</p>
 <pre class="mermaid">
 graph LR
 
@@ -431,178 +439,221 @@ b --> halfAdder
 halfAdder --> sum
 
 halfAdder --> carry</pre>
-
-
-
-
-
-
-
 <p>我们先来构建一个真值表:</p>
 <p>| a    | b    | result | carry |</p>
-<p>| —— | —— | ——— | ——- |</p>
+<p>| ---- | ---- | ------ | ----- |</p>
 <p>| 0    | 0    | 0      | 0     |</p>
 <p>| 0    | 1    | 1      | 0     |</p>
 <p>| 1    | 0    | 1      | 0     |</p>
 <p>| 1    | 1    | 0      | 1     |</p>
 <p>根据真值表可以构建出表达式：</p>
-<script type="math/tex; mode=display">
-
-Sum = \overline{a}b +a\overline{b}\\
-
-Carry = ab</script><p>根据表达式可以构建出电路：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413030612265.png" alt="image-20200413030612265" style="zoom:50%;" /></p>
-<h3 id="全加器"><a href="#全加器" class="headerlink" title="全加器"></a>全加器</h3><h4 id="真值表"><a href="#真值表" class="headerlink" title="真值表"></a>真值表</h4><p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413030758347.png" alt="image-20200413030758347" style="zoom:67%;" /></p>
-<h4 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h4><script type="math/tex; mode=display">
-
-Sum = A\ xor\ B\ xor\ CarryIn \\
-
-CarryOut = B\ CarryIn + A\ CarryIn + A\ B</script><h4 id="电路"><a href="#电路" class="headerlink" title="电路"></a>电路</h4><p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413031042132.png" alt="image-20200413031042132" style="zoom:50%;" /></p>
+<p>$$</p>
+<p>Sum = \overline{a}b +a\overline{b}\</p>
+<p>Carry = ab</p>
+<p>$$</p>
+<p>根据表达式可以构建出电路：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413030612265.png" alt="image-20200413030612265" style="zoom:50%;" />
+<h3 id="全加器">全加器</h3>
+<h4 id="真值表">真值表</h4>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413030758347.png" alt="image-20200413030758347" style="zoom:67%;" />
+<h4 id="表达式">表达式</h4>
+<p>$$</p>
+<p>Sum = A\ xor\ B\ xor\ CarryIn \</p>
+<p>CarryOut = B\ CarryIn + A\ CarryIn + A\ B</p>
+<p>$$</p>
+<h4 id="电路">电路</h4>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413031042132.png" alt="image-20200413031042132" style="zoom:50%;" />
 <p>有了加法器之后，我们就可以做很多的运算了，以加法为例，只需要将很多全加器串在一起就可以构成一个多位整数的加法器。</p>
-<h3 id="1-bit-ALU"><a href="#1-bit-ALU" class="headerlink" title="1 bit ALU"></a>1 bit ALU</h3><p>有了上面的这些积累之后，我们就可以实现一个有以下功能的ALU:</p>
+<h3 id="1-bit-ALU">1 bit ALU</h3>
+<p>有了上面的这些积累之后，我们就可以实现一个有以下功能的ALU:</p>
 <ul>
-<li><p>AND</p>
+<li>
+<p>AND</p>
 </li>
-<li><p>OR</p>
+<li>
+<p>OR</p>
 </li>
-<li><p>ADD</p>
+<li>
+<p>ADD</p>
 </li>
 </ul>
 <p>其实实现的方法也非常简单，就是对刚才的多路选择器做一个拓展，把全加器加进来就可以了。</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413031641887.png" alt="image-20200413031641887" style="zoom: 50%;" /></p>
-<h3 id="Basic-32-bit-ALU"><a href="#Basic-32-bit-ALU" class="headerlink" title="Basic 32 bit ALU"></a>Basic 32 bit ALU</h3><p>那么有了一个1 bit ALU之后，就可以把32个1 bit ALU级联在一起，就可以形成一个32位的ALU</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413031830822.png" alt="image-20200413031830822" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413031641887.png" alt="image-20200413031641887" style="zoom: 50%;" />
+<h3 id="Basic-32-bit-ALU">Basic 32 bit ALU</h3>
+<p>那么有了一个1 bit ALU之后，就可以把32个1 bit ALU级联在一起，就可以形成一个32位的ALU</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413031830822.png" alt="image-20200413031830822" style="zoom:50%;" />
 <p>但是值得注意的是，级联的运算器的数目越多，它的体积、成本以及出错概率都会相应的上升，他的可靠性、成本都会有所下降，所以往往不会以1bitALU为基础进行级联，而是会以多位的ALU为基础在进行级联，这样能够降低成本、增加准确率。</p>
-<h3 id="扩展1-bit-ALU"><a href="#扩展1-bit-ALU" class="headerlink" title="扩展1 bit ALU"></a>扩展1 bit ALU</h3><p>我们还希望我们的这个ALU可以完成减法操作，那么应该怎么做呢？我们都知道，假如说要完成$a-b$的操作，那么实际上完成的是$a$加上$b$的补码。$b$的补码就是对$b$进行取反，然后加一。那么这一系列的操作反应在电路中实际上就是：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413032402505.png" alt="image-20200413032402505" style="zoom: 50%;" /></p>
+<h3 id="扩展1-bit-ALU">扩展1 bit ALU</h3>
+<p>我们还希望我们的这个ALU可以完成减法操作，那么应该怎么做呢？我们都知道，假如说要完成$a-b$的操作，那么实际上完成的是$a$加上$b$的补码。$b$的补码就是对$b$进行取反，然后加一。那么这一系列的操作反应在电路中实际上就是：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413032402505.png" alt="image-20200413032402505" style="zoom: 50%;" />
 <p>如果我们要进行减法运算，那么我们就需要将$Binvert$设置为1这样就完成了对b的取反操作，同时，我们需要将最低位的$Carryin$的值改为1，就可以完成上面说的加一的操作。这样我们在没有添加过多的逻辑单元的情况下就完成了从加法器到加法、减法器的扩展。</p>
 <p>那么经过扩展后，我们的功能有：</p>
 <ul>
-<li><p>AND</p>
+<li>
+<p>AND</p>
 </li>
-<li><p>OR</p>
+<li>
+<p>OR</p>
 </li>
-<li><p>ADD</p>
+<li>
+<p>ADD</p>
 </li>
-<li><p>Subtract</p>
+<li>
+<p>Subtract</p>
 </li>
 </ul>
 <p>我们发现缺少了比较操作：</p>
 <ul>
-<li><p>Slt rd, rs, rt; 也就是比较功能</p>
+<li>
+<p>Slt rd, rs, rt; 也就是比较功能</p>
 </li>
-<li><p>如果rs &lt; rt， rd = 1 否则 为0</p>
+<li>
+<p>如果rs &lt; rt， rd = 1 否则 为0</p>
 </li>
 </ul>
 <p>那么怎么去做呢？我们可以是用减法来完成这一功能，我们可以做$rs - rt$的操作，如果结果是负数，那么就表示$rs&lt;rt$。接下来看电路：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413033818472.png" alt="image-20200413033818472" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413033818472.png" alt="image-20200413033818472" style="zoom:50%;" />
 <p>这里的less是负责接收高位信息的，因为我们在判断两个多位整数的大小的时候，是不能通过低位去判断的，所以我们需要这种机制来进行。大家觉得没讲透的话可以继续往下看，一会会讲到级联后的这个，到时候会好理解一些。</p>
 <p>那么除了设置比较之外，我们还需要去做一个溢出探测。溢出是指有限的符号位无法表示我们的结果了。溢出是通过最高位和符号位进行判断。</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413034346563.png" alt="image-20200413034346563" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413034346563.png" alt="image-20200413034346563" style="zoom:50%;" />
 <p>这里也是先挖个坑，等下再来填。</p>
-<h3 id="Compute-ALU"><a href="#Compute-ALU" class="headerlink" title="Compute ALU"></a>Compute ALU</h3><p>输入：</p>
+<h3 id="Compute-ALU">Compute ALU</h3>
+<p>输入：</p>
 <ul>
-<li><p>A</p>
+<li>
+<p>A</p>
 </li>
-<li><p>B</p>
+<li>
+<p>B</p>
 </li>
 </ul>
 <p>控制量：</p>
 <ul>
-<li><p>Binvert：是否反转</p>
+<li>
+<p>Binvert：是否反转</p>
 </li>
-<li><p>Operation：选择做什么运算的，其实就是那个选择器</p>
+<li>
+<p>Operation：选择做什么运算的，其实就是那个选择器</p>
 </li>
-<li><p>Carryin：上一个数的进位</p>
+<li>
+<p>Carryin：上一个数的进位</p>
 </li>
 </ul>
 <p>输出：</p>
 <ul>
-<li><p>Result</p>
+<li>
+<p>Result</p>
 </li>
-<li><p>Overflow</p>
+<li>
+<p>Overflow</p>
 </li>
 </ul>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413034609661.png" alt="image-20200413034609661" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413034609661.png" alt="image-20200413034609661" style="zoom:50%;" />
 <p>哒哒哒敲黑板开始填坑了：观察这个电路我们可以发现，高位的结果连接到了最低位的Less上，如果$Operation$是加法而且$Binvert$是1也就是进行反转，而且$Carryin$是1的话，就代表着我们在做A-B的操作。A-B后，如果高位是1的话，那么就说明A&gt;B，否则就说明$A \leq B$，这样就完成了简单的判断大小的操作。</p>
 <p>如果到这里你还是看不懂，那么不慌，我们详细的讲一下，假如说我们现在有两个4位有符号数A = 3,B=4</p>
 <p>我们要对比它们的大小，那么就需要先进行A-B的操作，为执行该操作，我们先对B进行取补码的操作：</p>
 <ul>
-<li><p>B = $0100_2$</p>
+<li>
+<p>B = $0100_2$</p>
 </li>
-<li><p>$B_补=not(0100) + 0001 = 1011+0001=1100$</p>
+<li>
+<p>$B_补=not(0100) + 0001 = 1011+0001=1100$</p>
 </li>
-<li><p>$A-B = A+B_补 = 0011+1100 = 1111$最高位为1，说明A&lt;B</p>
+<li>
+<p>$A-B = A+B_补 = 0011+1100 = 1111$最高位为1，说明A&lt;B</p>
 </li>
 </ul>
 <p>接下来看第二种情况，$A=4,B=3$，判断A、B大小</p>
 <ul>
-<li><p>B = $0011_2$</p>
+<li>
+<p>B = $0011_2$</p>
 </li>
-<li><p>$B_补=not(0011_2) + 0001_2 = 1100_2+0001_2=1101_2$</p>
+<li>
+<p>$B_补=not(0011_2) + 0001_2 = 1100_2+0001_2=1101_2$</p>
 </li>
-<li><p>$A-B = A+B_补 = 1101_2 + 0100_2 = 0001_2$，最高位为0，说明$A \not &lt; B$</p>
+<li>
+<p>$A-B = A+B_补 = 1101_2 + 0100_2 = 0001_2$，最高位为0，说明$A \not &lt; B$</p>
 </li>
 </ul>
 <p>相信大家一定看懂了，如果看不懂，那就把上面的部分再看一遍，还是看不懂建议再去复习一下二进制表示部分的内容。接下来还需要增加一个功能，因为我们时常需要判断相加的结果是否为0，所以我们想要添加一个判断是否为0的门，原理也很简单，如果每一位都是0的话，那么结果也一定为0，把人话翻译成机器语言就是所有Result进行或运算，如果是0的话那么就说明都是0，反之就说明不是0，那么对结果取反后，如果不是0那么就输出1，反之就是0，电路如下。</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413051637383.png" alt="image-20200413051637383" style="zoom: 50%;" /></p>
-<h3 id="ALU-symbol-amp-control"><a href="#ALU-symbol-amp-control" class="headerlink" title="ALU symbol &amp; control"></a>ALU symbol &amp; control</h3><p>我们将上面的级联电路进行封装，就得到了一个ALU，示意图如下：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413051923724.png" alt="image-20200413051923724" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413051637383.png" alt="image-20200413051637383" style="zoom: 50%;" />
+<h3 id="ALU-symbol-control">ALU symbol &amp; control</h3>
+<p>我们将上面的级联电路进行封装，就得到了一个ALU，示意图如下：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413051923724.png" alt="image-20200413051923724" style="zoom:50%;" />
 <p>ALU operation的值与其对应的操作如下:</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413051957833.png" alt="image-20200413051957833" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413051957833.png" alt="image-20200413051957833" style="zoom:50%;" />
 <p>ALU的构建部分到此结束了。</p>
-<h2 id="整数加减法"><a href="#整数加减法" class="headerlink" title="整数加减法"></a>整数加减法</h2><h3 id="数的表示范围："><a href="#数的表示范围：" class="headerlink" title="数的表示范围："></a>数的表示范围：</h3><p>有一个n位的二进制整数</p>
+<h2 id="整数加减法">整数加减法</h2>
+<h3 id="数的表示范围：">数的表示范围：</h3>
+<p>有一个n位的二进制整数</p>
 <ul>
-<li><p>有符号:</p>
+<li>
+<p>有符号:</p>
 <ul>
-<li><p>正数：$2^{n-1}-1$</p>
+<li>
+<p>正数：$2^{n-1}-1$</p>
 </li>
-<li><p>负数：$2^{n-1}$</p>
+<li>
+<p>负数：$2^{n-1}$</p>
 </li>
 </ul>
 </li>
-<li><p>无符号：$2^n-1$</p>
+<li>
+<p>无符号：$2^n-1$</p>
 </li>
 </ul>
 <p>什么样子的数进行运算会溢出呢？</p>
 <ul>
-<li><p>正数负数相加：不会发生溢出</p>
+<li>
+<p>正数负数相加：不会发生溢出</p>
 </li>
-<li><p>两个正数相加：可能溢出</p>
+<li>
+<p>两个正数相加：可能溢出</p>
 </li>
-<li><p>两个负数相加：可能溢出</p>
+<li>
+<p>两个负数相加：可能溢出</p>
 </li>
 </ul>
-<h3 id="整数的减法"><a href="#整数的减法" class="headerlink" title="整数的减法"></a>整数的减法</h3><p>很简单，我们上面也有所提及，$A-B=A+B_补$，在这里我们主要讨论在什么情况下会发生溢出。</p>
-<h4 id="什么时候溢出？"><a href="#什么时候溢出？" class="headerlink" title="什么时候溢出？"></a>什么时候溢出？</h4><ul>
-<li><p>两个正数相减或两个负数相减：不会溢出，因为结果的绝对值一定比两者绝对值一定比两者绝对值的最大值小，人话听不懂，但是用数学语言描述就看得懂了：</p>
-<script type="math/tex; mode=display">
-
-if (A\geq0 \and B\geq0)\or(A\leq0 \and B\leq0):\\
-
-|A-B|\leq max(|A|,|B|)</script></li>
-</ul>
+<h3 id="整数的减法">整数的减法</h3>
+<p>很简单，我们上面也有所提及，$A-B=A+B_补$，在这里我们主要讨论在什么情况下会发生溢出。</p>
+<h4 id="什么时候溢出？">什么时候溢出？</h4>
 <ul>
-<li>正数减负数：可能发生溢出</li>
+<li>
+<p>两个正数相减或两个负数相减：不会溢出，因为结果的绝对值一定比两者绝对值一定比两者绝对值的最大值小，人话听不懂，但是用数学语言描述就看得懂了：</p>
+<p>$$</p>
+<p>if (A\geq0 \and B\geq0)\or(A\leq0 \and B\leq0):\</p>
+<p>|A-B|\leq max(|A|,|B|)</p>
+<p>$$</p>
+</li>
+<li>
+<p>正数减负数：可能发生溢出</p>
+</li>
+<li>
+<p>负数减正数：可能发生溢出</p>
+</li>
 </ul>
-<ul>
-<li>负数减正数：可能发生溢出</li>
-</ul>
-<h4 id="溢出处理"><a href="#溢出处理" class="headerlink" title="溢出处理"></a>溢出处理</h4><p>发生溢出的时候，通常的做法是：将PC的值存到EPC中，其中PC的值代表当前指令，EPC代表发生错误的指令，执行这步操作，实际上在干的事情就是：记录下来，这个语句出错了。</p>
+<h4 id="溢出处理">溢出处理</h4>
+<p>发生溢出的时候，通常的做法是：将PC的值存到EPC中，其中PC的值代表当前指令，EPC代表发生错误的指令，执行这步操作，实际上在干的事情就是：记录下来，这个语句出错了。</p>
 <p>$mfc0$指令可以进行异常处理并且返回到当前指令继续执行。</p>
-<h3 id="加法器的速度问题"><a href="#加法器的速度问题" class="headerlink" title="加法器的速度问题"></a>加法器的速度问题</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>常用的方法是使用串行的处理方式，也就是先计算低位，然后从低位到高位依次计算，如下图所示：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413053913521.png" alt="image-20200413053913521" style="zoom: 33%;" /></p>
+<h3 id="加法器的速度问题">加法器的速度问题</h3>
+<h4 id="问题">问题</h4>
+<p>常用的方法是使用串行的处理方式，也就是先计算低位，然后从低位到高位依次计算，如下图所示：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413053913521.png" alt="image-20200413053913521" style="zoom: 33%;" />
 <p>这样计算的效率很低，这是由于后方的运算需要等待前方的进位完成才能够进行计算。如果我们能够预先知道上一位的进位的话，就可以极大地加快效率。</p>
-<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>我们可以将这个串行的电路改成一个两层的逻辑，这样可以极大的提升他的计算速度，但是这样的改动是有巨大的代价的，代价就是：需要很多的输入门，导致电路的体量很大。下面有一些解决方案：</p>
-<h5 id="超前进位加法器"><a href="#超前进位加法器" class="headerlink" title="超前进位加法器"></a>超前进位加法器</h5><p>核心思路：将需要进位的值和计算的值进行分离。</p>
-<script type="math/tex; mode=display">
-
-Generate : g_i  = a_i*b_i</script><script type="math/tex; mode=display">
-
-Propagate : p_i  = a_i \ xor \ b_i</script><p>我们先来看上面的两个符号，$Generate$代表当前位的结果，$Propagate$代表当前位的进位。我们很容易得到当前位的结果为$a_i\ xor\ b_i$，进位的结果是$a_i \and b_i$。</p>
+<h4 id="解决">解决</h4>
+<p>我们可以将这个串行的电路改成一个两层的逻辑，这样可以极大的提升他的计算速度，但是这样的改动是有巨大的代价的，代价就是：需要很多的输入门，导致电路的体量很大。下面有一些解决方案：</p>
+<h5 id="超前进位加法器">超前进位加法器</h5>
+<p>核心思路：将需要进位的值和计算的值进行分离。</p>
+<p>$$</p>
+<p>Generate : g_i  = a_i*b_i</p>
+<p>$$</p>
+<p>$$</p>
+<p>Propagate : p_i  = a_i \ xor \ b_i</p>
+<p>$$</p>
+<p>我们先来看上面的两个符号，$Generate$代表当前位的结果，$Propagate$代表当前位的进位。我们很容易得到当前位的结果为$a_i\ xor\ b_i$，进位的结果是$a_i \and b_i$。</p>
 <p>接下来我们再来关注一下上一位的进位和最终结果之间的关系，我们定义符号$C_i$表示来自上一位的进位</p>
 <p>| $a_i$ | $b_i$ | $c_i$ | C（进位） | S（当前位） |</p>
-<p>| ——- | ——- | ——- | ————- | —————- |</p>
+<p>| ----- | ----- | ----- | --------- | ----------- |</p>
 <p>| 0     | 0     | 0     | 0         | 0           |</p>
 <p>| 0     | 0     | 1     | 0         | 1           |</p>
 <p>| 0     | 1     | 0     | 0         | 1           |</p>
@@ -612,43 +663,49 @@ Propagate : p_i  = a_i \ xor \ b_i</script><p>我们先来看上面的两个符�
 <p>| 1     | 1     | 0     | 1         | 0           |</p>
 <p>| 1     | 1     | 1     | 1         | 0           |</p>
 <p>接下来我们来写一下这个表达式：</p>
-<script type="math/tex; mode=display">
+<p>$$</p>
+<p>\begin{align}</p>
+<pre><code>\begin{array}
 
-\begin{align}
+     CC &amp;= (c_i\and b_i\and not(a_i)) \or (a_i\and not(b_i)\and c_i)\or(a_i\and b_i\and not(c_i))\or (a_i\and b_i\and c_i)
 
-    \begin{array}
-
-         CC &= (c_i\and b_i\and not(a_i)) \or (a_i\and not(b_i)\and c_i)\or(a_i\and b_i\and not(c_i))\or (a_i\and b_i\and c_i)
-
-    \end{array}
-
-\end{align}</script><p>我们将这个表达式进行化简，就可以得到最终的结果：</p>
-<script type="math/tex; mode=display">
-
-C_0 = (a \  xor \ b )c + ab</script><p>计算过程如下( 写字烂，勿喷)，由于篇幅原因这里省略了很多中间步骤：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413063746627.png" alt="image-20200413063746627" style="zoom: 67%;" /></p>
+\end{array}
+</code></pre>
+<p>\end{align}</p>
+<p>$$</p>
+<p>我们将这个表达式进行化简，就可以得到最终的结果：</p>
+<p>$$</p>
+<p>C_0 = (a \  xor \ b )c + ab</p>
+<p>$$</p>
+<p>计算过程如下( 写字烂，勿喷)，由于篇幅原因这里省略了很多中间步骤：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413063746627.png" alt="image-20200413063746627" style="zoom: 67%;" />
 <p>根据这个过程我们可以构造出相应的全加器电路：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413063833244.png" alt="image-20200413063833244"  /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413063833244.png" alt="image-20200413063833244"  />
 <p>下面的图中给出了超前进位加法，在多位运算中的式子:</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064001556.png" alt="image-20200413064023371" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064001556.png" alt="image-20200413064023371" style="zoom:50%;" />
 <p>我们可以把原来串行的加法器拆分成四个一组，在每一组中进行超前进位加法，然后再将多个四位的超前进位加法器级联在一起，就可以达到使计算速度增加，但又不过度使用计算资源的效果。</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064201321.png" alt="image-20200413064201321" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064201321.png" alt="image-20200413064201321" style="zoom:50%;" />
 <p>下图所示的是一个四位的超前进位加法器：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064323970.png" alt="image-20200413064323970" style="zoom: 33%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064323970.png" alt="image-20200413064323970" style="zoom: 33%;" />
 <p>我们可以对他进行封装，并且进行级联即可获得更高位的快速加法器:</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064404843.png" alt="image-20200413064404843" style="zoom:50%;" /></p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064432856.png" alt="image-20200413064432856" style="zoom:50%;" /></p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064404843.png" alt="image-20200413064404843" style="zoom:50%;" />
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413064432856.png" alt="image-20200413064432856" style="zoom:50%;" />
 <p>我们对比两种方式：</p>
 <ul>
-<li>一、组内使用超前进位，组间串行：如上方左图所示。</li>
+<li>
+<p>一、组内使用超前进位，组间串行：如上方左图所示。</p>
+</li>
+<li>
+<p>二、组内使用超前进位，组间超前进位：如上方右图所示。</p>
+</li>
 </ul>
-<ul>
-<li>二、组内使用超前进位，组间超前进位：如上方右图所示。</li>
-</ul>
-<h3 id="多媒体中的饱和操作"><a href="#多媒体中的饱和操作" class="headerlink" title="多媒体中的饱和操作"></a>多媒体中的饱和操作</h3><p>当正向溢出时，值保留在最大可表示值。</p>
+<h3 id="多媒体中的饱和操作">多媒体中的饱和操作</h3>
+<p>当正向溢出时，值保留在最大可表示值。</p>
 <p>当反向溢出时，值保留在最小可表示值。</p>
-<h2 id="二进制乘法"><a href="#二进制乘法" class="headerlink" title="二进制乘法"></a>二进制乘法</h2><h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><p>二进制乘法和十进制乘法的运算是一样的，我们可以看一个例子：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413075433008.png" alt="image-20200413075433008" style="zoom:50%;" /></p>
+<h2 id="二进制乘法">二进制乘法</h2>
+<h3 id="整数">整数</h3>
+<p>二进制乘法和十进制乘法的运算是一样的，我们可以看一个例子：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413075433008.png" alt="image-20200413075433008" style="zoom:50%;" />
 <p>我们可以将这个过程用一个流程图来表示：</p>
 <pre class="mermaid">
 graph TD
@@ -668,61 +725,58 @@ E --> F{是否进行了32次?}
 F --> |否|B
 
 F --> |是|G(结束)</pre>
-
-
-
-
-
-
-
 <p>其中，被乘数左移一位，就相当于我们在使用竖式计算十进制乘法时，每过一位都要将新的得数向左移一位一样。而乘数向右移一位实际上就是更换将要检测的位数，这样就可以保证每次都检查最低位就可以了。</p>
-<h3 id="定点小数的乘法"><a href="#定点小数的乘法" class="headerlink" title="定点小数的乘法"></a>定点小数的乘法</h3><h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>假设有两个定点小数：</p>
-<script type="math/tex; mode=display">
+<h3 id="定点小数的乘法">定点小数的乘法</h3>
+<h4 id="方法">方法</h4>
+<p>假设有两个定点小数：</p>
+<p>$$</p>
+<p>x = 0.x_1x_2x_3…x_n\</p>
+<p>y = 0.y_1y_2y_3…y_n</p>
+<p>$$</p>
+<p>我们可以将$x·y$表示成下面的式子：</p>
+<p>$$</p>
+<p>\begin{align}</p>
+<pre><code>\begin{array}
 
-x = 0.x_1x_2x_3...x_n\\
+. x*y &amp;= x(2^{-1}y_1+2^{-2}y_2+...+2^{-n}y_n)\\
 
-y = 0.y_1y_2y_3...y_n</script><p>我们可以将$x·y$表示成下面的式子：</p>
-<script type="math/tex; mode=display">
+&amp; = 2^{-1}(y_1x+2^{-1}(y_2x+2^{-1}(…+2^{-1}(y_{n-1}x+2^{-1}(y_nx+0))…)))
 
-\begin{align}
+\end{array}
+</code></pre>
+<p>\end{align}</p>
+<p>$$</p>
+<p>据此我们可以得到一个通项公式:</p>
+<p>$$</p>
+<p>\begin{align}</p>
+<pre><code>\begin{array}
 
-    \begin{array}
+. z_0 &amp;=0\\
 
-    . x*y &= x(2^{-1}y_1+2^{-2}y_2+...+2^{-n}y_n)\\
+z_1 &amp;= 2^{-1}(y_nx+z_{0})\\
 
-    & = 2^{-1}(y_1x+2^{-1}(y_2x+2^{-1}(…+2^{-1}(y_{n-1}x+2^{-1}(y_nx+0))…)))
+z_2 &amp;= 2^{-1}(y_{n-1}x+z_{1})\\
 
-    \end{array}
+...\\
 
-\end{align}</script><p>据此我们可以得到一个通项公式:</p>
-<script type="math/tex; mode=display">
+z_i &amp;= 2^{-1}(y_{n-i+1}x+z_{i-1})\\
 
-\begin{align}
+...\\
 
-    \begin{array}
-
-    . z_0 &=0\\
-
-    z_1 &= 2^{-1}(y_nx+z_{0})\\
-
-    z_2 &= 2^{-1}(y_{n-1}x+z_{1})\\
-
-    ...\\
-
-    z_i &= 2^{-1}(y_{n-i+1}x+z_{i-1})\\
-
-    ...\\
-
-    z_n &= x*y =  2^{-1}(y_1x+z_{n-1})
+z_n &amp;= x*y =  2^{-1}(y_1x+z_{n-1})
 
 
 
-    \end{array}
-
-\end{align}</script><p>所以每次只需要相加两个数，然后向后移一位，且相加的数只有n位，因此不需要2n位的加法器。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>计算：$x = 0.1101,y= 0.1011,x*y = ?$</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/IMG_20200413_165014.jpg" alt="IMG_20200413_165014" style="zoom: 25%;" /></p>
-<h4 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h4><p>为了方便理解，我做了一个流程图</p>
+\end{array}
+</code></pre>
+<p>\end{align}</p>
+<p>$$</p>
+<p>所以每次只需要相加两个数，然后向后移一位，且相加的数只有n位，因此不需要2n位的加法器。</p>
+<h4 id="示例">示例</h4>
+<p>计算：$x = 0.1101,y= 0.1011,x*y = ?$</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/IMG_20200413_165014.jpg" alt="IMG_20200413_165014" style="zoom: 25%;" />
+<h4 id="流程图">流程图</h4>
+<p>为了方便理解，我做了一个流程图</p>
 <p>假设有问题n位定点小数乘法：</p>
 <pre class="mermaid">
 graph TD
@@ -742,27 +796,30 @@ E --> F{是否进行n次}
 F --> |已经进行n次|G(结束)
 
 F --> |没有进行n次|B</pre>
-
-
-
-
-
-
-
-<h3 id="乘法优化"><a href="#乘法优化" class="headerlink" title="乘法优化"></a>乘法优化</h3><p>我们看到刚才的计算过程，y有多少位就需要做多少个轮次的加法，这样的效率是非常之低的。这里优化的主要思想是：并行。</p>
-<h4 id="第一种：阵列乘法"><a href="#第一种：阵列乘法" class="headerlink" title="第一种：阵列乘法"></a>第一种：阵列乘法</h4><p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413090035787.png" alt="image-20200413090035787" style="zoom:50%;" /></p>
+<h3 id="乘法优化">乘法优化</h3>
+<p>我们看到刚才的计算过程，y有多少位就需要做多少个轮次的加法，这样的效率是非常之低的。这里优化的主要思想是：并行。</p>
+<h4 id="第一种：阵列乘法">第一种：阵列乘法</h4>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413090035787.png" alt="image-20200413090035787" style="zoom:50%;" />
 <p>我个人认为，这种乘法器的思想和超前进位的思想有一点相似，它将我们竖式中需要计算的都先计算出来，然后再对他们进行加法即可。</p>
-<h4 id="第二种：树型乘法器"><a href="#第二种：树型乘法器" class="headerlink" title="第二种：树型乘法器"></a>第二种：树型乘法器</h4><p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413092103537.png" alt="image-20200413092103537" style="zoom:67%;" /></p>
+<h4 id="第二种：树型乘法器">第二种：树型乘法器</h4>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413092103537.png" alt="image-20200413092103537" style="zoom:67%;" />
 <p>树形乘法器，就是将32位的结果分别算出来，然后再用树形结构进行归并相加，这样就只用$logn$级的轮次就可以算出结果。</p>
-<h3 id="乘法在MIPS中"><a href="#乘法在MIPS中" class="headerlink" title="乘法在MIPS中"></a>乘法在MIPS中</h3><p>在MIPS中，我们将乘法的结果放到了两个专有的寄存器中：</p>
+<h3 id="乘法在MIPS中">乘法在MIPS中</h3>
+<p>在MIPS中，我们将乘法的结果放到了两个专有的寄存器中：</p>
 <ul>
-<li><p>HI：存储高32位</p>
+<li>
+<p>HI：存储高32位</p>
 </li>
-<li><p>LO：存储低32位</p>
+<li>
+<p>LO：存储低32位</p>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mult rs, rt</span><br><span class="line"></span><br><span class="line">multu rs, rt</span><br><span class="line"></span><br><span class="line"># 这两条指令是将 rs*rt的结果存到我们刚才说的HI、LO寄存器中</span><br><span class="line"></span><br><span class="line">mfhi rd # 读取HI到rd</span><br><span class="line"></span><br><span class="line">mflo rd # 读取LO到rd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mul rd, rs, rt # 将rs*rt的低32位赋给rd</span><br></pre></td></tr></table></figure>
-<h3 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h3><h4 id="除法及其硬件结构"><a href="#除法及其硬件结构" class="headerlink" title="除法及其硬件结构"></a>除法及其硬件结构</h4><h5 id="第一种方法-恢复余数法"><a href="#第一种方法-恢复余数法" class="headerlink" title="第一种方法:恢复余数法"></a>第一种方法:恢复余数法</h5><h6 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h6><pre class="mermaid">
+<h3 id="除法">除法</h3>
+<h4 id="除法及其硬件结构">除法及其硬件结构</h4>
+<h5 id="第一种方法-恢复余数法">第一种方法:恢复余数法</h5>
+<h6 id="算法流程">算法流程</h6>
+<pre class="mermaid">
 graph TD
 
 A(开始) --> B[从余数寄存器中减去除数寄存器的内容,将结果放在余数寄存器中]
@@ -782,20 +839,18 @@ F --> G{第33次重复?}
 G --> |是第33次|H(结束)
 
 G --> |否,小于33次|B</pre>
-
-
-
-
-
-
-
-<h6 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h6><p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413203829386.png" alt="image-20200413203829386" style="zoom:50%;" /></p>
-<h6 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h6><p>回复余数法是一种非常暴力的方法，为什么暴力呢，听我慢慢道来：</p>
+<h6 id="硬件结构">硬件结构</h6>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413203829386.png" alt="image-20200413203829386" style="zoom:50%;" />
+<h6 id="讲解">讲解</h6>
+<p>回复余数法是一种非常暴力的方法，为什么暴力呢，听我慢慢道来：</p>
 <p>上面框图一大堆，看起来很麻烦的样子。单核心的操作非常简单，那就是：从高位的解开始尝试，先把余数给减了，如果不行的话，再恢复回来，如果行的话，那就保留。</p>
-<h6 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h6><p>与优化乘法的方式相似，只用左移余数的方法就可以完成操作，方法如下：</p>
-<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413211400148.png" alt="image-20200413211400148" style="zoom:50%;" /></p>
-<h5 id="更快速的除法"><a href="#更快速的除法" class="headerlink" title="更快速的除法"></a>更快速的除法</h5><p>因为除法中存在减法操作，所以不能像之前的乘法一样优化，但是我们可以通过同时生成多位商的方法进行操作，或是查表法、不执行除法等方法进行优化。</p>
-<h5 id="MIPS在除法中"><a href="#MIPS在除法中" class="headerlink" title="MIPS在除法中"></a>MIPS在除法中</h5><p>和乘法一样，除法也用到了HI和LO两个寄存器，他们分别用于储存余数、除数。</p>
+<h6 id="优化">优化</h6>
+<p>与优化乘法的方式相似，只用左移余数的方法就可以完成操作，方法如下：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200413211400148.png" alt="image-20200413211400148" style="zoom:50%;" />
+<h5 id="更快速的除法">更快速的除法</h5>
+<p>因为除法中存在减法操作，所以不能像之前的乘法一样优化，但是我们可以通过同时生成多位商的方法进行操作，或是查表法、不执行除法等方法进行优化。</p>
+<h5 id="MIPS在除法中">MIPS在除法中</h5>
+<p>和乘法一样，除法也用到了HI和LO两个寄存器，他们分别用于储存余数、除数。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">div rs, rt</span><br><span class="line"></span><br><span class="line">divu rs, rt</span><br><span class="line"></span><br><span class="line">mfhi s1</span><br><span class="line"></span><br><span class="line">mflo s1</span><br></pre></td></tr></table></figure>
 <p>今天就讲到这里，明天再继续吧。</p>
 
@@ -992,7 +1047,7 @@ G --> |否,小于33次|B</pre>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机组成原理—第三章"><span class="nav-number">1.</span> <span class="nav-text">计算机组成原理—第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ALU的构建"><span class="nav-number">1.2.</span> <span class="nav-text">ALU的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑的与、或"><span class="nav-number">1.2.1.</span> <span class="nav-text">逻辑的与、或</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归正题，加法——半加器"><span class="nav-number">1.2.2.</span> <span class="nav-text">回归正题，加法——半加器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全加器"><span class="nav-number">1.2.3.</span> <span class="nav-text">全加器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#真值表"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">真值表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表达式"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#电路"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">电路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-bit-ALU"><span class="nav-number">1.2.4.</span> <span class="nav-text">1 bit ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-32-bit-ALU"><span class="nav-number">1.2.5.</span> <span class="nav-text">Basic 32 bit ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展1-bit-ALU"><span class="nav-number">1.2.6.</span> <span class="nav-text">扩展1 bit ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute-ALU"><span class="nav-number">1.2.7.</span> <span class="nav-text">Compute ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALU-symbol-amp-control"><span class="nav-number">1.2.8.</span> <span class="nav-text">ALU symbol &amp; control</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数加减法"><span class="nav-number">1.3.</span> <span class="nav-text">整数加减法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数的表示范围："><span class="nav-number">1.3.1.</span> <span class="nav-text">数的表示范围：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数的减法"><span class="nav-number">1.3.2.</span> <span class="nav-text">整数的减法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么时候溢出？"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">什么时候溢出？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#溢出处理"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">溢出处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法器的速度问题"><span class="nav-number">1.3.3.</span> <span class="nav-text">加法器的速度问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">解决</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#超前进位加法器"><span class="nav-number">1.3.3.2.1.</span> <span class="nav-text">超前进位加法器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多媒体中的饱和操作"><span class="nav-number">1.3.4.</span> <span class="nav-text">多媒体中的饱和操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制乘法"><span class="nav-number">1.4.</span> <span class="nav-text">二进制乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数"><span class="nav-number">1.4.1.</span> <span class="nav-text">整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定点小数的乘法"><span class="nav-number">1.4.2.</span> <span class="nav-text">定点小数的乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程图"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">流程图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法优化"><span class="nav-number">1.4.3.</span> <span class="nav-text">乘法优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种：阵列乘法"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">第一种：阵列乘法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种：树型乘法器"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">第二种：树型乘法器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法在MIPS中"><span class="nav-number">1.4.4.</span> <span class="nav-text">乘法在MIPS中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#除法"><span class="nav-number">1.4.5.</span> <span class="nav-text">除法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#除法及其硬件结构"><span class="nav-number">1.4.5.1.</span> <span class="nav-text">除法及其硬件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#第一种方法-恢复余数法"><span class="nav-number">1.4.5.1.1.</span> <span class="nav-text">第一种方法:恢复余数法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#算法流程"><span class="nav-number">1.4.5.1.1.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#硬件结构"><span class="nav-number">1.4.5.1.1.2.</span> <span class="nav-text">硬件结构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#讲解"><span class="nav-number">1.4.5.1.1.3.</span> <span class="nav-text">讲解</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#优化"><span class="nav-number">1.4.5.1.1.4.</span> <span class="nav-text">优化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更快速的除法"><span class="nav-number">1.4.5.1.2.</span> <span class="nav-text">更快速的除法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MIPS在除法中"><span class="nav-number">1.4.5.1.3.</span> <span class="nav-text">MIPS在除法中</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">计算机组成原理—第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ALU的构建"><span class="nav-number">1.2.</span> <span class="nav-text">ALU的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑的与、或"><span class="nav-number">1.2.1.</span> <span class="nav-text">逻辑的与、或</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归正题，加法——半加器"><span class="nav-number">1.2.2.</span> <span class="nav-text">回归正题，加法——半加器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全加器"><span class="nav-number">1.2.3.</span> <span class="nav-text">全加器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#真值表"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">真值表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表达式"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#电路"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">电路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-bit-ALU"><span class="nav-number">1.2.4.</span> <span class="nav-text">1 bit ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-32-bit-ALU"><span class="nav-number">1.2.5.</span> <span class="nav-text">Basic 32 bit ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展1-bit-ALU"><span class="nav-number">1.2.6.</span> <span class="nav-text">扩展1 bit ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute-ALU"><span class="nav-number">1.2.7.</span> <span class="nav-text">Compute ALU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALU-symbol-control"><span class="nav-number">1.2.8.</span> <span class="nav-text">ALU symbol &amp; control</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数加减法"><span class="nav-number">1.3.</span> <span class="nav-text">整数加减法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数的表示范围："><span class="nav-number">1.3.1.</span> <span class="nav-text">数的表示范围：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数的减法"><span class="nav-number">1.3.2.</span> <span class="nav-text">整数的减法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么时候溢出？"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">什么时候溢出？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#溢出处理"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">溢出处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法器的速度问题"><span class="nav-number">1.3.3.</span> <span class="nav-text">加法器的速度问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">解决</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#超前进位加法器"><span class="nav-number">1.3.3.2.1.</span> <span class="nav-text">超前进位加法器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多媒体中的饱和操作"><span class="nav-number">1.3.4.</span> <span class="nav-text">多媒体中的饱和操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制乘法"><span class="nav-number">1.4.</span> <span class="nav-text">二进制乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数"><span class="nav-number">1.4.1.</span> <span class="nav-text">整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定点小数的乘法"><span class="nav-number">1.4.2.</span> <span class="nav-text">定点小数的乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流程图"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">流程图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法优化"><span class="nav-number">1.4.3.</span> <span class="nav-text">乘法优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种：阵列乘法"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">第一种：阵列乘法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种：树型乘法器"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">第二种：树型乘法器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法在MIPS中"><span class="nav-number">1.4.4.</span> <span class="nav-text">乘法在MIPS中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#除法"><span class="nav-number">1.4.5.</span> <span class="nav-text">除法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#除法及其硬件结构"><span class="nav-number">1.4.5.1.</span> <span class="nav-text">除法及其硬件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#第一种方法-恢复余数法"><span class="nav-number">1.4.5.1.1.</span> <span class="nav-text">第一种方法:恢复余数法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#算法流程"><span class="nav-number">1.4.5.1.1.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#硬件结构"><span class="nav-number">1.4.5.1.1.2.</span> <span class="nav-text">硬件结构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#讲解"><span class="nav-number">1.4.5.1.1.3.</span> <span class="nav-text">讲解</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#优化"><span class="nav-number">1.4.5.1.1.4.</span> <span class="nav-text">优化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更快速的除法"><span class="nav-number">1.4.5.1.2.</span> <span class="nav-text">更快速的除法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MIPS在除法中"><span class="nav-number">1.4.5.1.3.</span> <span class="nav-text">MIPS在除法中</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
