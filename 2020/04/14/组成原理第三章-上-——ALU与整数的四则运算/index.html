@@ -435,7 +435,7 @@ halfAdder --> sum
 halfAdder --> carry</pre>
 <p>我们先来构建一个真值表:</p>
 <div class="line-block">a | b | result | carry |</div>
-<div class="line-block">---- | ---- | ------ | ----- |</div>
+<div class="line-block">—- | —- | —— | —– |</div>
 <div class="line-block">0 | 0 | 0 | 0 |</div>
 <div class="line-block">0 | 1 | 1 | 0 |</div>
 <div class="line-block">1 | 0 | 1 | 0 |</div>
@@ -583,7 +583,7 @@ halfAdder --> carry</pre>
 <p>我们先来看上面的两个符号，<span class="math inline">\(Generate\)</span>代表当前位的结果，<span class="math inline">\(Propagate\)</span>代表当前位的进位。我们很容易得到当前位的结果为<span class="math inline">\(a_i\ xor\ b_i\)</span>，进位的结果是<span class="math inline">\(a_i \and b_i\)</span>。</p>
 <p>接下来我们再来关注一下上一位的进位和最终结果之间的关系，我们定义符号<span class="math inline">\(C_i\)</span>表示来自上一位的进位</p>
 <div class="line-block"><span class="math inline">\(a_i\)</span> | <span class="math inline">\(b_i\)</span> | <span class="math inline">\(c_i\)</span> | C（进位） | S（当前位） |</div>
-<div class="line-block">----- | ----- | ----- | --------- | ----------- |</div>
+<div class="line-block">—– | —– | —– | ——— | ———– |</div>
 <div class="line-block">0 | 0 | 0 | 0 | 0 |</div>
 <div class="line-block">0 | 0 | 1 | 0 | 1 |</div>
 <div class="line-block">0 | 1 | 0 | 0 | 1 |</div>
@@ -657,8 +657,8 @@ F --> |是|G(结束)</pre>
 <h4 id="方法">方法</h4>
 <p>假设有两个定点小数：</p>
 <p>$$</p>
-<p>x = 0.x_1x_2x_3...x_n \</p>
-<p>y = 0.y_1y_2y_3...y_n</p>
+<p>x = 0.x_1x_2x_3…x_n \</p>
+<p>y = 0.y_1y_2y_3…y_n</p>
 <p>$$</p>
 <p>我们可以将<span class="math inline">\(x·y\)</span>表示成下面的式子：</p>
 <p>$$ <span class="math display">\[\begin{align}

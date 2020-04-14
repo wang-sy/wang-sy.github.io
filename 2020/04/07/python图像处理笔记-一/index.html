@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="图像处理笔记(一) 直方图均衡化 参考文档 [1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码 12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直">
+<meta name="description" content="图像处理笔记(一) 直方图均衡化 参考文档 [1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码 12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python图像处理笔记(一)">
 <meta property="og:url" content="http://yoursite.com/2020/04/07/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%80/index.html">
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
-<meta property="og:description" content="图像处理笔记(一) 直方图均衡化 参考文档 [1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码 12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直">
+<meta property="og:description" content="图像处理笔记(一) 直方图均衡化 参考文档 [1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社. [2] 直方图均衡化 代码 12345678910111213# 直方图均衡化def histeq(im, nbr_bins &#x3D; 256):    &quot;&quot;&quot;    对一副灰度图像进行直方图均衡化    &quot;&quot;&quot;    # 计算图像的直">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuY25ibG9ncy5jb20vY25ibG9nc19jb20vU2l2aWxUYXJhbS8xNTEwNDg1L29faW1hZ2UtMTMtY29udi1jbm4uZ2lm">
@@ -395,7 +395,7 @@
         <h1 id="图像处理笔记一">图像处理笔记(一)</h1>
 <h2 id="直方图均衡化">直方图均衡化</h2>
 <h3 id="参考文档">参考文档</h3>
-<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
+<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
 <p>[2] 直方图均衡化</p>
 <h3 id="代码">代码</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直方图均衡化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">histeq</span><span class="params">(im, nbr_bins = <span class="number">256</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对一副灰度图像进行直方图均衡化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 计算图像的直方图</span></span><br><span class="line">    imhist, bins = histogram(im.flatten(), nbr_bins, normed = <span class="literal">True</span>)</span><br><span class="line">    cdf = imhist.cumsum()</span><br><span class="line">    cdf = <span class="number">255</span> * cdf / cdf[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 使用累积分布函数的线性插值，计算新的像素值</span></span><br><span class="line">    im2 = interp(im.flatten(), bins[:<span class="number">-1</span>], cdf)</span><br><span class="line">    <span class="keyword">return</span> im2.reshape(im.shape), cdf</span><br></pre></td></tr></table></figure>
@@ -423,7 +423,7 @@
 <p>没啥好讲的，把一堆图拉到一块，平均一下即可。这个方法可以用于降噪， 但是我们也会发现，这个方法要把所有图片都拉到内存里，如果要平均很多的图片的话，我们需要拉很多的内存，不过又有一种方法就是可以每次平均一张也就是每次新引入一张，也可以。</p>
 <h2 id="图像的主成分分析pca">图像的主成分分析（PCA）</h2>
 <h3 id="参考资料">参考资料</h3>
-<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
+<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
 <p>[2] <a href="https://www.bilibili.com/video/BV1F441187rd?from=search&amp;seid=4973130116529586818" target="_blank" rel="noopener">机器学习经典算法：PCA降维与SVD矩阵分解</a>—— <a href="https://space.bilibili.com/410704854" target="_blank" rel="noopener">自兴人工智能教育</a></p>
 <p>主成分分析法，老朋友了。这个目前已知的有两种用法：</p>
 <ul>

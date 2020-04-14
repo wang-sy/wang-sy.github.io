@@ -29,7 +29,7 @@ halfAdder --> sum
 halfAdder --> carry</pre>
 <p>我们先来构建一个真值表:</p>
 <div class="line-block">a | b | result | carry |</div>
-<div class="line-block">---- | ---- | ------ | ----- |</div>
+<div class="line-block">—- | —- | —— | —– |</div>
 <div class="line-block">0 | 0 | 0 | 0 |</div>
 <div class="line-block">0 | 1 | 1 | 0 |</div>
 <div class="line-block">1 | 0 | 1 | 0 |</div>
@@ -177,7 +177,7 @@ halfAdder --> carry</pre>
 <p>我们先来看上面的两个符号，<span class="math inline">\(Generate\)</span>代表当前位的结果，<span class="math inline">\(Propagate\)</span>代表当前位的进位。我们很容易得到当前位的结果为<span class="math inline">\(a_i\ xor\ b_i\)</span>，进位的结果是<span class="math inline">\(a_i \and b_i\)</span>。</p>
 <p>接下来我们再来关注一下上一位的进位和最终结果之间的关系，我们定义符号<span class="math inline">\(C_i\)</span>表示来自上一位的进位</p>
 <div class="line-block"><span class="math inline">\(a_i\)</span> | <span class="math inline">\(b_i\)</span> | <span class="math inline">\(c_i\)</span> | C（进位） | S（当前位） |</div>
-<div class="line-block">----- | ----- | ----- | --------- | ----------- |</div>
+<div class="line-block">—– | —– | —– | ——— | ———– |</div>
 <div class="line-block">0 | 0 | 0 | 0 | 0 |</div>
 <div class="line-block">0 | 0 | 1 | 0 | 1 |</div>
 <div class="line-block">0 | 1 | 0 | 0 | 1 |</div>
@@ -251,8 +251,8 @@ F --> |是|G(结束)</pre>
 <h4 id="方法">方法</h4>
 <p>假设有两个定点小数：</p>
 <p>$$</p>
-<p>x = 0.x_1x_2x_3...x_n \</p>
-<p>y = 0.y_1y_2y_3...y_n</p>
+<p>x = 0.x_1x_2x_3…x_n \</p>
+<p>y = 0.y_1y_2y_3…y_n</p>
 <p>$$</p>
 <p>我们可以将<span class="math inline">\(x·y\)</span>表示成下面的式子：</p>
 <p>$$ <span class="math display">\[\begin{align}
@@ -389,7 +389,7 @@ G --> |否,小于33次|B</pre>
 <h2 id="harris角点检测器">Harris角点检测器</h2>
 <h3 id="参考资料">参考资料</h3>
 <ul>
-<li>Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Kindle 版本.</li>
+<li>Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Kindle 版本.</li>
 <li>人工智能：harris角点检测_<a href="https://www.bilibili.com/video/BV1JE411f7iG?from=search&amp;seid=6288544590541875218" target="_blank" rel="noopener">bilibili</a></li>
 <li>harris corner detection(角点检测)_<a href="https://www.bilibili.com/video/BV1Wb411b79B?from=search&amp;seid=6288544590541875218" target="_blank" rel="noopener">bilibili</a></li>
 <li>【机器学习】【线性代数 for PCA】矩阵与对角阵相似、 一般矩阵的相似对角化、实对称矩阵的相似对角化_<a href="https://blog.csdn.net/u012421852/article/details/80489727" target="_blank" rel="noopener">csdn</a></li>
@@ -842,7 +842,7 @@ finalScore = \frac{det({M})}{trace({M})^2}
 <h3 id="shared_ptr">shared_ptr</h3>
 <p>shared_ptr 是一个标准的共享所有权的智能指针，允许多个 shared_ptr 智能指针指向同一个指针对象，shared_ptr 利用引用计数的方式实现了对所管理的对象的所有权的分享，即允许多个 shared_ptr 共同管理同一个对象</p>
 <h3 id="weak_ptr">weak_ptr</h3>
-<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符"*"和运算符"-&gt;"，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
+<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符"*“和运算符”-&gt;"，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
 <pre class="mermaid">graph LR
 普通指针 --自动delete--> auto_ptr
 auto_ptr --禁止所有权转移-->unique_ptr-治标不治本
@@ -993,7 +993,7 @@ unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">lena = scipy.misc.lena()</span><br></pre></td></tr></table></figure>
 <p>woc，这是啥，我快点打开看看。</p>
 <blockquote>
-<p>AttributeError: module 'scipy.misc' has no attribute 'lena'</p>
+<p>AttributeError: module ‘scipy.misc’ has no attribute ‘lena’</p>
 </blockquote>
 <p>百度之，发现是这张图：</p>
 <p><img src="https://saiyu-wang-blog.oss-cn-shenzhen.aliyuncs.com/20140702104508726.jpg" style="zoom:50%;" /></p>
@@ -1101,7 +1101,7 @@ unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
 <h1 id="第三步在手机端添加outlook日历">第三步——在手机端添加outlook日历</h1>
 <p>打开华为自带日历： <img src="https://img-blog.csdnimg.cn/20200228170325553.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="华为自带日历" /> 点击左方菜单，进入日历账户管理，点击添加账户，账户类型为exchange： <img src="https://img-blog.csdnimg.cn/20200228170458795.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="exchange" /> 选择类型为公司，将自己的outlook账号填上去就可以了，密码直接填自己的windows登陆密码即可，这样，电脑端和手机端的连接就完成了！</p>
 <h1 id="第四步在ios端添加outlook日历">第四步——在IOS端添加outlook日历</h1>
-<p>以ipad为例，设置--&gt;密码域账户--&gt;添加账户，和手机端一样，将outlook邮箱登录，即可完成ipad上面</p>
+<p>以ipad为例，设置–&gt;密码域账户–&gt;添加账户，和手机端一样，将outlook邮箱登录，即可完成ipad上面</p>
 <h1 id="完成">完成</h1>
 <p>到此为止，三个平台的同步就完成了，我试过很多方法，qq邮箱、等等都不如outlook方便。</p>
 ]]></content>
@@ -1118,7 +1118,7 @@ unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
     <content><![CDATA[<h1 id="图像处理笔记一">图像处理笔记(一)</h1>
 <h2 id="直方图均衡化">直方图均衡化</h2>
 <h3 id="参考文档">参考文档</h3>
-<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
+<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
 <p>[2] 直方图均衡化</p>
 <h3 id="代码">代码</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 直方图均衡化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">histeq</span><span class="params">(im, nbr_bins = <span class="number">256</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对一副灰度图像进行直方图均衡化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 计算图像的直方图</span></span><br><span class="line">    imhist, bins = histogram(im.flatten(), nbr_bins, normed = <span class="literal">True</span>)</span><br><span class="line">    cdf = imhist.cumsum()</span><br><span class="line">    cdf = <span class="number">255</span> * cdf / cdf[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 使用累积分布函数的线性插值，计算新的像素值</span></span><br><span class="line">    im2 = interp(im.flatten(), bins[:<span class="number">-1</span>], cdf)</span><br><span class="line">    <span class="keyword">return</span> im2.reshape(im.shape), cdf</span><br></pre></td></tr></table></figure>
@@ -1146,7 +1146,7 @@ unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
 <p>没啥好讲的，把一堆图拉到一块，平均一下即可。这个方法可以用于降噪， 但是我们也会发现，这个方法要把所有图片都拉到内存里，如果要平均很多的图片的话，我们需要拉很多的内存，不过又有一种方法就是可以每次平均一张也就是每次新引入一张，也可以。</p>
 <h2 id="图像的主成分分析pca">图像的主成分分析（PCA）</h2>
 <h3 id="参考资料">参考资料</h3>
-<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
+<p>[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.</p>
 <p>[2] <a href="https://www.bilibili.com/video/BV1F441187rd?from=search&amp;seid=4973130116529586818" target="_blank" rel="noopener">机器学习经典算法：PCA降维与SVD矩阵分解</a>—— <a href="https://space.bilibili.com/410704854" target="_blank" rel="noopener">自兴人工智能教育</a></p>
 <p>主成分分析法，老朋友了。这个目前已知的有两种用法：</p>
 <ul>
@@ -1790,8 +1790,8 @@ B^{-1}b\\
 </ul>
 <p>约定符号：</p>
 <ul>
-<li>$t0,$t1,...,$t9 用于表示临时变量</li>
-<li>$s0,$s1,...,$s 7表示需要保存的变量</li>
+<li>$t0,$t1,…,$t9 用于表示临时变量</li>
+<li>$s0,$s1,…,$s 7表示需要保存的变量</li>
 </ul>
 <p>设计原则二——<strong>更小就会更快</strong></p>
 <ul>
@@ -1886,19 +1886,19 @@ B^{-1}b\\
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">0</td>
-<td style="text-align: center;">0000 0000 ... 0000</td>
+<td style="text-align: center;">0000 0000 … 0000</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">-1</td>
-<td style="text-align: center;">1111 1111 ... 1111</td>
+<td style="text-align: center;">1111 1111 … 1111</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">最小的数</td>
-<td style="text-align: center;">1000 0000 ... 0000</td>
+<td style="text-align: center;">1000 0000 … 0000</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">最大的数</td>
-<td style="text-align: center;">0111 1111 ... 1111</td>
+<td style="text-align: center;">0111 1111 … 1111</td>
 </tr>
 </tbody>
 </table>
@@ -1930,7 +1930,7 @@ B^{-1}b\\
 <li>算数逻辑运算</li>
 <li>内存访问</li>
 <li>分支和跳转指令</li>
-<li>浮点运算指令 --使用协处理器完成</li>
+<li>浮点运算指令 –使用协处理器完成</li>
 <li>内存管理指令</li>
 <li>特殊指令</li>
 </ul>
@@ -2079,7 +2079,7 @@ B^{-1}b\\
 <p>这个语句可以和beq一起用，来进行在大于、小于等情况下的选择结构。</p>
 <h3 id="小练习">小练习</h3>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(i&gt;=j)&#123;</span><br><span class="line">    i = i + <span class="number">1</span>;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    j = j + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将上述代码转化成mips指令集中的code，i,j--&gt;$s1,$s2 我的答案：</p>
+<p>将上述代码转化成mips指令集中的code，i,j–&gt;$s1,$s2 我的答案：</p>
 <figure class="highlight mips"><table><tr><td class="code"><pre><span class="line">           <span class="keyword">slt </span>   $<span class="built_in">t0</span>, i, <span class="keyword">j </span><span class="comment"># if i&gt;=j 0</span></span><br><span class="line">           <span class="keyword">beq </span>$<span class="built_in">t0</span>, $<span class="built_in">zero</span>, Else <span class="comment">#if t0==zero --&gt; i&gt;=j goto Else:j=j+1,else go on</span></span><br><span class="line">           <span class="keyword">addi </span>$<span class="built_in">s1</span>, $<span class="built_in">s1</span>, <span class="number">1</span></span><br><span class="line">           <span class="keyword">j </span>        Exit</span><br><span class="line"><span class="symbol">Else:</span> <span class="keyword">addi </span>$<span class="built_in">s2</span>, $<span class="built_in">s2</span>, <span class="number">1</span></span><br><span class="line"><span class="symbol">Exit:</span> ...</span><br></pre></td></tr></table></figure>
 <h3 id="有符号和无符号数字的比较">有符号和无符号数字的比较</h3>
 <p>无符号数进行比较： sltu,sltui，其实说白了就是后面加个u就是无符号数操作，再加个i就是常数操作。</p>
@@ -2209,7 +2209,7 @@ B^{-1}b\\
 <p>那肯定不得行，我们也要把自己的博客搞漂亮点，我们先对未来进行规划，以我自己为例：</p>
 <ul>
 <li><p>博客需要分类，我在同时学习不同方向的知识，需要分类功能才能有序的检索</p></li>
-<li><p>我的博客不能叫Hexo，要叫SaiyuWang's Blog</p></li>
+<li><p>我的博客不能叫Hexo，要叫SaiyuWang’s Blog</p></li>
 <li><p>我要上面那种两栏的，不要这种中间一条的</p></li>
 <li><p>我要搞个小头像，下面还要放段话</p></li>
 </ul>
@@ -2264,7 +2264,7 @@ B^{-1}b\\
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">INFO  Created: ~/blog/source/categories/index.md</span><br></pre></td></tr></table></figure>
 <p>这段提示中告诉我们在~/blog/source/categories/文件夹下生成了一个index.md（其实也生成了categories文件夹），我们现在进入这个路径下的index.md进行更改：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim ~/blog/source/categories/index.md</span><br></pre></td></tr></table></figure>
-<p>在原有的基础上，增加type属性，type: "categories"</p>
+<p>在原有的基础上，增加type属性，type: “categories”</p>
 <figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-03-29 19:11:59</span><br><span class="line">type: "categories"</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 <p>完成这些操作后，我们重启服务，进行查看，发现新的网站左边出现了标签、分类两个新的选项，点击进入分类，我们可以看到：</p>
 <figure>

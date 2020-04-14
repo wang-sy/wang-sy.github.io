@@ -609,7 +609,7 @@
 <h3 id="shared_ptr">shared_ptr</h3>
 <p>shared_ptr 是一个标准的共享所有权的智能指针，允许多个 shared_ptr 智能指针指向同一个指针对象，shared_ptr 利用引用计数的方式实现了对所管理的对象的所有权的分享，即允许多个 shared_ptr 共同管理同一个对象</p>
 <h3 id="weak_ptr">weak_ptr</h3>
-<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符"*"和运算符"-&gt;"，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
+<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符"*“和运算符”-&gt;"，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
 <pre class="mermaid">graph LR
 普通指针 --自动delete--> auto_ptr
 auto_ptr --禁止所有权转移-->unique_ptr-治标不治本
