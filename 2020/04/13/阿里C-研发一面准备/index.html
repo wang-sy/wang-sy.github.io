@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,找实习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="阿里C++面试文档 4月8做完笔试，做的稀烂，还以为直接凉凉了，就没管这事了，没想到今天接到约面试的电话，约到了明天下午，然鹅我已经半年多没写过C++了，于是今天下午赶紧恶补一下，许个愿，等过几天看看能不能回来还愿。 先说结果： 我是18级的，他们不招，所以这些准备的今年是用不上了，但是还是可以分享一下的。 NULL 和 nullptr 参考资料： this one nullptr是在C++11中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里C++研发一面准备">
+<meta property="og:url" content="http://yoursite.com/2020/04/13/%E9%98%BF%E9%87%8CC-%E7%A0%94%E5%8F%91%E4%B8%80%E9%9D%A2%E5%87%86%E5%A4%87/index.html">
+<meta property="og:site_name" content="SaiyuWang&#39;s Blog">
+<meta property="og:description" content="阿里C++面试文档 4月8做完笔试，做的稀烂，还以为直接凉凉了，就没管这事了，没想到今天接到约面试的电话，约到了明天下午，然鹅我已经半年多没写过C++了，于是今天下午赶紧恶补一下，许个愿，等过几天看看能不能回来还愿。 先说结果： 我是18级的，他们不招，所以这些准备的今年是用不上了，但是还是可以分享一下的。 NULL 和 nullptr 参考资料： this one nullptr是在C++11中">
+<meta property="article:published_time" content="2020-04-12T17:19:09.000Z">
+<meta property="article:modified_time" content="2020-04-14T09:12:54.172Z">
+<meta property="article:author" content="Saiyu Wang">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="找实习">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/13/阿里C-研发一面准备/"/>
+
+
+
+
+
+  <title>阿里C++研发一面准备 | SaiyuWang's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SaiyuWang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">就当是一场梦，醒了很久还是很感动</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/%E9%98%BF%E9%87%8CC-%E7%A0%94%E5%8F%91%E4%B8%80%E9%9D%A2%E5%87%86%E5%A4%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Saiyu Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SaiyuWang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">阿里C++研发一面准备</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T01:19:09+08:00">
+                2020-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%89%BE%E5%AE%9E%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">找实习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1>阿里C++面试文档</h1>
+<p>4月8做完笔试，做的稀烂，还以为直接凉凉了，就没管这事了，没想到今天接到约面试的电话，约到了明天下午，然鹅我已经半年多没写过C++了，于是今天下午赶紧恶补一下，许个愿，等过几天看看能不能回来还愿。</p>
+<p>先说结果：<br>
+我是18级的，他们不招，所以这些准备的今年是用不上了，但是还是可以分享一下的。</p>
+<h2 id="NULL-和-nullptr">NULL 和 nullptr</h2>
+<p>参考资料： <a href="https://blog.csdn.net/reasonyuanrobot/article/details/100022574" target="_blank" rel="noopener">this one</a></p>
+<p>nullptr是在C++11中才出现的，首先我们来看一下nullptr解决了什么问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>在C<ins>中不允许(void*)类型进行隐式转换，所以在C语言中，NULL被定义为(void*)0,而在C</ins>语言中，NULL则被定义为整数0，也就是说，NULL是一个整型变量，这样的设计带来了如下的问题:</p>
+<ul>
+<li>
+<pre><code class="language-C++">char* a =&quot; Hello&quot;;
+void foo(void* p){}
+foo(a);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  上方这种调用会出现问题</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;C++</span><br><span class="line">  void func(int data);</span><br><span class="line">   </span><br><span class="line">  void func(char* data);</span><br></pre></td></tr></table></figure>
+
+在上面这种情况中，无法将NULL和整形区分，调用的结果与想象中不符。
+
+
+
+</code></pre>
+</li>
+</ul>
+<p>nullptr在C++11被引入用于解决这一问题，nullptr可以明确区分整型和指针类型，能够根据环境自动转换成相应的指针类型，但不会被转换为任何整型，所以不会造成参数传递错误。</p>
+<h2 id="深拷贝与浅拷贝">深拷贝与浅拷贝</h2>
+<ul>
+<li>
+<p>浅拷贝下：</p>
+<p>A复制了B，那么A和B是共用同一片内存区域的，也就是说，A和B中任何一个发生变化，他们两个都会发生变化。</p>
+</li>
+<li>
+<p>深拷贝下:</p>
+<p>A复制了B，A和B除了内容相同之外，相互独立。</p>
+</li>
+</ul>
+<h2 id="堆区与栈区">堆区与栈区</h2>
+<p>参考资料：<a href="https://www.zhihu.com/question/19729973/answer/13037929" target="_blank" rel="noopener">this one</a></p>
+<h3 id="申请方式的区别">申请方式的区别</h3>
+<p>堆区存放的是new、malloc出的变量，由程序员自己定义大小。</p>
+<p>栈由系统自动分配，我们直接int出来的局部变量就在栈区。</p>
+<h3 id="系统的响应">系统的响应</h3>
+<ul>
+<li>
+<p>堆:操作系统有一个记录空闲内存地址的链表，系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。会在这块内 存空间中的首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。另外，由于找到的堆结点的大小不一定正好等于申请的大 小，系统会自动的将多余的那部分重新放入空闲链表中。</p>
+</li>
+<li>
+<p>栈:只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。</p>
+</li>
+</ul>
+<h3 id="能申请的空间的大小">能申请的空间的大小</h3>
+<ul>
+<li>栈：能从栈获得的空间较小。</li>
+<li>堆：堆获得的空间比较灵活，也比较大。</li>
+</ul>
+<h3 id="申请效率">申请效率</h3>
+<ul>
+<li>
+<p>栈由系统自动分配，速度较快。但程序员是无法控制的。</p>
+</li>
+<li>
+<p>堆是由new分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.</p>
+</li>
+</ul>
+<h2 id="inline-和-普通函数">inline 和 普通函数</h2>
+<h3 id="inline-VS-普通函数">inline VS 普通函数</h3>
+<p>参考资料：<a href="http://blog.sina.com.cn/s/blog_5f99444c01013jji.html" target="_blank" rel="noopener">this one</a></p>
+<p>内联函数有一些限制：</p>
+<ul>
+<li>内联函数体不能包含循环语句、switch语句。</li>
+<li>内联函数要先定义、后调用，不能先声明内联函数原型，再定义、调用。</li>
+</ul>
+<p>内联函数实际上是省去了跳转的步骤，在速度层面有一定的加强，但同时也增大了内存的开销。</p>
+<h3 id="inline-VS-宏定义">inline VS 宏定义</h3>
+<p>宏定义直接就是代码替换，与inline有本质上的区别，如果直接用宏定义来替代inline可能还会导致逻辑错误。</p>
+<h2 id="static"><strong>static</strong></h2>
+<p><a href="https://blog.csdn.net/majianfei1023/article/details/45290467" target="_blank" rel="noopener">来源</a></p>
+<h3 id="静态局部变量">静态局部变量</h3>
+<p>刚才在讲堆栈的时候，有一点是没有讲到的，C++程序在内存中，除了占用堆栈区域外，还有一种区域是：静态内存区域，它负责存储<strong>全局变量和静态变量</strong>，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束释放。当然，还有代码区，这里不展开讲。</p>
+<p>static是在全局数据区分配的,那么它存在的意思是什么？又是什么时候初始化的呢？</p>
+<ul>
+<li>它存在的意义就是随着<strong>第一次函数的调用而初始化</strong>，却不随着函数的调用结束而销毁，所以它只会初始化一次。</li>
+</ul>
+<p>静态局部变量的特点：</p>
+<ul>
+<li>（1）该变量在全局数据区分配内存(局部变量在栈区分配内存);</li>
+<li>（2）静态局部变量在程序执行到该对象的声明处时被首次初始化，即以后的函数调用不再进行初始化(局部变量每次函数调用都会被初始化);</li>
+<li>（3）静态局部变量一般在声明处初始化，如果没有显式初始化，会被程序自动初始化为0(局部变量不会被初始化);</li>
+<li>（4）它始终驻留在全局数据区，直到程序运行结束。但其作用域为局部作用域，也就是不能在函数体外面使用它(局部变量在栈区，在函数结束后立即释放</li>
+</ul>
+<h3 id="静态全局变量"><strong>静态全局变量</strong></h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">1</span>;  <span class="comment">//note:3</span></span><br><span class="line"><span class="comment">//int i = 1;  //note:4</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	i += <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>静态全局变量不能被其它文件所用(全局变量可以);</p>
+<h3 id="静态函数：和静态全局变量类似">静态函数：和静态全局变量类似</h3>
+<h3 id="静态数据成员：被定义在类里面的静态成员"><strong>静态数据成员</strong>：被定义在类里面的静态成员</h3>
+<p>特点：与普通的成员不一样，普通的类成员是一个实例一个。而静态成员是每个类一个的，这个可以用来统计一些累计的东西，也可以用来做公有的东西。</p>
+<h3 id="静态成员函数：类里面的静态函数"><strong>静态成员函数</strong>：类里面的静态函数</h3>
+<ul>
+<li>1.静态成员之间可以相互访问，包括静态成员函数访问静态数据成员和访问静态成员函数;</li>
+<li>2.非静态成员函数可以任意地访问静态成员函数和静态数据成员;</li>
+<li>3.静态成员函数不能访问非静态成员函数和非静态数据成员;</li>
+<li>4.调用静态成员函数，可以用成员访问操作符(.)和(-&gt;)为一个类的对象或指向类对象的指针调用静态成员函数,也可以用类名::函数名调用(因为他本来就是属于类的，用类名调用很正常)</li>
+</ul>
+<h2 id="虚函数和多态">虚函数和多态</h2>
+<p>一、子类对象可以被当作父类对象。</p>
+<ul>
+<li>派生类的对象可以隐含的转换成基类对象。</li>
+<li>派生类对象可以初始化基类的引用。</li>
+<li>派生类指针可以隐含转换为基类的指针</li>
+</ul>
+<p>说人话就是：</p>
+<ul>
+<li>父类指针可以指向子类对象</li>
+</ul>
+<p>那么虚函数有什么用处呢？这里我们和java对比着来说，众所周知，Java中可以override，也就是说将函数重写，这样来达到多态。父类指针指向的子类，可以调用子类中重写过的方法。但是C<ins>在默认情况下不可以，所以C</ins>引入了virtual。</p>
+<h3 id="多态">多态:</h3>
+<p>不同类的对象堆同一消息的不同响应。俺会了，⑧谈了</p>
+<h3 id="动态绑定">动态绑定</h3>
+<p>可以说是多态的实际应用</p>
+<h3 id="实现动态绑定的要点（多态）">实现动态绑定的要点（多态）</h3>
+<ul>
+<li>具有类的继承关系图，这个继承关系中每个类都可以调用一个虚函数</li>
+<li>基础类的指针指向子类的对象</li>
+<li>通过基础类的指针调用虚函数</li>
+</ul>
+<h3 id="虚析构函数">虚析构函数</h3>
+<p>在析构函数定义为虚函数，这样就可以根据子类的不同特性对析构函数进行重写。</p>
+<h2 id="虚函数表">虚函数表</h2>
+<h3 id="有无虚函数的类的内存布局的区别‘">有无虚函数的类的内存布局的区别‘</h3>
+<p>无虚函数：类的实例化中仅有成员占用空间。</p>
+<p>有虚函数：虚函数指针同时占用空间，该虚函数指针指向一个虚函数表。</p>
+<p>虚函数表保存了一个函数的地址，也就是函数指针。</p>
+<p>再来捋一遍：</p>
+<ul>
+<li>含有虚函数的类进行实例化：</li>
+<li>编译器给类的实例化分配一个虚函数指针</li>
+<li>虚函数指针指向虚函数表</li>
+<li>虚函数表里面有虚函数</li>
+</ul>
+<h3 id="子类不重写父类的虚函数的情况：">子类不重写父类的虚函数的情况：</h3>
+<p>假设现在有一个父类一个子类，父类中定义类一个虚函数，子类在继承父类后，并没有重写该函数。</p>
+<p>这种情况下，父类和子类的内存布局中仍然都有虚函数指针，指向虚函数表。为避免套娃，不讲了。</p>
+<p>一句话来说:我爸爸有虚函数，我直接继承了， 那我的虚函数指针就指向我爸爸在虚函数表里的虚函数。反之我的虚函数指针就指向我重写的虚函数在虚函数表里的位置。</p>
+<h3 id="补充">补充</h3>
+<p>看后面看到的，塞过来</p>
+<p>子类的虚函数被放在声明的第一个基类的虚函数表中。</p>
+<h2 id="c-经典继承，多态，封装">c++经典继承，多态，封装</h2>
+<h3 id="封装">封装</h3>
+<ul>
+<li>好处：安全，方便简单</li>
+<li>封装的层次：
+<ul>
+<li>方法封装了功能</li>
+<li>类封装了数据和功能</li>
+</ul>
+</li>
+<li>如何实现封装
+<ul>
+<li>使用private修饰属性，不能直接给属性赋值</li>
+<li>提供public的方法完成对属性的赋值set和取值get操作</li>
+<li>在set方法中添加控制语句</li>
+</ul>
+</li>
+<li>类的成员使用的修饰符：
+<ul>
+<li>private 默认 protected public</li>
+</ul>
+</li>
+<li>类只能用public和默认来修饰</li>
+</ul>
+<h3 id="继承">继承</h3>
+<ul>
+<li>
+<p>父类、子类。就是子类继承父类的<strong>属性</strong>和<strong>行为</strong>，使得子类对象具有与父类相同的属性、相同的行为。子类可以直接 访问父类中的<strong>非私有</strong>的属性和行为</p>
+</li>
+<li>
+<p>好处：</p>
+<ul>
+<li>避免代码重复，提高<strong>代码的复用性。</strong></li>
+<li>类与类之间产生了关系，是<strong>多态的前提。</strong></li>
+<li>修改父类，影响所有的子类（好处：便于修改，修改一次接口。不足：增加了耦合性）</li>
+</ul>
+</li>
+</ul>
+<h3 id="多态-2">多态</h3>
+<p>已经说完了</p>
+<h2 id="引用VS指针">引用VS指针</h2>
+<p><a href="https://blog.csdn.net/tch918/article/details/7401351" target="_blank" rel="noopener">https://blog.csdn.net/tch918/article/details/7401351</a></p>
+<p>引用：</p>
+<ul>
+<li>是一块内存区域的别名</li>
+<li>必须被初始化</li>
+<li>初始化后不能被更改（绑定）</li>
+<li>他不是一个对象</li>
+</ul>
+<p>指针：</p>
+<ul>
+<li>他记录一块内存区域的地址</li>
+<li>定义时可以不被初始化</li>
+<li>可以指向不同的对象（不绑定）</li>
+<li>它是一个对象</li>
+</ul>
+<h2 id="虚函数VS纯虚函数">虚函数VS纯虚函数</h2>
+<p>首先书虚函数和纯虚函数的定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;&#125; <span class="comment">// 虚函数</span></span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>= <span class="number">0</span>&#123;&#125; <span class="comment">// 纯虚函数</span></span><br></pre></td></tr></table></figure>
+<p>虚函数：虚函数是多态的基础，我们在上面已经有所涉及，基类中含有一个虚函数，派生类可以对该函数进行重写，这一过程就实现了多态。</p>
+<p>纯虚函数：和虚函数有很大的相似性，但是纯虚函数多了一个限制，那就是派生类必须重写该函数。</p>
+<p>不管是虚函数还是纯虚函数，<strong>基类都可以为提供他们的实现</strong>（<strong>implementation</strong>），如果有的话子类可以调用基类的这些实现。</p>
+<p>子类可<strong>自主选择</strong>是否要提供一份属于自己的个性化虚函数实现。</p>
+<p>子类<strong>必须提供</strong>一份属于自己的个性化纯虚函数实现。</p>
+<h3 id="抽象类">抽象类</h3>
+<p>C++中包含纯虚函数的类，被称为是“抽象类”。抽象类不能使用new出对象，只有实现了这个纯虚函数的子类才能new出对象。</p>
+<p>C++中的纯虚函数更像是“只提供申明，没有实现”，是对子类的约束，是“接口继承”。</p>
+<p>C++中的纯虚函数也是一种“运行时多态”。</p>
+<h2 id="const"><strong>const</strong></h2>
+<p>常量表示一种定义后就不能再修改的量</p>
+<ul>
+<li>
+<p>最简单的用法： <strong>const修饰普通类型的变量</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX_N = <span class="number">500</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>const 修饰指针变量</strong>，分为三种情况：</p>
+<ul>
+<li>const 修饰指针指向的内容，则内容为不可变量，人话就是：const修饰的指针指向的东东，那么就只能访问不能更改</li>
+<li>const 修饰指针，则指针为不可变量，人话：const修饰指针本身，指针指向的区域不能变化</li>
+<li>const 修饰指针和指针指向的内容，则指针和指针指向的内容都为不可变量，就是第一种加第二种</li>
+</ul>
+<p>对于第一种：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+<p>第二种：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">8</span>;</span><br><span class="line"> <span class="keyword">int</span>* <span class="keyword">const</span> p = &amp;a;</span><br><span class="line"></span><br><span class="line"> *p = <span class="number">9</span>; <span class="comment">//it’s right</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>  b = <span class="number">7</span>;</span><br><span class="line"> p = &amp;b; <span class="comment">//it’s wrong</span></span><br></pre></td></tr></table></figure>
+<p>第三种：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">8</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span>  p = &amp;a;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="const-修饰传递参数">const 修饰传递参数</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Cpf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;a; </span><br><span class="line">    <span class="comment">// ++a;  it's wrong, a can't is changed</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>值传递的const修饰传递</strong>，一般这种情况不需要const修饰，因为<strong>函数会自动产生临时变量复制实参值</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Cpf</span><span class="params">(<span class="keyword">int</span> *<span class="keyword">const</span> a)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;*a&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    *a = <span class="number">9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>当const参数为指针时，可以防止指针被意外篡改。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Cmf</span><span class="params">(<span class="keyword">const</span> Test&amp; _tt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;_tt.get_cm(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>自定义类型的参数传递，需要临时对象复制参数，对于临时对象的构造，需要调用构造函数，比较浪费时间，因此我们采取const外加引用传递的方法。</strong></p>
+<h3 id="const修饰函数的返回值">const修饰函数的返回值</h3>
+<p><strong>const修饰内置类型的返回值，修饰与不修饰返回值作用一样。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span> <span class="title">Cmf</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>const 修饰自定义类型的作为返回值，此时返回的值不能作为左值使用，既不能被赋值，也不能被修改。</strong></p>
+<p><strong>const 修饰返回的指针或者引用，是否返回一个指向const的指针，取决于我们想让用户干什么。</strong></p>
+<h3 id="const修饰类成员函数"><strong>const修饰类成员函数.</strong></h3>
+<p>onst 修饰类成员函数，其目的是防止成员函数修改被调用对象的值，如果我们不想修改一个调用对象的值，所有的成员函数都应当声明为const成员函数。<strong>注意：const关键字不能与static关键字同时使用，因为static关键字修饰静态成员函数，静态成员函数不含有this指针，即不能实例化，const成员函数必须具体到某一实例。</strong></p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getNum</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span> <span class="comment">// const 成员函数</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ++num;     <span class="comment">// 编译错误，企图修改数据成员m_num</span></span><br><span class="line">        func();     <span class="comment">// 编译错误，企图调用非const函数</span></span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="智能指针"><strong>智能指针</strong></h2>
+<p>链接：<a href="https://zhuanlan.zhihu.com/p/78123220" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/78123220</a></p>
+<p>由于 C++ 语言没有自动内存回收机制，程序员每次 new 出来的内存都要手动 delete。程序员忘记 delete，流程太复杂，最终导致没有 delete，异常导致程序过早退出，没有执行 delete 的情况并不罕见。——解决了忘了delete的问题。</p>
+<p>智能指针实际上是一个栈对象，并非指针类型，在栈对象生命期即将结束时，智能指针通过析构函数释放有它管理的堆内存。所有智能指针都重载了“operator-&gt;”操作符，直接返回对象的引用，用以操作对象。访问智能指针原来的方法则使用“.”操作符。</p>
+<p>访问智能指针包含的裸指针则可以用 get() 函数。</p>
+<h3 id="std-auto-ptr"><strong>std::auto_ptr</strong></h3>
+<p>从C++98开始便推出了auto_ptr，对裸指针进行封装，让程序员无需手动释放指针指向的内存区域，在auto_ptr生命周期结束时自动释放，由于auto_ptr在转移指针所有权后会产生野指针，导致程序运行时crash，如下面示例代码所示。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line"><span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = p1; <span class="comment">//转移控制权</span></span><br><span class="line">*p1 += <span class="number">10</span>; <span class="comment">//crash，p1为空指针，可以用p1-&gt;get判空做保护</span></span><br></pre></td></tr></table></figure>
+<h3 id="unique-ptr">unique_ptr</h3>
+<p>unique_ptr是auto_ptr的继承者，对于同一块内存只能有一个持有者，而unique_ptr和auto_ptr唯一区别就是unique_ptr不允许赋值操作，也就是不能放在等号的右边（函数的参数和返回值例外），这一定程度避免了一些误操作导致指针所有权转移，然而，unique_str依然有提供所有权转移的方法move，调用move后，原unique_ptr就会失效，再用其访问裸指针也会发生和auto_ptr相似的crash，如下面示例代码，所以，即使使用了unique_ptr，也要慎重使用move方法，防止指针所有权被转移。</p>
+<h3 id="shared-ptr">shared_ptr</h3>
+<p>shared_ptr 是一个标准的共享所有权的智能指针，允许多个 shared_ptr 智能指针指向同一个指针对象，shared_ptr 利用引用计数的方式实现了对所管理的对象的所有权的分享，即允许多个 shared_ptr 共同管理同一个对象</p>
+<h3 id="weak-ptr">weak_ptr</h3>
+<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符&quot;*“和运算符”-&gt;&quot;，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
+<pre class="mermaid">graph LR
+普通指针 --自动delete--> auto_ptr
+auto_ptr --禁止所有权转移-->unique_ptr-治标不治本
+unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
+<h2 id="map-set的底层">map&amp;set的底层</h2>
+<p>空间占用率高</p>
+<p>红黑树：</p>
+<ul>
+<li>根节点必须为黑色</li>
+<li>父子不能同为红色</li>
+<li>从任何一个节点出发，到叶子节点经过的黑色节点数量一致</li>
+</ul>
+<p>操作：</p>
+<ul>
+<li>搜索：和二叉搜索树一样</li>
+<li>插入：以红色作为默认插入颜色，插入后进行修复：
+<ul>
+<li>一、变色</li>
+<li>二、旋转</li>
+</ul>
+</li>
+</ul>
+<h2 id="vector底层">vector底层</h2>
+<p>数组，</p>
+<p>访问：O(1)</p>
+<p>扩容：新建vector会分配连续内存空间，通过push_back增加元素时，如果初始分分配空间满了，那么久扩容，扩容到原来的两倍。</p>
+<h2 id="unordered-map-底层">unordered_map 底层</h2>
+<p>哈希表，查找速度非常的快</p>
+<p>哈希表的建立比较耗费时间</p>
+<p>对于查找问题，unordered_map会更加高效一些</p>
+<p>哈希：</p>
+<ul>
+<li>开散列</li>
+<li>闭散列</li>
+</ul>
+<h2 id="C-11">C++11</h2>
+<ul>
+<li>nullptr</li>
+<li>auto：自动推导类型，但不能用于传参和数组</li>
+<li>基于范围的for循环</li>
+<li>初始化列表</li>
+<li>tuple元组</li>
+</ul>
+<h2 id="项目">项目</h2>
+<p>什么是立体匹配？</p>
+<p>立体匹配解决的科学问题是：</p>
+<ul>
+<li>给出两张图片，这两张图片是由两个平行的摄像机向同一方向拍摄得到的。</li>
+<li>使用这两张图片，得到一张深度图（深度图中每一个点的值表示左右图中在现实世界中的同一点相差的距离）</li>
+<li>根据深度图可以重建出三维世界</li>
+</ul>
+<p>基本流程：</p>
+<ul>
+<li></li>
+</ul>
+<h3 id="图割立体匹配">图割立体匹配</h3>
+<ul>
+<li>匹配代价计算</li>
+<li>视差计算</li>
+</ul>
+<p>相当于是构建了一个全局的函数，深度图构成的序列是函数的自变量，求函数的最优解的问题。</p>
+<p>作者用的方法是：使用最大流最小割定理。</p>
+<p>建边方法：</p>
+<p>假设(i,j,k)代表i，j节点取k深度</p>
+<p>随机生成</p>
+<ul>
+<li>一个像素点位置上：不同深度取值建边，成为深度边。</li>
+<li>交换深度</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/%E6%89%BE%E5%AE%9E%E4%B9%A0/" rel="tag"># 找实习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/09/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%BA%8C/" rel="next" title="python图像处理笔记(二)">
+                <i class="fa fa-chevron-left"></i> python图像处理笔记(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/13/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%89%E2%80%94%E2%80%94Harris%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%E5%99%A8/" rel="prev" title="python图像处理笔记-三——Harris角点检测器">
+                python图像处理笔记-三——Harris角点检测器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg"
+                alt="Saiyu Wang" />
+            
+              <p class="site-author-name" itemprop="name">Saiyu Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wang-sy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangsaiyu@cqu.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">阿里C++面试文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NULL-和-nullptr"><span class="nav-number">1.1.</span> <span class="nav-text">NULL 和 nullptr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝与浅拷贝"><span class="nav-number">1.2.</span> <span class="nav-text">深拷贝与浅拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆区与栈区"><span class="nav-number">1.3.</span> <span class="nav-text">堆区与栈区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#申请方式的区别"><span class="nav-number">1.3.1.</span> <span class="nav-text">申请方式的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统的响应"><span class="nav-number">1.3.2.</span> <span class="nav-text">系统的响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能申请的空间的大小"><span class="nav-number">1.3.3.</span> <span class="nav-text">能申请的空间的大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#申请效率"><span class="nav-number">1.3.4.</span> <span class="nav-text">申请效率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inline-和-普通函数"><span class="nav-number">1.4.</span> <span class="nav-text">inline 和 普通函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-VS-普通函数"><span class="nav-number">1.4.1.</span> <span class="nav-text">inline VS 普通函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-VS-宏定义"><span class="nav-number">1.4.2.</span> <span class="nav-text">inline VS 宏定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static"><span class="nav-number">1.5.</span> <span class="nav-text">static</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态局部变量"><span class="nav-number">1.5.1.</span> <span class="nav-text">静态局部变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态全局变量"><span class="nav-number">1.5.2.</span> <span class="nav-text">静态全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态函数：和静态全局变量类似"><span class="nav-number">1.5.3.</span> <span class="nav-text">静态函数：和静态全局变量类似</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态数据成员：被定义在类里面的静态成员"><span class="nav-number">1.5.4.</span> <span class="nav-text">静态数据成员：被定义在类里面的静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员函数：类里面的静态函数"><span class="nav-number">1.5.5.</span> <span class="nav-text">静态成员函数：类里面的静态函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数和多态"><span class="nav-number">1.6.</span> <span class="nav-text">虚函数和多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多态"><span class="nav-number">1.6.1.</span> <span class="nav-text">多态:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态绑定"><span class="nav-number">1.6.2.</span> <span class="nav-text">动态绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现动态绑定的要点（多态）"><span class="nav-number">1.6.3.</span> <span class="nav-text">实现动态绑定的要点（多态）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚析构函数"><span class="nav-number">1.6.4.</span> <span class="nav-text">虚析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数表"><span class="nav-number">1.7.</span> <span class="nav-text">虚函数表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有无虚函数的类的内存布局的区别‘"><span class="nav-number">1.7.1.</span> <span class="nav-text">有无虚函数的类的内存布局的区别‘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子类不重写父类的虚函数的情况："><span class="nav-number">1.7.2.</span> <span class="nav-text">子类不重写父类的虚函数的情况：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">1.7.3.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-经典继承，多态，封装"><span class="nav-number">1.8.</span> <span class="nav-text">c++经典继承，多态，封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封装"><span class="nav-number">1.8.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承"><span class="nav-number">1.8.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态-2"><span class="nav-number">1.8.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用VS指针"><span class="nav-number">1.9.</span> <span class="nav-text">引用VS指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数VS纯虚函数"><span class="nav-number">1.10.</span> <span class="nav-text">虚函数VS纯虚函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象类"><span class="nav-number">1.10.1.</span> <span class="nav-text">抽象类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const"><span class="nav-number">1.11.</span> <span class="nav-text">const</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const-修饰传递参数"><span class="nav-number">1.11.1.</span> <span class="nav-text">const 修饰传递参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const修饰函数的返回值"><span class="nav-number">1.11.2.</span> <span class="nav-text">const修饰函数的返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const修饰类成员函数"><span class="nav-number">1.11.3.</span> <span class="nav-text">const修饰类成员函数.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能指针"><span class="nav-number">1.12.</span> <span class="nav-text">智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-auto-ptr"><span class="nav-number">1.12.1.</span> <span class="nav-text">std::auto_ptr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-ptr"><span class="nav-number">1.12.2.</span> <span class="nav-text">unique_ptr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shared-ptr"><span class="nav-number">1.12.3.</span> <span class="nav-text">shared_ptr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weak-ptr"><span class="nav-number">1.12.4.</span> <span class="nav-text">weak_ptr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map-set的底层"><span class="nav-number">1.13.</span> <span class="nav-text">map&amp;set的底层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector底层"><span class="nav-number">1.14.</span> <span class="nav-text">vector底层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-map-底层"><span class="nav-number">1.15.</span> <span class="nav-text">unordered_map 底层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-11"><span class="nav-number">1.16.</span> <span class="nav-text">C++11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目"><span class="nav-number">1.17.</span> <span class="nav-text">项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图割立体匹配"><span class="nav-number">1.17.1.</span> <span class="nav-text">图割立体匹配</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saiyu Wang</span>
+  
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+  
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="图像处理,python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="图形学笔记（三）—— Harris角点检测器 前言 从现在开始学习的是书中的第二章：局部图像描述子。这里主要是寻找图像间的对应点和对应区域。 Harris角点检测器 参考资料  Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Kindle 版本. 人工智能：harris角点检测_bilibili harris corner de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python图像处理笔记-三——Harris角点检测器">
+<meta property="og:url" content="http://yoursite.com/2020/04/13/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%89%E2%80%94%E2%80%94Harris%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%E5%99%A8/index.html">
+<meta property="og:site_name" content="SaiyuWang&#39;s Blog">
+<meta property="og:description" content="图形学笔记（三）—— Harris角点检测器 前言 从现在开始学习的是书中的第二章：局部图像描述子。这里主要是寻找图像间的对应点和对应区域。 Harris角点检测器 参考资料  Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Kindle 版本. 人工智能：harris角点检测_bilibili harris corner de">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133125796.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133537098.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133612077.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133958279.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412152559928.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412142519387.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412142725820.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412152745271.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/timg.jpg">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412165450824.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/timg2.jpg">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412165729281.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412170009129.png">
+<meta property="article:published_time" content="2020-04-12T17:22:45.000Z">
+<meta property="article:modified_time" content="2020-04-14T09:12:54.172Z">
+<meta property="article:author" content="Saiyu Wang">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133125796.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/13/python图像处理笔记-三——Harris角点检测器/"/>
+
+
+
+
+
+  <title>python图像处理笔记-三——Harris角点检测器 | SaiyuWang's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SaiyuWang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">就当是一场梦，醒了很久还是很感动</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%89%E2%80%94%E2%80%94Harris%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Saiyu Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SaiyuWang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python图像处理笔记-三——Harris角点检测器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T01:22:45+08:00">
+                2020-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1>图形学笔记（三）—— Harris角点检测器</h1>
+<h2 id="前言">前言</h2>
+<p>从现在开始学习的是书中的第二章：局部图像描述子。这里主要是寻找图像间的对应点和对应区域。</p>
+<h2 id="Harris角点检测器">Harris角点检测器</h2>
+<h3 id="参考资料">参考资料</h3>
+<ul>
+<li>Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Kindle 版本.</li>
+<li>人工智能：harris角点检测_<a href="https://www.bilibili.com/video/BV1JE411f7iG?from=search&amp;seid=6288544590541875218" target="_blank" rel="noopener">bilibili</a></li>
+<li>harris corner detection(角点检测)_<a href="https://www.bilibili.com/video/BV1Wb411b79B?from=search&amp;seid=6288544590541875218" target="_blank" rel="noopener">bilibili</a></li>
+<li>【机器学习】【线性代数 for PCA】矩阵与对角阵相似、 一般矩阵的相似对角化、实对称矩阵的相似对角化_<a href="https://blog.csdn.net/u012421852/article/details/80489727" target="_blank" rel="noopener">csdn</a></li>
+<li>线代022｜矩阵的相似对角化 看过有收获，真心分享给大家_<a href="https://www.bilibili.com/video/BV1iJ411u77D?from=search&amp;seid=4427364463745926667" target="_blank" rel="noopener">bilibili</a></li>
+</ul>
+<h3 id="什么是角点">什么是角点?</h3>
+<p>说白了就是物体边缘的拐点</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133125796.png" alt="image-20200412133125796" style="zoom: 80%;" />
+<p>上面图像中的红点处就是角点，有了角点之后，就可以干很多的事情了。</p>
+<h3 id="Harris检测角点的核心思路">Harris检测角点的核心思路</h3>
+<p>Harris的核心思路是滑动窗口检测，这里我们将图像中的点分三类进行讨论：</p>
+<ul>
+<li>
+<p>一、平坦点：在图像的某个像素点周围是平坦的，如图所示：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133537098.png" alt="image-20200412133537098" style="zoom:67%;" />
+<p>平坦点的周围的像素值没有太大的变化。</p>
+</li>
+<li>
+<p>二、边缘点：像素点位于一条边上</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133612077.png" alt="image-20200412133612077" style="zoom:67%;" />
+<p>边缘点的周围的像素向某个方向变化较为剧烈。</p>
+</li>
+<li>
+<p>三、角点：像素点位于一个角上</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412133958279.png" alt="image-20200412133958279" style="zoom:67%;" />
+<p>角点的周围各个方向上像素的变化都比较剧烈。</p>
+</li>
+</ul>
+<h4 id="Moravec">Moravec</h4>
+<p>知道了这三类情况后，我们来看公式：<br>
+$$<br>
+E(u,v) = \Sigma_{x,y}w(x,y) [I(x+u,y+v) - I(x,y)]^2<br>
+$$<br>
+其中，$E(u,v)$表示竖直和水平方向的偏移，$w(x,y)$表示窗口的中心，$I(x+u,y+v)$表示中心增加偏移后的灰度值，$I(x,y)$表示中心的灰度值。</p>
+<p>这个公式就代表着某个点附近的变化的剧烈程度，$w(x,y)$是一个滤波（常用高斯）。那么结合上面的理论，这个点的$E(u,v)$越大，那么它就越有可能是个角点。但是值得注意的是，这种方法没有旋转不变性。</p>
+<h4 id="Harris">Harris</h4>
+<h5 id="泰勒展开">泰勒展开</h5>
+<p>Moravec的缺点是，他只考虑了四种方向，所以他没有旋转不变性。而Harris将方向进行了细化。于是Harris使用全微分的方法将方向进行了细化，具体来说，是用了泰勒展开。</p>
+<p>先复习一下什么是泰勒展开：<br>
+$$<br>
+f(x+u,y+v) \approx f(x,y) +uf_x(x,y)+vf_y(x,y)<br>
+$$<br>
+上面的式子是二变量函数的一阶展开，细心如你能发现上面的式子里表示中心增加偏移后的灰度值的式子可以使用泰勒展开！经过一番计算之后可以得到这样一个式子。</p>
+<p>计算过程也是非常简单的：<br>
+$$\begin{align*}<br>
+E(u,v) &amp;= \Sigma_{x,y}w(x,y) [I(x+u,y+v) - I(x,y)]^2\<br>
+&amp;=w(x,y)\Sigma_{x,y}[I(x,y)+uI_x(x,y)+vI_y(x,y) - I(x,y)]^2\<br>
+&amp;=w(x,y)\Sigma_{x,y}[uI_x(x,y)+vI_y(x,y)]^2\<br>
+&amp;=w(x,y)\Sigma_{x,y}[u<sup>2I_x(x,y)</sup>2+v<sup>2I_y(x,y)</sup>2+2uvI_x(x,y)I_y(x,y)]\</p>
+<p>\end{align*}$$<br>
+将最终的结果简写一下，就可以得到:<br>
+$$<br>
+E(u,v) = \Sigma_{x,y}w(x,y) (u<sup>2I_x</sup>2+v<sup>2I_y</sup>2+2uvI_xI_y)<br>
+$$</p>
+<h5 id="矩阵表示">矩阵表示</h5>
+<p>这里$I_x,I_y$代表图像在水平、垂直方向上的梯度，我们将这个式子用矩阵来表示（从现在开始就是书上写的了）：<br>
+$$<br>
+E(u,v) = [u,v]<br>
+\left(<br>
+\Sigma w(x,y)<br>
+\left[<br>
+\begin{matrix}<br>
+I_x^2&amp;I_xI_y\<br>
+I_xI_y&amp;I_y^2<br>
+\end{matrix}<br>
+\right]<br>
+\right)<br>
+\left[<br>
+\begin{matrix}<br>
+u\<br>
+v<br>
+\end{matrix}<br>
+\right]<br>
+$$<br>
+最后再来个特殊表示：<br>
+$$<br>
+E(u,v) =<br>
+\left[<br>
+\begin{matrix}<br>
+u &amp; v<br>
+\end{matrix}<br>
+\right]<br>
+M_I<br>
+\left[<br>
+\begin{matrix}<br>
+u\<br>
+v<br>
+\end{matrix}<br>
+\right]<br>
+$$<br>
+那么问题来了，我们做了这么多东西，不就是用泰勒展开了一下Moravec的式子，然后用矩阵表示了一下么？我们到底是怎么消除其旋转不变性的呢？</p>
+<p>下面来到了这个算法的关键步骤：</p>
+<h5 id="相似对角化">相似对角化</h5>
+<p>我们看到上面的式子$E(u,v) =\left[\begin{matrix} u &amp; v \end{matrix}\right]M_I\left[\begin{matrix} u\v\end{matrix}\right]$我们使用矩阵相似对角化就可以得到下面的式子：<br>
+$$<br>
+E(u,v) = \left[    \begin{matrix}        u &amp; v    \end{matrix}\right]P\left[    \begin{matrix}        \lambda_1 &amp; 0\        0 &amp; \lambda_2\    \end{matrix}\right]P^{-1}\left[    \begin{matrix}        u\       	v    \end{matrix}\right]<br>
+$$</p>
+<h6 id="什么是相似对角化？">什么是相似对角化？</h6>
+<p>那么在此之前，我们来复习一下到底什么是矩阵相似对角化呢？（我也忘了）</p>
+<ul>
+<li>
+<p>定义一：设A、B都是n阶矩阵，若存在可逆矩阵$P$，使得:<br>
+$$<br>
+\begin{align*}<br>
+P^{-1} AP = B<br>
+\end{align*}<br>
+$$<br>
+则称为矩阵A和矩阵B相似</p>
+</li>
+<li>
+<p>定义二：如果方阵A与对角阵相似，则一定存在一个可逆矩阵P，按照下面公式求出方阵A的相似对角矩阵：<br>
+$$<br>
+\begin{align*}<br>
+\Lambda = PAP^{-1}<br>
+\end{align*}<br>
+$$</p>
+</li>
+</ul>
+<p>相似对角化就是求出来这个对角矩阵$\Lambda$（好久没碰线性代数了，如果理解有误欢迎指出）</p>
+<p>那么怎么算这个$\Lambda$呢？在此之前我们需要知道什么样的矩阵能够被相似对角化。<br>
+$$<br>
+\begin{align*}<br>
+一个矩阵可以被特征化 \Leftrightarrow 该矩阵有n个线性无关的特征向量<br>
+\end{align*}<br>
+$$<br>
+又有一条件：属于不同特征值的特征向量一定线性无关（这里不能再深挖了，在深挖没完了，有兴趣的自己深挖）</p>
+<p>那么根据上面的两个条件，我们可以知道：如果n阶方阵A有n个不相等的特征值，那么说明A可以被相似对角化。而如果A有重特征值，那么检查重特征值对应的线性无关的特征向量的个数若等于特征值的重数，那么就代表A可对角化。另外还有特殊情况：</p>
+<ul>
+<li>若A为n阶对称阵，那么A可对角化</li>
+</ul>
+<h6 id="进行相似对角化">进行相似对角化</h6>
+<p>那么根据上面的理论，我们的这个：<br>
+$$<br>
+M_I  =<br>
+\left[<br>
+\begin{matrix}<br>
+I_x^2&amp;I_xI_y\<br>
+I_xI_y&amp;I_y^2<br>
+\end{matrix}<br>
+\right]<br>
+$$<br>
+他显然是一个对称矩阵，所以根据上面的定理他是可以相似对角化的，我们对它使用相似对角化就可以得到上面的式子中的一部分：<br>
+$$<br>
+M_I  =P\left[    \begin{matrix}        \lambda_1 &amp; 0\        0 &amp; \lambda_2\    \end{matrix}\right]P^{-1}<br>
+$$<br>
+将这部分带入即可得到我们的式子：<br>
+$$<br>
+E(u,v) = \left[    \begin{matrix}        u &amp; v    \end{matrix}\right]P\left[    \begin{matrix}        \lambda_1 &amp; 0\        0 &amp; \lambda_2\    \end{matrix}\right]P^{-1}\left[    \begin{matrix}        u\        v    \end{matrix}\right]<br>
+$$<br>
+我们可以先计算$[u\ v]P$以及$P^{-1}\left[    \begin{matrix}        u\        v    \end{matrix}\right]$，假设得到的结果是$[u’\ v’]$以及$[u’\ v’]^T$，那么我们上面的式子就可以改写为：<br>
+$$<br>
+\begin{align}<br>
+\begin{array}</p>
+<p>E E(u,v) &amp;= \left[<br>
+\begin{matrix}<br>
+u’ &amp; v’<br>
+\end{matrix}<br>
+\right]</p>
+<p>\left[<br>
+\begin{matrix}<br>
+\lambda_1 &amp; 0\<br>
+0 &amp; \lambda_2\<br>
+\end{matrix}<br>
+\right]</p>
+<p>\left[<br>
+\begin{matrix}<br>
+u’\<br>
+v’<br>
+\end{matrix}<br>
+\right]<br>
+\<br>
+&amp;= \lambda_1(u’)<sup>2+\lambda_2(v’)</sup>2\<br>
+&amp;= \frac{u’<sup>2}{\frac{1}{\lambda_1}}+\frac{v’</sup>2}{\frac{1}{\lambda_21}}<br>
+\end{array}<br>
+\end{align}<br>
+$$<br>
+好的，到了这里大家打眼一看就知道了，这是椭圆公式啊！那么我们对比一下原来椭圆的公式：$\frac{x<sup>2}{a</sup>2}+\frac{y<sup>2}{b</sup>2}$在这里我们可以写为：$a^2 = \frac{1}{\lambda_1}$那么我们就可以知道$a = \lambda_1^{-\frac{1}{2}}$，同理可得$b = \lambda_2^{-\frac{1}{2}}$</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412152559928.png" alt="image-20200412152559928" style="zoom:67%;" />
+<h4 id="回到问题本身">回到问题本身</h4>
+<p>我们看一些图</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412142519387.png" alt="image-20200412142519387" style="zoom:67%;" />
+<p>如果我们取点附近窗口的梯度的话，我们可以看到:</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412142725820.png" alt="image-20200412142725820" style="zoom:67%;" />
+<p>上面的三个图像分别代表：</p>
+<ul>
+<li>左-平坦点附近窗口内的梯度：离原点普遍较近</li>
+<li>中-边缘点附近的窗口的梯度：分布在某个坐标轴周围</li>
+<li>右-角点附近的窗口的梯度：分布在两个坐标轴周围</li>
+</ul>
+<p>我们的目标是：让这个椭圆的两个半轴尽量的长，用数学语言来表示就是：让$\lambda_1,\lambda_2$尽量的大，有一张图非常的形象：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412152745271.png" alt="image-20200412152745271" style="zoom: 50%;" />
+<p>再把我们的目标明确一下：我们希望$\lambda_1,\lambda_2$同时很大但又差不多大于是我们构建出了这样的式子：<br>
+$$<br>
+R = det({M_\lambda}) - k trace({M_\lambda})^2<br>
+$$<br>
+相信很多同学和我一样，已经忘记了这些符号，或者根本没有学过这些符号，那么我来解释一下：</p>
+<ul>
+<li>$det:$矩阵的行列式，如果你不知道什么是行列式，那你只能自己百度了</li>
+<li>$trace:$矩阵的迹主对角线上各个元素的总和</li>
+</ul>
+<p>反应在这个式子里：</p>
+<ul>
+<li>$M_\lambda = \left[\begin{matrix}\lambda_1&amp;0\0&amp;\lambda_2\end{matrix}\right]$</li>
+<li>$det({M_\lambda}) = \lambda_1\lambda_2$</li>
+<li>$trace({M_\lambda})=\lambda_1+\lambda_2$</li>
+</ul>
+<p>所以我们的式子也可以写成：<br>
+$$<br>
+R = \lambda_1\lambda_2 + t(\lambda_1+\lambda_2)^2<br>
+$$<br>
+如果这个R很大的话，就说明这里是角点，如果这个R很小的话，那么就不是。值得注意的是，这个R评分并不是一个准确的描述问题的机制，拓展一下，这类问题属于病态的问题，也就是说我们无法找到一种准确的方式来描述这个问题，只能通过近似的方式来描述它。放到这个例子里就是我们人眼很容易观测出一个点是不是角点，也可以说出来很多抽象的方法来判断它是否是角点。但之所以我们能够这么轻易的去判断，是因为我们有足够的抽象能力，什么是角点？角点是在角上的点。我们之所以能够如此轻易的判断，是因为我们将角这个概念进行了抽象和封装，而计算机不会。所以我们只能使用像是上面R这种方法来近似地描述问题。（不废话了，继续讲）</p>
+<h3 id="实际计算">实际计算</h3>
+<p>但是上面说的东西怎么量化的来算呢？我们先计算每个像素点的M矩阵<br>
+$$<br>
+M =<br>
+\Sigma<br>
+w(x,y)<br>
+\left[<br>
+\begin{matrix}<br>
+I_x^2&amp;I_xI_y\<br>
+I_xI_y&amp;I_y^2<br>
+\end{matrix}<br>
+\right]<br>
+$$<br>
+这里的$I_x,I_y$也就是图像在水平、垂直方向的导数，可以用可以用Sobel核去做一个卷积就可以得到。然后这个window函数可以使用高斯核等。该卷积的目的是得到$M_I$在周围像素上的局部平均。</p>
+<p>可以看到计算的方法很简单，也没啥好讲的，理论懂了就万事大吉了，最终我们使用这两项的比值来衡量这个问题：<br>
+$$<br>
+finalScore = \frac{det({M})}{trace({M})^2}<br>
+$$</p>
+<h3 id="代码">代码</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy. ndimage <span class="keyword">import</span> filters</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算比值得分的函数,即计算finalScore</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeHarrisResponse</span><span class="params">(im, sigma = <span class="number">3</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">        在一幅灰度图像中，对每个像素计算角点器响应函数</span></span><br><span class="line"><span class="string">        输入:</span></span><br><span class="line"><span class="string">            im:表示需要求R的图像（需要是灰度图）</span></span><br><span class="line"><span class="string">            sigma：考虑半径</span></span><br><span class="line"><span class="string">        返回：</span></span><br><span class="line"><span class="string">            Wdet / Wtr ： lambda1*lambda2 与 (lambda1+lambda2)^2的比</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算导数</span></span><br><span class="line">    <span class="comment"># I_x</span></span><br><span class="line">    imx = zeros(im.shape)</span><br><span class="line">    filters.gaussian_filter(im, (sigma, sigma), (<span class="number">0</span>, <span class="number">1</span>) , imx)</span><br><span class="line">    <span class="comment"># I_y</span></span><br><span class="line">    imy = zeros(im.shape)</span><br><span class="line">    filters.gaussian_filter(im, (sigma, sigma), (<span class="number">1</span>, <span class="number">0</span>) , imy)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算Harris矩阵的分量</span></span><br><span class="line">    Wxx = filters.gaussian_filter(imx * imx, sigma)</span><br><span class="line">    Wxy = filters.gaussian_filter(imx * imy, sigma)</span><br><span class="line">    Wyy = filters.gaussian_filter(imy * imy, sigma)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算特征值和迹</span></span><br><span class="line">    Wdet = Wxx * Wyy - Wxy ** <span class="number">2</span></span><br><span class="line">    Wtr = Wxx + Wyy</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Wdet / Wtr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从每个像素计算角点器响应函数到图像中的所有角点</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHarrisPoints</span><span class="params">(harrisim, minDist = <span class="number">10</span>, threshold = <span class="number">0.1</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">        从一幅Harris响应图像中返回角点。</span></span><br><span class="line"><span class="string">        输入：</span></span><br><span class="line"><span class="string">            minDist：分割角点和图像边界的最少像素数目</span></span><br><span class="line"><span class="string">        输出：</span></span><br><span class="line"><span class="string">            角点们</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 寻找高于阈值的候选角点</span></span><br><span class="line">    <span class="comment"># 角点阈值等于得分矩阵中最大的*0.1</span></span><br><span class="line">    cornerThreshold = harrisim.max() * threshold</span><br><span class="line">    <span class="comment">#harrisim_t为1的位置就是可能是角点的</span></span><br><span class="line">    harrisimT = (harrisim &gt; cornerThreshold) * <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 得到候选点的坐标</span></span><br><span class="line">    coords = array(harrisimT.nonzero()).T</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 候选点的Harris 响应值</span></span><br><span class="line">    candidateValues = [harrisim[c[<span class="number">0</span>], c[<span class="number">1</span>]] <span class="keyword">for</span> c <span class="keyword">in</span> coords]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 对候选点按照Harris 响应值进行排序</span></span><br><span class="line">    index = argsort(candidateValues)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 将可行点的位置保存到数组中</span></span><br><span class="line">    allowedLocations = zeros(harrisim.shape) </span><br><span class="line">    allowedLocations[minDist : -minDist, minDist : -minDist] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 按照minDistance 原则，选择最佳Harris点</span></span><br><span class="line">    filteredCoords = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> index:</span><br><span class="line">        <span class="keyword">if</span>(allowedLocations[coords[i, <span class="number">0</span>], coords[i, <span class="number">1</span>]] == <span class="number">1</span>):</span><br><span class="line">            filteredCoords.append(coords[i])</span><br><span class="line">            allowedLocations[(coords[i, <span class="number">0</span>] - minDist) : (coords[i, <span class="number">0</span>] + minDist),</span><br><span class="line">                             (coords[i, <span class="number">1</span>] - minDist) : (coords[i, <span class="number">1</span>] + minDist)] = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> filteredCoords</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示角点</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotHarrisPoints</span><span class="params">(img, filteredCoords)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">        绘制图像中检测到的角点</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    figure()</span><br><span class="line">    <span class="comment">#灰度图</span></span><br><span class="line">    gray()</span><br><span class="line">    <span class="comment">#显示图</span></span><br><span class="line">    imshow(img)</span><br><span class="line">    <span class="comment"># 显示点</span></span><br><span class="line">    plot([p[<span class="number">1</span>] <span class="keyword">for</span> p <span class="keyword">in</span> filteredCoords], [p[<span class="number">0</span>] <span class="keyword">for</span> p <span class="keyword">in</span> filteredCoords], <span class="string">"*"</span>)</span><br><span class="line">    <span class="comment"># 关闭坐标</span></span><br><span class="line">    axis(<span class="string">'off'</span>)</span><br><span class="line">    show()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    im = array(Image.open(<span class="string">r'C:\Users\wangsy\Desktop\learning\ch3\timg.jpg'</span>).convert(<span class="string">'L'</span>))</span><br><span class="line">    harrisim = computeHarrisResponse(im)</span><br><span class="line">    filteredCoords = getHarrisPoints(harrisim, <span class="number">6</span>)</span><br><span class="line">    plotHarrisPoints(im, filteredCoords)</span><br></pre></td></tr></table></figure>
+<p>我们使用第一讲里面用到的埃菲尔铁塔试试，原图如下：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/timg.jpg" alt="timg" style="zoom:50%;" />
+<p>使用上述代码提取角点:</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412165450824.png" alt="image-20200412165450824" style="zoom: 50%;" />
+<p>可以看到，效果是可以的，但是艾菲尔铁塔的角点太多了，有点难看出来，所以我们换张图来看看。</p>
+<p>这是一个象棋棋盘：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/timg2.jpg" alt="timg2" style="zoom:50%;" />
+<p>提取效果如下</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412165729281.png" alt="image-20200412165729281" style="zoom:50%;" />
+<p>可以看出提取效果还是非常好的，虽然提取的有点多。其中有的地方提取效果不佳，这有可能是由于后面的纹理导致的。同时我们可以调整阈值进行查看。将阈值调整到0.3，得到的结果如下：</p>
+<img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200412170009129.png" alt="image-20200412170009129" style="zoom:50%;" />
+<p>好了，今天就到这里了，这是第二章的第一小节的前半部分，如果只想囫囵吞枣的话，很快就可以水完，但是如果想要抓住事情的来龙去脉，把事情耨清楚，就需要一定的努力了，之前的博客半章4000字就能搞定了，现在一个问题就需要4000字了。</p>
+<p>学这个问题也让我理解到，好的参考读物有多么的重要，读那些垃圾博客再多也不如多读一些经典的东西。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/13/%E9%98%BF%E9%87%8CC-%E7%A0%94%E5%8F%91%E4%B8%80%E9%9D%A2%E5%87%86%E5%A4%87/" rel="next" title="阿里C++研发一面准备">
+                <i class="fa fa-chevron-left"></i> 阿里C++研发一面准备
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/14/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%B8%8A-%E2%80%94%E2%80%94ALU%E4%B8%8E%E6%95%B4%E6%95%B0%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97/" rel="prev" title="组成原理第三章(上)——ALU与整数的四则运算">
+                组成原理第三章(上)——ALU与整数的四则运算 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg"
+                alt="Saiyu Wang" />
+            
+              <p class="site-author-name" itemprop="name">Saiyu Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wang-sy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangsaiyu@cqu.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">图形学笔记（三）—— Harris角点检测器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Harris角点检测器"><span class="nav-number">1.2.</span> <span class="nav-text">Harris角点检测器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.2.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是角点"><span class="nav-number">1.2.2.</span> <span class="nav-text">什么是角点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Harris检测角点的核心思路"><span class="nav-number">1.2.3.</span> <span class="nav-text">Harris检测角点的核心思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Moravec"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Moravec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Harris"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">Harris</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#泰勒展开"><span class="nav-number">1.2.3.2.1.</span> <span class="nav-text">泰勒展开</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#矩阵表示"><span class="nav-number">1.2.3.2.2.</span> <span class="nav-text">矩阵表示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#相似对角化"><span class="nav-number">1.2.3.2.3.</span> <span class="nav-text">相似对角化</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#什么是相似对角化？"><span class="nav-number">1.2.3.2.3.1.</span> <span class="nav-text">什么是相似对角化？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#进行相似对角化"><span class="nav-number">1.2.3.2.3.2.</span> <span class="nav-text">进行相似对角化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回到问题本身"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">回到问题本身</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际计算"><span class="nav-number">1.2.4.</span> <span class="nav-text">实际计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.2.5.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saiyu Wang</span>
+  
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+  
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
+
