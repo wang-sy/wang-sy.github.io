@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="大二下,课内学习,组成原理," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="组成原理（三）下——浮点数运算 浮点数的表示 基础原理 有很多数字非常的大或者非常的小，会超出32位2进制数的表示范围。所以仅使用整形变量或是定点数并不能满足我们的需求，所以我们有了一套由十进制的科学计数法推广而来的浮点数表示方法。首先，我们来回顾一下十进制下的科学计数法: \[ N &#x3D; 10^E *M \] 我们把它推广到R进制，就可以得到: \[ N &#x3D; R^e*M \] 我们给他们都来命一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组成原理第三章-下-——浮点数的相关运算">
+<meta property="og:url" content="http://yoursite.com/2020/04/15/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%B8%8B-%E2%80%94%E2%80%94%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="SaiyuWang&#39;s Blog">
+<meta property="og:description" content="组成原理（三）下——浮点数运算 浮点数的表示 基础原理 有很多数字非常的大或者非常的小，会超出32位2进制数的表示范围。所以仅使用整形变量或是定点数并不能满足我们的需求，所以我们有了一套由十进制的科学计数法推广而来的浮点数表示方法。首先，我们来回顾一下十进制下的科学计数法: \[ N &#x3D; 10^E *M \] 我们把它推广到R进制，就可以得到: \[ N &#x3D; R^e*M \] 我们给他们都来命一个">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414020015817.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414020700674.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414025741113.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/IMG_20200414_111131.jpg">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414032235696.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414032250767.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414063901228.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/IMG_20200414_145344.jpg">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414065701391.png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414071918356.png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3NhaXl1d2FuZy1ibG9nLm9zcy1jbi1iZWlqaW5nLmFsaXl1bmNzLmNvbS8lRTclQkIlODQlRTYlODglOTAlRTUlOEUlOUYlRTclOTAlODYlRTclQUMlQUMlRTQlQjglODklRTclQUIlQTAlRTQlQjglOEIvaW1hZ2UtMjAyMDA0MTQwODU0NTc1MTAucG5n?x-oss-process=image/format,png">
+<meta property="og:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414085606233.png">
+<meta property="article:published_time" content="2020-04-15T03:24:01.000Z">
+<meta property="article:modified_time" content="2020-04-15T03:25:19.479Z">
+<meta property="article:author" content="Saiyu Wang">
+<meta property="article:tag" content="大二下">
+<meta property="article:tag" content="课内学习">
+<meta property="article:tag" content="组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414020015817.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/15/组成原理第三章-下-——浮点数的相关运算/"/>
+
+
+
+
+
+  <title>组成原理第三章-下-——浮点数的相关运算 | SaiyuWang's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SaiyuWang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">就当是一场梦，醒了很久还是很感动</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%B8%8B-%E2%80%94%E2%80%94%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Saiyu Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SaiyuWang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">组成原理第三章-下-——浮点数的相关运算</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-15T11:24:01+08:00">
+                2020-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">组成原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="组成原理三下浮点数运算">组成原理（三）下——浮点数运算</h1>
+<h2 id="浮点数的表示">浮点数的表示</h2>
+<h3 id="基础原理">基础原理</h3>
+<p>有很多数字非常的大或者非常的小，会超出32位2进制数的表示范围。所以仅使用整形变量或是定点数并不能满足我们的需求，所以我们有了一套由十进制的科学计数法推广而来的浮点数表示方法。首先，我们来回顾一下十进制下的科学计数法: <span class="math display">\[
+N = 10^E *M
+\]</span> 我们把它推广到R进制，就可以得到: <span class="math display">\[
+N = R^e*M
+\]</span> 我们给他们都来命一个名：</p>
+<ul>
+<li>R：基数，对于二进计数值的机器是一个常数，一般规定为2、8、16中的一个</li>
+<li>e：指数</li>
+<li>M：尾数</li>
+</ul>
+<p>一个机器浮点数由<strong>阶码和尾数以及符号位</strong>组成：</p>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414020015817.png" alt="image-20200414020015817" style="zoom:67%;" /></p>
+<ul>
+<li>尾数：用定点小数表示，给出有效数字的位数</li>
+<li>阶码：用定点整数形式表示，知名小数点在数据中的位置，决定了浮点数的表示范围。</li>
+</ul>
+<p>通俗的说，就是：阶码控制一个范围<span class="math inline">\([-X,X]\)</span>我们可以将这个范围看作一个区间，然后尾数，也就是这个定点小数表示当前的数字在这个区间中的相对位置。</p>
+<h3 id="ieee754重点">IEEE754（重点）</h3>
+<p><strong>标准表示方法：</strong>为便于软件移植，使用 IEEE标准IEEE754 ：<strong>（重点）</strong></p>
+<ul>
+<li>尾数用原码；</li>
+<li>阶码用变形移码；</li>
+<li>基为2</li>
+</ul>
+<p>按照该标准，32位浮点数和64位浮点数的标准格式为：</p>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414020700674.png" alt="image-20200414020700674" style="zoom:67%;" /></p>
+<p>其中：</p>
+<ul>
+<li>S—尾数符号，0正1负</li>
+<li>M—尾数，纯小数表示，小数点放在尾数域的最前面，采用源码表示</li>
+<li>E—阶码，采用移码表示（后面填坑）</li>
+</ul>
+<h3 id="浮点数的规格化表示">浮点数的规格化表示</h3>
+<p>众所周知，一个数可以由很多种科学计数法来表示，比如：</p>
+<p><span class="math inline">\(0.5 = 5*10^{-1}=0.5*10^{0},....\)</span></p>
+<p>我们可以一直写下去，那显然，如果大家都乱写就乱套了，所以为了提高数据的表示精度，需要做规格化处理，这样做可以：</p>
+<ul>
+<li>提高表示精度</li>
+<li>使数据表示有唯一性</li>
+</ul>
+<blockquote>
+<p>Q：什么是规格化？</p>
+<p>A：如果尾数为R进制的规格化，绝对值大于或等于<span class="math inline">\(\frac{1}{R}\)</span></p>
+</blockquote>
+<p>二进制源码的规格化数的表现形式：</p>
+<p>正数：<span class="math inline">\(0.1....\)</span></p>
+<p>负数：<span class="math inline">\(1.1....\)</span></p>
+<p>补码位数的规格化的表现形式：</p>
+<p>正数：<span class="math inline">\(0.1....\)</span></p>
+<p>负数：<span class="math inline">\(1.0.....\)</span></p>
+<p>补码下尾数的最高位域符号位相反</p>
+<p>可能有人看到这里看不懂，我解释一下，规格化处理后的数字应该满足尾数的绝对值大于或等于<span class="math inline">\(\frac{1}{R}\)</span>这里有<span class="math inline">\(R=1\)</span>，所以我们规格化处理后，尾数的绝对值应当大于等于0.5，0.5是什么?是2的-1次方，那么二进制源码表示下当尾数的最高位为1时，就满足规格化，这样的设计便于判断。</p>
+<p><strong>为什么这样的设计能够提高精度？</strong></p>
+<p>要想知道为什么这样做能够提高精度，就应当先了解为什么会产生精度误差。产生精度误差的原因是：<strong>当我们要表示的数很小或不能被准确表示的时候，我们的区间长*比例只能达到近似解。</strong>那么我们分析以下两种情况：</p>
+<ul>
+<li>例子：表示0.0001</li>
+<li>大区间小比例：
+<ul>
+<li>假设我们的指数为表示出来的值为100，那么我们想要表示0.0001，就需要让尾数位为：0.000001，但是众所周知，二进制数在很多情况下都只能尽量地逼近这个数，那么问题来了：该怎么让尾数尽可能地逼近这个数呢？答案就是：尽量用更多的位。那么反过来观察我们的方法，我们浪费了尾数位的高位。这显然是不理智的。</li>
+</ul></li>
+<li>小区间大比例：
+<ul>
+<li>我们刚才悟出了一个道理：<strong>精度主要由尾数位的准确程度决定</strong>，那么我们就要尽量的压榨尾数位，什么时候才能把它压榨到极限呢？答案很简单：第一位不为0。</li>
+</ul></li>
+</ul>
+<p><strong>隐藏位计数</strong></p>
+<p>我们还可以再使用隐藏位技术再提高一点精度，既然我们都知道，尾数的第一位必为1了，那我们还记录他干什么呢？那么我们在记录尾数的时候，可以将尾数的最高位通过左移一位隐藏起来(其实就是自然溢出)，这样就可以再多记一位尾数了。</p>
+<h3 id="规格化浮点数的真值">规格化浮点数的真值</h3>
+<p>我们通过32位浮点数来看：</p>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414025741113.png" alt="image-20200414025741113" style="zoom:50%;" /></p>
+<p>移码定义： <span class="math display">\[
+\begin{align}
+\begin{array}
+x[x]_移 &amp;= x_0x_1x_2x_3...x_n\\
+&amp; = 2^n +x
+\end{array}
+\end{align}
+\]</span> 实际上就是：在<span class="math inline">\(2^n\)</span>的基础上进行平移。</p>
+<p>一个规格化的32位浮点数的x的真值为： <span class="math display">\[
+x = (-1)^s*(1.M) * 2^{E-127}
+\]</span> 一个规格化的64位浮点数x的真值为： <span class="math display">\[
+x = (-1)^s*(1.M)*2^{E-1023}
+\]</span></p>
+<h4 id="例题1">例题1</h4>
+<p>若浮点数x的二进制储存格式为:<span class="math inline">\((41360000)_{16}\)</span>求其32位浮点数的十进制格式：</p>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/IMG_20200414_111131.jpg" alt="IMG_20200414_111131" style="zoom: 15%;" /></p>
+<h4 id="例题2">例题2</h4>
+<p>将十进制数20.59375转换成32位浮点数的二进制格式来存储。</p>
+<p>首先先将整数部分和分数部分转化成二进制数：</p>
+<p><span class="math inline">\(20.59375 = 10100.10011\)</span></p>
+<p>移动小数点，使其在1，2位之间：</p>
+<p><span class="math inline">\(10100.10011 = 1.010010011 * 2^4,e=4\)</span></p>
+<p>得到:<span class="math inline">\(e = E - 127\)</span></p>
+<p><span class="math inline">\(S = 0, E = 4+127=131=1000,0011,M = 010010011\)</span></p>
+<p>最后得到32位浮点数的二进制储存格式为：</p>
+<p><span class="math inline">\(0100,0001,1010,0100,1100,0000,0000,0000\)</span></p>
+<h3 id="ieee754浮点数的范围">IEEE754浮点数的范围</h3>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414032235696.png" alt="image-20200414032235696" style="zoom:50%;" /></p>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414032250767.png" alt="image-20200414032250767" style="zoom:50%;" /></p>
+<h2 id="浮点数的加减">浮点数的加减</h2>
+<h3 id="加法">加法</h3>
+<p>我们先从算数式的角度去理解，假设我们已经有了两个浮点数，它们分别是：</p>
+<p><span class="math inline">\(x = 2^{Ex}M_x\)</span></p>
+<p><span class="math inline">\(y = 2^{Ey}M_y\)</span></p>
+<p>其中，E代表阶码，M代表尾数</p>
+<p>那么两个浮点数进行加减运算实际上就是： <span class="math display">\[
+x \pm y = (M_x2^{Ex-Ey} \pm M_y)2^{Ey},E_x \leq E_y
+\]</span> 说白了就是分为几步：</p>
+<ul>
+<li>一、将两个数对齐，对齐到阶码大的数那里</li>
+<li>二、将对齐后的尾数相加</li>
+<li>三、乘上较大的阶码表示的数</li>
+</ul>
+<p>那么我们将这个操作转化到机器上，就变成了：</p>
+<ul>
+<li><p>一、0操作数的检查：</p></li>
+<li><p>二、比较阶码大小并完成对阶（小的数向大的数对齐），小阶的尾数右移，每右移一位,其阶码加1(右规)。</p></li>
+<li><p>三、尾数进行加或减运算</p></li>
+<li><p>四、结果规格化：尾数运算完之后可能不满足规格化的要求，所以要进行规格化处理</p>
+<ul>
+<li>向左规格化：如果不是规格化的数，需要尾数向左移位，这个很好理解，就是太小了需要大一点，实现方法就是：每向左一位，阶码减1，直到满足规格化要求为止</li>
+<li>向右规格化：两个满足规格化的数相加，可能太大。所以需要用右移的方法使结果满足规格化要求。方法是：每右移一位，阶码加一，直到满足规格化要求为止。</li>
+</ul></li>
+<li><p>五、舍入处理：在对阶或向右规格化的时候，尾数要向右进位，这样被右移的尾数的低位部分会被丢掉，从而会造成一定的误差，所以要进行舍入处理。</p>
+<ul>
+<li>0舍入1法:
+<ul>
+<li>如果右移的时候被丢掉的位数的最高位为0就舍去，否则就加一</li>
+</ul></li>
+<li>恒置1法：
+<ul>
+<li>只要数位被移掉，就在尾数的末尾置1。</li>
+</ul></li>
+</ul></li>
+<li><p>六、溢出处理：将数字右规后，再根据阶码来判断浮点运算是否溢出，溢出可以分为三类：</p>
+<ul>
+<li>负上溢：</li>
+<li>正上溢：正负上溢都一样，就是+1操作的时候，没法再加了，就溢出了</li>
+<li>下溢：向左规格化的时候，阶码已经小于0了，但是仍然要减1，这时叫做下溢</li>
+</ul>
+<p>所以我们说，浮点数的溢出是以其阶码溢出表现出来的：</p>
+<ul>
+<li>阶码下溢是由于表示的数的绝对值太小了，这时可以把数看作0</li>
+<li>阶码上溢是由于表示的数的绝对值实在是太大了，可以把数看作无穷</li>
+</ul>
+<p>流程图就直接copy老师的了：</p>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414063901228.png" alt="image-20200414063901228" style="zoom: 67%;" /></p></li>
+</ul>
+<h4 id="例题">例题</h4>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/IMG_20200414_145344.jpg" alt="IMG_20200414_145344" style="zoom:25%;" /></p>
+<h4 id="硬件电路">硬件电路</h4>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414065701391.png" alt="image-20200414065701391" style="zoom: 67%;" /></p>
+<h2 id="浮点数的乘除运算">浮点数的乘除运算</h2>
+<p><span class="math inline">\(x = 2^{Ex}M_x\)</span></p>
+<p><span class="math inline">\(y = 2^{Ey}M_y\)</span></p>
+<p>乘法运算规则： <span class="math display">\[
+x*y = 2^{(E_x+E_y)}*(M_x*M_y)
+\]</span> 除法规则： <span class="math display">\[
+x \div y= 2^{(E_x-E_y)}*(M_x \div M_y)
+\]</span></p>
+<h3 id="移码的溢出判断">移码的溢出判断</h3>
+<p>首先明确：使用双符号位的阶码加法器，规定移码的第二位始终为0，那么移码的第二位为1的话就说明他溢出了。</p>
+<ul>
+<li>当低位符号为0时，(10)表明结果上溢</li>
+<li>当低位符号位1时，(11)表明结果下溢</li>
+<li>最高位为0，说明没溢出</li>
+<li>低位符号为1，(01)结果为正</li>
+<li>低位结果为0，(00)结果为负</li>
+</ul>
+<h3 id="尾数处理">尾数处理</h3>
+<p>浮点加减法对结果的规格化及舍入处理也适用于浮点乘除法。</p>
+<h3 id="例题-1">例题</h3>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414071918356.png" alt="image-20200414071918356" style="zoom: 67%;" /></p>
+<h2 id="浮点数表示和算法总结">浮点数表示和算法总结</h2>
+<ul>
+<li>IEEE754</li>
+<li>尾数规格化</li>
+<li>浮点数计算流程</li>
+<li>浮点数计算硬件实现</li>
+</ul>
+<h2 id="mips中的浮点数指令">MIPS中的浮点数指令</h2>
+<p>在mips中有32个单精度的寄存器，专门用于浮点数的操作。记作：<span class="math inline">\(f_0,f_1,...,f_{31}\)</span>，在储存单精度浮点数的时候，我32个可以分别使用，而在储存双精度浮点数的时候可以两两组合使用，也就是<span class="math inline">\(f_0/f_1,f_2/f_3,...,f_{30}/f_{31}\)</span>。</p>
+<p>单精度的加减乘除指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add.s, sub.s, mul.s, div.s</span><br><span class="line"># 示例：add.s $f0, $f1, $f6</span><br></pre></td></tr></table></figure>
+<p>双精度的加减乘除：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add.d, sub.d, mul.d, div.d</span><br><span class="line"># 实例：mul.d $f4, $f4, $f6</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，上面说过双精度浮点数储存在两个连续的寄存器中，我们一般用开头的那个寄存器来代指另这两个寄存器的总体，所以我们上面的加法<span class="math inline">\(f4 = f4 + f6\)</span>中的f4实际上是指的f4f5连接而成的双精度数，当然f6也是同理。</p>
+<h3 id="例题1-1">例题1</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">f2c</span> <span class="params">(<span class="keyword">float</span> fahr)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="number">5.0</span>/<span class="number">9.0</span>) * (fahr - <span class="number">32.0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MIPS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f2c : lwc1 $f16, const5($gp)# 从环境中把5读入</span><br><span class="line">	  lwc2 $f18, const9($gp)# 从环境中把9读入</span><br><span class="line">	  div.s $f16, $f16, $f18# 除法</span><br><span class="line">	  lwc1 $f18, const32($gp)# 将32读入</span><br><span class="line">	  sub.s $f18, $f12, $f18# 减法</span><br><span class="line">	  mul.s $f0, $f16, $f18# 乘法</span><br><span class="line">	  jr $ra# 返回</span><br></pre></td></tr></table></figure>
+<h3 id="例题2-1">例题2</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mm</span><span class="params">(<span class="keyword">double</span> x[][], <span class="keyword">double</span> y[][], <span class="keyword">double</span> z[][])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">32</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j != <span class="number">32</span>;j ++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k != <span class="number">32</span>; k++)&#123;</span><br><span class="line">                x[i][j] = x[i][j] + y[i][k] * z[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设x,y,z分别在$a0, $a1, $a2,并且i,j,k在$s0,$s1,$s2。</p>
+<p>MIPS：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">    li $t1, 32 # t1 &#x3D; 32，用于判断是否临界</span><br><span class="line">    li $s0, 0 # i &#x3D; 0，对i进行初始化</span><br><span class="line">L1:</span><br><span class="line">    li $s1, 0 # j &#x3D; 0，</span><br><span class="line">L2:</span><br><span class="line">    li $s2, 0 # k &#x3D; 0</span><br><span class="line">    sll $t2, $s0, 5 # t2 &#x3D; i*32，左移五位也就是*32</span><br><span class="line">    addu $t2, $t2, $s1 # t2 &#x3D; i*size(row) + j，到此为止，t2 就是 (i,j)的位置了</span><br><span class="line">    sll $t2, $t2, 3 ## t2 &#x3D; t2 * 8， 因为每个字节八位，所以要乘八</span><br><span class="line">    l.d $f4, 0($t2) #f4 &#x3D; x[i][j]</span><br><span class="line">L3:</span><br><span class="line">    sll $t0, $s2, 5 # t0 &#x3D; k*32，左移五位也就是*32</span><br><span class="line">    addu $t0, $t2, $s1 # t0 &#x3D; k*size(row) + j，到此为止，t2 就是 (i,j)的位置了</span><br><span class="line">    sll $t0, $t0, 3 ## t0 &#x3D; t0 * 8， 因为每个字节八位，所以要乘八</span><br><span class="line">    addu $t0, $a2, $t0 # t0 是z[k][j]的地址</span><br><span class="line">    l.d $f16, 0($t0) # f16 &#x3D; z[k][j]</span><br><span class="line">	sll $t0, $s0, 5 # t0 &#x3D; k*32，左移五位也就是*32</span><br><span class="line">    addu $t0, $t0, $s2 # t0 &#x3D; k*size(row) + j，到此为止，t2 就是 (i,k)的位置了</span><br><span class="line">    sll $t0, $t0, 3 ## t0 &#x3D; t0 * 8， 因为每个字节八位，所以要乘八</span><br><span class="line">    addu $t0, $a1, $t0 # t0 是y[i][k]的地址</span><br><span class="line">    l.d $f18, 0($t0)</span><br><span class="line">    mul.d $f16, $f18, $f16 # y[i][k] * z[k][j]</span><br><span class="line">    add.d $f4, $f4, $f16 # f4 &#x3D; x[i][j] + y[i][k]*z[k][j]</span><br><span class="line">    addiu $s2, $s2, 1 # k++</span><br><span class="line">    bne $s2, $t1, L3 # if(k!&#x3D;32) goto: L3</span><br><span class="line">    s.d $f4, 0($t2) # x[i][j] &#x3D; $f4</span><br><span class="line">    addiu $s1, $s1, 1 # $j &#x3D; j + 1</span><br><span class="line">    bne $s1, $t1, L2 # if( j!&#x3D; 32) goto : L2</span><br><span class="line">    addiu $s0, $s0, 1# i++</span><br><span class="line">    bne $s0, $t1, L1# if(i!&#x3D; 32) goto L1</span><br></pre></td></tr></table></figure>
+<h2 id="精度误差">精度误差</h2>
+<h3 id="grs">GRS</h3>
+<p>双精度的尾数只有53位，即使包含了一个恒为1的隐藏位。但是他只能表述<span class="math inline">\(2^{53}\)</span>个数字，所以她表示的过程中一定是有一定的精度误差的，为了保证精度，IEEE754定义了一些额外的规则，比如这里的GRS。其中guard、round、sticky是53位以外有额外增加的三位。</p>
+<ul>
+<li>guard,保护位</li>
+<li>round, 舍入位</li>
+<li>sticky,黏贴位</li>
+</ul>
+<p><span class="math display">\[
+F = 1.xxxxxxxxxxxxxxxxxxx\ G \ R \ S
+\]</span></p>
+<p>但是不是所有的处理器都实现了这样的操作，这是因为我们需要在硬件实现的成本、效率、市场等角度去做均衡。实际操作过程中，根据IEEE754，中间结果在右边至少应该增加两个附加位(guard &amp; round)：</p>
+<ul>
+<li>Guard bit(保护位)：在尾数部分右边的位</li>
+<li>Rounding bit（舍入位）：在保护位右边的位</li>
+</ul>
+<p>附加位的作用：用于保护对阶时向右移的位或运算的中间结果</p>
+<p>附加位的处理：</p>
+<ul>
+<li>左规的时候被移动到尾数中</li>
+<li>作为舍入的依据</li>
+</ul>
+<h3 id="舍入方式">舍入方式</h3>
+<figure>
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL3NhaXl1d2FuZy1ibG9nLm9zcy1jbi1iZWlqaW5nLmFsaXl1bmNzLmNvbS8lRTclQkIlODQlRTYlODglOTAlRTUlOEUlOUYlRTclOTAlODYlRTclQUMlQUMlRTQlQjglODklRTclQUIlQTAlRTQlQjglOEIvaW1hZ2UtMjAyMDA0MTQwODU0NTc1MTAucG5n?x-oss-process=image/format,png" alt="" /><figcaption>image-20200414085457510</figcaption>
+</figure>
+<ul>
+<li>一、就近舍入：舍入为最近可表示的数</li>
+<li>二、朝正无穷舍入：舍入为Z2（正向）</li>
+<li>三、朝负无穷舍入：舍入为Z1（负向舍入）</li>
+<li>四、朝0方向舍入：截去，正数：Z1；负数：取Z2；</li>
+</ul>
+<h3 id="由计算顺序引起的误差">由计算顺序引起的误差</h3>
+<p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0%E4%B8%8B/image-20200414085606233.png" alt="image-20200414085606233" style="zoom:50%;" /></p>
+<p>比如说向上面的一样，我们的单精度数能够表示的数字个数有限，当范围过大时，克表示的最小单位会超过1，那么这时将1加入，1无法准确计算，只能作为舍入依据</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%A4%A7%E4%BA%8C%E4%B8%8B/" rel="tag"># 大二下</a>
+          
+            <a href="/tags/%E8%AF%BE%E5%86%85%E5%AD%A6%E4%B9%A0/" rel="tag"># 课内学习</a>
+          
+            <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag"># 组成原理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/14/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%B8%8A-%E2%80%94%E2%80%94ALU%E4%B8%8E%E6%95%B4%E6%95%B0%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97/" rel="next" title="组成原理第三章(上)——ALU与整数的四则运算">
+                <i class="fa fa-chevron-left"></i> 组成原理第三章(上)——ALU与整数的四则运算
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg"
+                alt="Saiyu Wang" />
+            
+              <p class="site-author-name" itemprop="name">Saiyu Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wang-sy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangsaiyu@cqu.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#组成原理三下浮点数运算"><span class="nav-number">1.</span> <span class="nav-text">组成原理（三）下——浮点数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数的表示"><span class="nav-number">1.1.</span> <span class="nav-text">浮点数的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础原理"><span class="nav-number">1.1.1.</span> <span class="nav-text">基础原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ieee754重点"><span class="nav-number">1.1.2.</span> <span class="nav-text">IEEE754（重点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数的规格化表示"><span class="nav-number">1.1.3.</span> <span class="nav-text">浮点数的规格化表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规格化浮点数的真值"><span class="nav-number">1.1.4.</span> <span class="nav-text">规格化浮点数的真值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例题1"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">例题1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例题2"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">例题2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ieee754浮点数的范围"><span class="nav-number">1.1.5.</span> <span class="nav-text">IEEE754浮点数的范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数的加减"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数的加减</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加法"><span class="nav-number">1.2.1.</span> <span class="nav-text">加法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例题"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">例题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#硬件电路"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">硬件电路</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数的乘除运算"><span class="nav-number">1.3.</span> <span class="nav-text">浮点数的乘除运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移码的溢出判断"><span class="nav-number">1.3.1.</span> <span class="nav-text">移码的溢出判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尾数处理"><span class="nav-number">1.3.2.</span> <span class="nav-text">尾数处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例题-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">例题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数表示和算法总结"><span class="nav-number">1.4.</span> <span class="nav-text">浮点数表示和算法总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mips中的浮点数指令"><span class="nav-number">1.5.</span> <span class="nav-text">MIPS中的浮点数指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例题1-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">例题1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例题2-1"><span class="nav-number">1.5.2.</span> <span class="nav-text">例题2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#精度误差"><span class="nav-number">1.6.</span> <span class="nav-text">精度误差</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grs"><span class="nav-number">1.6.1.</span> <span class="nav-text">GRS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#舍入方式"><span class="nav-number">1.6.2.</span> <span class="nav-text">舍入方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#由计算顺序引起的误差"><span class="nav-number">1.6.3.</span> <span class="nav-text">由计算顺序引起的误差</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saiyu Wang</span>
+  
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+  
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
+
