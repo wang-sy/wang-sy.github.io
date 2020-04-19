@@ -281,6 +281,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%83-%E5%9B%BE%E5%83%8F%E6%89%AD%E6%9B%B2%E4%B8%8E%E9%85%8D%E5%87%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Saiyu Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SaiyuWang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/19/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%83-%E5%9B%BE%E5%83%8F%E6%89%AD%E6%9B%B2%E4%B8%8E%E9%85%8D%E5%87%86/" itemprop="url">python图像处理笔记-七-图像扭曲与配准</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T22:44:19+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          python图像处理笔记-七-图像扭曲与配准
+对图像块使用仿射变换，我们将其称为图像扭曲。该操作不仅出现在计算机图形学中，还出现在计算机视觉算法中，扭曲可以用scipy的ndimage完成：
+1transformedIm = ndimage.affine_transform(im, A, b, si
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/19/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%83-%E5%9B%BE%E5%83%8F%E6%89%AD%E6%9B%B2%E4%B8%8E%E9%85%8D%E5%87%86/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E5%85%AD%E2%80%94%E2%80%94%E5%8D%95%E5%BA%94%E6%80%A7%E5%8F%98%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -376,9 +526,10 @@
           
           python图像处理笔记-六——单应性变换
 齐次坐标
-单应性变化是将一个平面内的店映射到另一个平面内的二维投影变换。本质上，单应性变换 H，按照下方的方程映射到二维的点：
-\[
-\left[\begin{matrix}    x&#39; \\   y&#39; \\   w&#39;\end{ma
+单应性变化是将一个平面内的店映射到另一个平面内的二维投影变换。本质上，单应性变换
+H，按照下方的方程映射到二维的点：
+$$
+\left[\begin{matrix}    x’ \   y’ \   w’\end{matrix}\right]=\
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -526,7 +677,8 @@
       
         
           
-          图形学笔记（五）——SIFT（尺度不变特征变换） SIFT(Scale-Invariant Feature Transform)的中文名字是尺度不变特征变换。SIFT描述子具有非常强的稳健性，自从SIFT出现，许多其他本质上使用相同描述子的方法也相继出现。它可以用于三维视角和噪声的可靠匹配。
+          图形学笔记（五）——SIFT（尺度不变特征变换）
+SIFT(Scale-Invariant Feature Transform)的中文名字是尺度不变特征变换。SIFT描述子具有非常强的稳健性，自从SIFT出现，许多其他本质上使用相同描述子的方法也相继出现。它可以用于三维视角和噪声的可靠匹配。
 参考资
           ...
           <!--noindex-->
@@ -830,7 +982,8 @@ Harris角点检测器可以检测出来图像中的兴趣点，但是没有给�
           组成原理（三）下——浮点数运算
 浮点数的表示
 基础原理
-有很多数字非常的大或者非常的小，会超出32位2进制数的表示范围。所以仅使用整形变量或是定点数并不能满足我们的需求，所以我们有了一套由十进制的科学计数法推广而来的浮点数表示方法。首先，我们来回顾一下十进制下的科学计数法: \[
+有很多数字非常的大或者非常的小，会超出32位2进制数的表示范围。所以仅使用整形变量或是定点数并不能满足我们的需求，所以我们有了一套由十进制的科学计数法推广而来的浮点数表示方法。首先，我们来回顾一下十进制下的科学计数法:
+$$
 N = 10^E 
           ...
           <!--noindex-->
@@ -982,13 +1135,18 @@ N = 10^E
           计算机组成原理—第三章
 参考资料
 
+
 《计算机组成与设计：硬件/软件接口》——机械工业出版社
+
+
 《Arithmetic for Computers》——Jiang Zhong
+
+
 授课内容 —— 吴长泽老师
 
+
 ALU的构建
-ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单的例子
-逻辑
+ALU就是运算器，这些内容都可以在书中的附录中找到，我们接下来看一个简单
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1142,7 +1300,7 @@ ALU就是运算器，这些内容都可以在书中的附录中找到，我们�
 Harris角点检测器
 参考资料
 
-Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Ki
+Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33). 人民邮电出版社. Ki
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1292,7 +1450,8 @@ Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33).
           
           阿里C++面试文档
 4月8做完笔试，做的稀烂，还以为直接凉凉了，就没管这事了，没想到今天接到约面试的电话，约到了明天下午，然鹅我已经半年多没写过C++了，于是今天下午赶紧恶补一下，许个愿，等过几天看看能不能回来还愿。
-先说结果： 我是18级的，他们不招，所以这些准备的今年是用不上了，但是还是可以分享
+先说结果：
+我是18级的，他们不招，所以这些准备的今年是用不上了，但是还是可以分享
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1594,165 +1753,12 @@ Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33).
         
           
           前言
-开学一阵子了，最近各大高校都在网上授课，在上(mo)课(yu)的时候忽然看到一篇博客：又到了每年此刻，教你把课程表导入日历，忽然惊起，感叹道:把课程表导入日历，让日历提醒我上课！这样就不会因为coding(moyu)影响到我上(gua)课(ji)了。 再导入电脑后，我还希望能够把电脑日历中的内
+开学一阵子了，最近各大高校都在网上授课，在上(mo)课(yu)的时候忽然看到一篇博客：又到了每年此刻，教你把课程表导入日历，忽然惊起，感叹道:把课程表导入日历，让日历提醒我上课！这样就不会因为coding(moyu)影响到我上(gua)课(ji)了。
+再导入电脑后，我还希望能够把电脑日历中的内
           ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/04/07/%E9%80%9A%E8%BF%87outlook%E9%82%AE%E7%AE%B1%E5%AE%9E%E7%8E%B0windows%E3%80%81%E5%AE%89%E5%8D%93%E3%80%81ios%E4%B8%89%E5%B9%B3%E5%8F%B0%E6%97%A5%E5%8E%86%E5%90%8C%E6%AD%A5/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Saiyu Wang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SaiyuWang's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/07/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%80/" itemprop="url">python图像处理笔记(一)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-07T23:41:18+08:00">
-                2020-04-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像处理</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          图像处理笔记(一)
-直方图均衡化
-参考文档
-[1] Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 11). 人民邮电出版社.
-[2] 直方图均衡化
-代码
-12345678910111213# 直方图均衡化def histeq(im, nbr_bins = 
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/07/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B8%80/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1844,7 +1850,7 @@ Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 33).
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

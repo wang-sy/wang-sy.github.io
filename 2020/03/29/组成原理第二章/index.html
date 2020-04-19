@@ -389,7 +389,7 @@
       
 
       
-        <h1 id="计算机指令">计算机指令</h1>
+        <h1>计算机指令</h1>
 <h2 id="算术运算指令">算术运算指令</h2>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add </span>a, <span class="keyword">b, </span>c<span class="comment"># a = b + c</span></span><br></pre></td></tr></table></figure>
 <p><strong>设计原则一——对指令进行规整化设置</strong></p>
@@ -406,7 +406,7 @@
 <li>MIPS</li>
 </ul>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add </span><span class="built_in">t0</span>, g, h <span class="comment"># temp : t0 = g + h</span></span><br><span class="line"><span class="keyword">add </span><span class="built_in">t1</span>, i, <span class="keyword">j </span><span class="comment"># temp : t1 = i + j</span></span><br><span class="line"><span class="keyword">sub </span>f, <span class="built_in">t0</span>, <span class="built_in">t1</span> <span class="comment">#final: f  = t0 - t1</span></span><br></pre></td></tr></table></figure>
-<p>参与算术逻辑运算的变量必须是<strong>寄存器变量</strong>，对于MIPS(x 32)指令集来说，有32个寄存器，每个寄存器长<span class="math display">\[32bit\]</span>，它们：</p>
+<p>参与算术逻辑运算的变量必须是<strong>寄存器变量</strong>，对于MIPS(x 32)指令集来说，有32个寄存器，每个寄存器长$$32bit$$，它们：</p>
 <ul>
 <li>用于存储最常用到的变量</li>
 <li>每个寄存器的编号为0~31</li>
@@ -424,8 +424,8 @@
 </ul>
 <p>前面的代码，根据<strong>约定符号进行矫正</strong>：</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add </span>$<span class="built_in">t0</span>, $<span class="built_in">s1</span>, $<span class="built_in">s2</span></span><br><span class="line"><span class="keyword">add </span>$<span class="built_in">t1</span>, $<span class="built_in">s3</span>, $<span class="built_in">s4</span></span><br><span class="line"><span class="keyword">sub </span>$<span class="built_in">s0</span>, $<span class="built_in">t0</span>, $<span class="built_in">t1</span></span><br></pre></td></tr></table></figure>
-<p>可以看到，在<span class="math inline">\(MIPS32\)</span>指令集中，只有<span class="math inline">\(32*32\)</span>个存储空间，这并不足以支持所有运算，所以很多的数据是存储在<strong>内存</strong>中的，我们将这些被储存在内存中的数据称为_<strong>Memory Operands</strong>。内存的操作数是用来保存复杂的操作数，这是由寄存器的空间过小导致的。</p>
-<p>算数逻辑运算不能直接对内存中的数据进行运算，这就需要我们先<strong>从内存中读取(load)数据</strong>,然后<strong>再进行处理</strong>，最终再将操作的<strong>结果写入(write)内存</strong>。在对内存的操作中，都是通过字节寻址的(每八位分配一个地址)。值得注意的是，每个字节由<span class="math inline">\(8bit\)</span>组成，而寄存器中每一位长度是<span class="math inline">\(32bit\)</span>，这就表明，我们在知道首地址的情况下，想要寻找第<span class="math inline">\(i\)</span>个元素时，需要将偏移量<span class="math inline">\(*4\)</span>。</p>
+<p>可以看到，在$MIPS32$指令集中，只有$32*32$个存储空间，这并不足以支持所有运算，所以很多的数据是存储在<strong>内存</strong>中的，我们将这些被储存在内存中的数据称为_<strong>Memory Operands</strong>。内存的操作数是用来保存复杂的操作数，这是由寄存器的空间过小导致的。</p>
+<p>算数逻辑运算不能直接对内存中的数据进行运算，这就需要我们先<strong>从内存中读取(load)数据</strong>,然后<strong>再进行处理</strong>，最终再将操作的<strong>结果写入(write)内存</strong>。在对内存的操作中，都是通过字节寻址的(每八位分配一个地址)。值得注意的是，每个字节由$8bit$组成，而寄存器中每一位长度是$32bit$，这就表明，我们在知道首地址的情况下，想要寻找第$i$个元素时，需要将偏移量$*4$。</p>
 <p>MIPS中数据的对齐方式是：<strong>大端对齐</strong>。什么是大端对齐呢？</p>
 <ul>
 <li>存储一个数据，需要四个字节，这也就对应着内存上的四个存储单元。</li>
@@ -445,7 +445,7 @@
 <p>其中，$s2 is h,$s3 is the base address of A</p>
 <p><strong>MIPS code</strong></p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lw </span> $<span class="built_in">t0</span>, <span class="number">32</span>($<span class="built_in">s3</span>)</span><br><span class="line"><span class="keyword">add </span>$<span class="built_in">t0</span>, $<span class="built_in">s2</span>, $<span class="built_in">t0</span></span><br><span class="line"><span class="keyword">sw </span> $<span class="built_in">t0</span>, <span class="number">48</span>($<span class="built_in">s3</span>)<span class="comment">#写入</span></span><br></pre></td></tr></table></figure>
-<p>可以看出，寄存器和内存的交互主要通过<span class="math inline">\(lw\)</span> ,<span class="math inline">\(sw\)</span>两条语句，进行数据的读取、写入，对于编译器而言，选择哪些变量放到寄存器中，哪些放到内存中，是非常关键的问题，同时也是非常困难的问题。</p>
+<p>可以看出，寄存器和内存的交互主要通过$lw$ ,$sw$两条语句，进行数据的读取、写入，对于编译器而言，选择哪些变量放到寄存器中，哪些放到内存中，是非常关键的问题，同时也是非常困难的问题。</p>
 <h2 id="立即数">立即数</h2>
 <p>所谓<strong>立即数</strong>，即所使用的变量是一个常数，他是包含在指令中的。如:</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">addi </span>$<span class="built_in">s3</span>, $<span class="built_in">s3</span>, <span class="number">4</span></span><br></pre></td></tr></table></figure>
@@ -455,26 +455,36 @@
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">addi </span>$<span class="built_in">s3</span>, $<span class="built_in">s3</span>, -<span class="number">4</span></span><br></pre></td></tr></table></figure>
 <p>就可以完成C语言中如下功能</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s3 -= <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
-<p><strong>支持的数字范围：</strong>立即数操作的常亮仅支持有符号的16位整数，即：<span class="math inline">\(\left[ -32768, 32767\right]\)</span>这个区间。如果需要一个32位整数，那么这个整数就只能被先放到内存中，然后再被寄存器读取。</p>
+<p>**支持的数字范围：**立即数操作的常亮仅支持有符号的16位整数，即：$\left[ -32768, 32767\right]$这个区间。如果需要一个32位整数，那么这个整数就只能被先放到内存中，然后再被寄存器读取。</p>
 <p>这里就引出了第三个设计原则：<strong>加快高概率事件(Make the Common Case Fast)</strong></p>
 <ul>
-<li><p>小的常数是常用的</p></li>
-<li><p>使用常用的数，不需要从内存中读取</p>
-<h3 id="数字的类型">数字的类型</h3></li>
-<li><p>无符号整数(unsigned int)</p>
+<li>
+<p>小的常数是常用的</p>
+</li>
+<li>
+<p>使用常用的数，不需要从内存中读取</p>
+<h3 id="数字的类型">数字的类型</h3>
+</li>
+<li>
+<p>无符号整数(unsigned int)</p>
 <ul>
 <li>用于表示地址</li>
 <li>或是非负数</li>
-</ul></li>
-<li><p>有符号整数</p>
+</ul>
+</li>
+<li>
+<p>有符号整数</p>
 <ul>
 <li>正负数</li>
-</ul></li>
-<li><p>浮点数</p>
+</ul>
+</li>
+<li>
+<p>浮点数</p>
 <ul>
 <li>单精度浮点数(float)</li>
 <li>双精度浮点数(double)</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p><strong>有符号数的表示</strong></p>
 <ul>
@@ -487,42 +497,47 @@
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add </span> $<span class="built_in">t2</span>, $<span class="built_in">s1</span>, $<span class="built_in">zero</span></span><br><span class="line"><span class="keyword">addi </span>$<span class="built_in">t2</span>, $<span class="built_in">zero</span>, <span class="number">100</span></span><br></pre></td></tr></table></figure>
 <p>事实上，MIPS中是没有初始化的方法的，在上面的代码中，我们用$s1的值初始化了$t2，然后将100赋值给$t2，这种语法的设计减少了很多冗余的语句。</p>
 <h2 id="有符号数和无符号数的表示">有符号数和无符号数的表示</h2>
-<p><strong>无符号二进制数计算公式</strong>: <span class="math display">\[  x = \Sigma \left( x_i 2^i\right) \]</span> 这个老掉牙了，没啥好说的，一个长度为n的无符号二进制数，能表示<span class="math inline">\(\left[0,2^n-1\right]\)</span>这个区间内的整数。</p>
+<p><strong>无符号二进制数计算公式</strong>:<br>
+$$  x = \Sigma \left( x_i 2^i\right) $$<br>
+这个老掉牙了，没啥好说的，一个长度为n的无符号二进制数，能表示$\left[0,2^n-1\right]$这个区间内的整数。</p>
 <p><strong>有符号数的表示</strong>：</p>
 <ul>
 <li><strong>源码的表示：最高为作为符号位</strong>
 <ul>
 <li><strong>0代表符号为正</strong></li>
 <li><strong>1代表符号为负</strong></li>
-</ul></li>
+</ul>
+</li>
 <li>源码表示存在的问题：<strong>同时存在正0和负0</strong></li>
 </ul>
 <p><strong>补码的表示</strong>：这一部分我之前看的时候基本上都是硬背的，现在听到这种讲法才恍然大悟（菜是原罪）</p>
-<p>假设补码表示的二进制数有n位，标号为<span class="math inline">\(0 ,n-1\)</span>，那么补码到十进制数的计算公式为： <span class="math display">\[ x = -x_{n-1}*2^{n-1} + \Sigma_{i=0}^{n-2} \left(x_{i}*2^{i}\right) \]</span> 它对应的取值范围是:<span class="math inline">\(\left[ -2^{n-1},+2^{n-1}-1\right]\)</span></p>
+<p>假设补码表示的二进制数有n位，标号为$0  ,n-1$，那么补码到十进制数的计算公式为：<br>
+$$ x = -x_{n-1}*2^{n-1} + \Sigma_{i=0}^{n-2} \left(x_{i}*2^{i}\right) $$<br>
+它对应的取值范围是:$\left[ -2^{n-1},+2^{n-1}-1\right]$</p>
 <p>在整数运算中，大多数情况下，使用的是补码的形式。下面有一些特殊的补码数字（帮助理解用的，不用想哪里特殊）:</p>
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">十进制</th>
-<th style="text-align: center;">二进制</th>
+<tr>
+<th style="text-align:center">十进制</th>
+<th style="text-align:center">二进制</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0000 0000 … 0000</td>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0000 0000 … 0000</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">-1</td>
-<td style="text-align: center;">1111 1111 … 1111</td>
+<tr>
+<td style="text-align:center">-1</td>
+<td style="text-align:center">1111 1111 … 1111</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">最小的数</td>
-<td style="text-align: center;">1000 0000 … 0000</td>
+<tr>
+<td style="text-align:center">最小的数</td>
+<td style="text-align:center">1000 0000 … 0000</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">最大的数</td>
-<td style="text-align: center;">0111 1111 … 1111</td>
+<tr>
+<td style="text-align:center">最大的数</td>
+<td style="text-align:center">0111 1111 … 1111</td>
 </tr>
 </tbody>
 </table>
@@ -532,29 +547,35 @@
 <li>将数字取反：<strong>将数字的每一位取反，再对最后一位加1</strong>。
 <ul>
 <li>优点：可以用已有的加法电路，做简单的拓展即可作为减法电路使用。</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>符号位扩展</strong>：
 <ul>
-<li>应用场景：如:使用<span class="math inline">\(addi\)</span>指令时，得到的是一个16位数字，要将该数字拓展为32位数字，才可以与其他数字进行算术运算。</li>
+<li>应用场景：如:使用$addi$指令时，得到的是一个16位数字，要将该数字拓展为32位数字，才可以与其他数字进行算术运算。</li>
 <li><strong>无符号数的拓展方法</strong>：
 <ul>
 <li>直接补零</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>有符号数的拓展方法</strong>：
 <ul>
 <li><strong>正数</strong>：在数字前方<strong>补0</strong></li>
 <li><strong>负数</strong>：在数字前方<strong>补1</strong></li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="指令的表示">指令的表示</h2>
-<p>还记得我们第一章的时候讲过，汇编语言多数时间执行着<strong>将高级语言翻译成机器语言(machine code)</strong> 工作。下面是一些寄存器名称和用途的的对应表： <img src="https://img-blog.csdnimg.cn/20200329231009644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 其中，1号寄存器被称为$at，它是为汇编程序预留的；26-27号寄存器被称为$k0,$k1，他们是保留给操作系统的。</p>
+<p>还记得我们第一章的时候讲过，汇编语言多数时间执行着<strong>将高级语言翻译成机器语言(machine code)</strong> 工作。下面是一些寄存器名称和用途的的对应表：<br>
+<img src="https://img-blog.csdnimg.cn/20200329231009644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+其中，1号寄存器被称为$at，它是为汇编程序预留的；26-27号寄存器被称为$k0,$k1，他们是保留给操作系统的。</p>
 <p>指令集分为六大类：</p>
 <ul>
 <li>算数逻辑运算</li>
 <li>内存访问</li>
 <li>分支和跳转指令</li>
-<li>浮点运算指令 –使用协处理器完成</li>
+<li>浮点运算指令 --使用协处理器完成</li>
 <li>内存管理指令</li>
 <li>特殊指令</li>
 </ul>
@@ -564,11 +585,12 @@
 <li>HI &amp; LO：在乘除法运算时做临时储存</li>
 </ul>
 <h3 id="mips32中指令集架构的格式">mips32中指令集架构的格式</h3>
-<p><img src="https://img-blog.csdnimg.cn/20200329231053563.png" alt="在这里插入图片描述" /> #### R format</p>
+<p><img src="https://img-blog.csdnimg.cn/20200329231053563.png" alt="在这里插入图片描述"></p>
+<h4 id="R-format">R format</h4>
 <p>主要用途：用于表示<strong>算数逻辑运算</strong>，分为：</p>
 <p>他们分别代表：</p>
 <ul>
-<li><strong>op</strong>：<span class="math inline">\(operation\ code\)</span>用于表示当前的操作类型</li>
+<li><strong>op</strong>：$operation\ code$用于表示当前的操作类型</li>
 <li><strong>rs,rt</strong>：表示用于运算的两个源操作数，对应寄存器的编号</li>
 <li><strong>rd</strong>：目标操作数，对应寄存器的编号</li>
 <li><strong>shamt</strong>：针对移位运算，记录移位的次数</li>
@@ -579,117 +601,136 @@
 <p>对应的指令为：</p>
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">special</th>
-<th style="text-align: center;">$s1</th>
-<th style="text-align: center;">$s2</th>
-<th style="text-align: center;">$t0</th>
-<th style="text-align: center;">0</th>
-<th style="text-align: center;">add</th>
+<tr>
+<th style="text-align:center">special</th>
+<th style="text-align:center">$s1</th>
+<th style="text-align:center">$s2</th>
+<th style="text-align:center">$t0</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">add</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">17</td>
-<td style="text-align: center;">18</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">32</td>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">17</td>
+<td style="text-align:center">18</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">32</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">000000</td>
-<td style="text-align: center;">10001</td>
-<td style="text-align: center;">10010</td>
-<td style="text-align: center;">01000</td>
-<td style="text-align: center;">00000</td>
-<td style="text-align: center;">100000</td>
+<tr>
+<td style="text-align:center">000000</td>
+<td style="text-align:center">10001</td>
+<td style="text-align:center">10010</td>
+<td style="text-align:center">01000</td>
+<td style="text-align:center">00000</td>
+<td style="text-align:center">100000</td>
 </tr>
 </tbody>
 </table>
-<h4 id="i-format">I format</h4>
-<p><img src="https://img-blog.csdnimg.cn/20200329231114195.png" alt="在这里插入图片描述" /> I-format可以用于之前的<span class="math inline">\(addi\)</span>操作、<span class="math inline">\(load/store\)</span>或是条件跳转等指令。 其中</p>
+<h4 id="I-format">I format</h4>
+<p><img src="https://img-blog.csdnimg.cn/20200329231114195.png" alt="在这里插入图片描述"><br>
+I-format可以用于之前的$addi$操作、$load/store$或是条件跳转等指令。<br>
+其中</p>
 <ul>
 <li>rs/rt ：源操作或目标操作寄存器</li>
-<li><span class="math inline">\(constant\ or\ address\)</span></li>
+<li>$constant\ or\ address$</li>
 <li>在进行运算时：补码形式的二进制数</li>
 <li>在进行寻址时：表示内存地址</li>
 </ul>
-<p>设计规则四——<strong><em>Good design demands good compromises</em></strong></p>
+<p>设计规则四——<em><strong>Good design demands good compromises</strong></em></p>
 <p>这种设计方法看似折中、不利于译码，但将长度固定在了３２位，为了统一，增加了一部分译码的复杂性，达到了整体的统一，同时，这种设计方法，降低了后期电路设计的复杂性。</p>
-<h4 id="j-format">J format</h4>
+<h4 id="J-format">J format</h4>
 <p>后面再讲</p>
 <h3 id="冯诺依曼计算机设计的两个关键特性">冯诺依曼计算机设计的两个关键特性</h3>
-<h4 id="指令和数据都是二进制串无法区分">１．指令和数据都是二进制串，无法区分</h4>
-<h4 id="程序时能够被改写的">２．程序时能够被改写的</h4>
-<figure>
-<img src="https://img-blog.csdnimg.cn/20200329231127317.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
-</figure>
+<h4 id="１．指令和数据都是二进制串，无法区分">１．指令和数据都是二进制串，无法区分</h4>
+<h4 id="２．程序时能够被改写的">２．程序时能够被改写的</h4>
+<p><img src="https://img-blog.csdnimg.cn/20200329231127317.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>存储程序相关的基本概念：</p>
 <ul>
-<li><p><strong>程序可以被保存为二进制文件</strong>，这样的特性使得一个程序可以从一个电脑搬到另一个电脑上使用，这一个叫做“<strong><em>二进制的兼容性</em></strong>”（deepin-wine）</p></li>
-<li><p>为了<strong>保证对已经编译好了的软件的继承</strong>，指令集架构应当围绕着少数几个大的指令集架构发展。</p>
+<li>
+<p><strong>程序可以被保存为二进制文件</strong>，这样的特性使得一个程序可以从一个电脑搬到另一个电脑上使用，这一个叫做“<em><strong>二进制的兼容性</strong></em>”（deepin-wine）</p>
+</li>
+<li>
+<p>为了<strong>保证对已经编译好了的软件的继承</strong>，指令集架构应当围绕着少数几个大的指令集架构发展。</p>
 <h2 id="逻辑运算指令">逻辑运算指令</h2>
-<p>一些对应的语言： <img src="https://img-blog.csdnimg.cn/20200329231142538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
-<h3 id="移位运算shift-operations">移位运算(Shift Operations)</h3></li>
+<p>一些对应的语言：<br>
+<img src="https://img-blog.csdnimg.cn/20200329231142538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="移位运算-Shift-Operations">移位运算(Shift Operations)</h3>
+</li>
 </ul>
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">special</th>
-<th style="text-align: center;">rs</th>
-<th style="text-align: center;">rt</th>
-<th style="text-align: center;">rd</th>
-<th style="text-align: center;">shamt</th>
-<th style="text-align: center;">funct</th>
+<tr>
+<th style="text-align:center">special</th>
+<th style="text-align:center">rs</th>
+<th style="text-align:center">rt</th>
+<th style="text-align:center">rd</th>
+<th style="text-align:center">shamt</th>
+<th style="text-align:center">funct</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: center;">6 bits</td>
-<td style="text-align: center;">5 bits</td>
-<td style="text-align: center;">5 bits</td>
-<td style="text-align: center;">5 bits</td>
-<td style="text-align: center;">5 bits</td>
-<td style="text-align: center;">6 bits</td>
+<tr>
+<td style="text-align:center">6 bits</td>
+<td style="text-align:center">5 bits</td>
+<td style="text-align:center">5 bits</td>
+<td style="text-align:center">5 bits</td>
+<td style="text-align:center">5 bits</td>
+<td style="text-align:center">6 bits</td>
 </tr>
 </tbody>
 </table>
-<p>C语言中 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$s1 = $s2 &lt;&lt; <span class="number">10</span>;</span><br><span class="line">$s1 = $s2 &gt;&gt; <span class="number">10</span>;</span><br></pre></td></tr></table></figure> 与MIPS中： <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sll </span>$<span class="number">1</span>,$<span class="number">2</span>,<span class="number">10</span></span><br><span class="line"><span class="keyword">srl </span>$<span class="number">1</span>,$<span class="number">2</span>,<span class="number">10</span></span><br></pre></td></tr></table></figure> 相同 其中： shamt-用于记录移动多少位</p>
+<p>C语言中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$s1 = $s2 &lt;&lt; <span class="number">10</span>;</span><br><span class="line">$s1 = $s2 &gt;&gt; <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>与MIPS中：</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sll </span>$<span class="number">1</span>,$<span class="number">2</span>,<span class="number">10</span></span><br><span class="line"><span class="keyword">srl </span>$<span class="number">1</span>,$<span class="number">2</span>,<span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>相同<br>
+其中： shamt-用于记录移动多少位</p>
 <ul>
-<li><p>逻辑左移运算：</p>
+<li>
+<p>逻辑左移运算：</p>
 <ul>
 <li>左移，并将空出来的部分用零填充</li>
-<li>左移<span class="math inline">\(i\)</span>位，相当于乘上<span class="math inline">\(2^i\)</span></li>
-</ul></li>
-<li><p>逻辑右移运算：</p>
-<ul>
-<li><p>右移，并将空出来的部分用零填充</p></li>
-<li><p>右移<span class="math inline">\(i\)</span>位，相当于除以上<span class="math inline">\(2^i\)</span></p>
-<h3 id="与或运算andor-operations">与、或运算(And/Or Operations)</h3>
-<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">and </span>$<span class="built_in">t0</span>, $<span class="built_in">t1</span>, $<span class="built_in">t2</span><span class="comment">#t0 = t1 and t2</span></span><br><span class="line"><span class="keyword">or </span>   $<span class="built_in">t0</span>, $<span class="built_in">t1</span>, $<span class="built_in">t2</span><span class="comment">#t0 = t1 or     t2</span></span><br></pre></td></tr></table></figure>
-<p>将$t1 &amp; $t2的值赋给$t0，与运算可以运用在屏蔽寄存器中。</p></li>
-</ul></li>
+<li>左移$i$位，相当于乘上$2^i$</li>
 </ul>
-<h3 id="nor运算">NOR运算</h3>
+</li>
+<li>
+<p>逻辑右移运算：</p>
+<ul>
+<li>
+<p>右移，并将空出来的部分用零填充</p>
+</li>
+<li>
+<p>右移$i$位，相当于除以上$2^i$</p>
+<h3 id="与、或运算-And-Or-Operations">与、或运算(And/Or Operations)</h3>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">and </span>$<span class="built_in">t0</span>, $<span class="built_in">t1</span>, $<span class="built_in">t2</span><span class="comment">#t0 = t1 and t2</span></span><br><span class="line"><span class="keyword">or </span>   $<span class="built_in">t0</span>, $<span class="built_in">t1</span>, $<span class="built_in">t2</span><span class="comment">#t0 = t1 or     t2</span></span><br></pre></td></tr></table></figure>
+<p>将$t1 &amp; $t2的值赋给$t0，与运算可以运用在屏蔽寄存器中。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="NOR运算">NOR运算</h3>
 <p>NOR就是not，or，这是一个三目运算符，使用方法如下:</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nor </span>$<span class="built_in">t0</span>, $<span class="built_in">t1</span>, $<span class="built_in">t2</span></span><br></pre></td></tr></table></figure>
-<p>这个运算表示<span class="math inline">\(not\ \left( t2\ or\ t1\right)\)</span> MIPS中没有单独的取反操作，如果想要对$t1取反存入到$t0中，方法如下：</p>
+<p>这个运算表示$not\ \left(   t2\ or\ t1\right)$<br>
+MIPS中没有单独的取反操作，如果想要对$t1取反存入到$t0中，方法如下：</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nor </span>$<span class="built_in">t0</span>, $<span class="built_in">t1</span>, $<span class="built_in">zero</span></span><br></pre></td></tr></table></figure>
-<p>在上述代码中，进行的是<span class="math inline">\(not\ \left( t1\ or\ zero\right)\)</span>的操作，其中，任何一个数和零进行或运算，还是他本身，再对它本身取反就可以得到<span class="math inline">\(not\ t1\)</span>的结果。</p>
-<h2 id="条件指令分支与循环">条件指令（分支与循环）</h2>
+<p>在上述代码中，进行的是$not\ \left(   t1\ or\ zero\right)$的操作，其中，任何一个数和零进行或运算，还是他本身，再对它本身取反就可以得到$not\ t1$的结果。</p>
+<h2 id="条件指令（分支与循环）">条件指令（分支与循环）</h2>
 <p>常见的控制指令：</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">beq </span>re, rt, L1</span><br><span class="line"><span class="keyword">bne </span>rs, rt, L1</span><br><span class="line"><span class="keyword">j </span>         L1</span><br></pre></td></tr></table></figure>
 <p>他们对应的C语言语法是:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#beq re, rt, L1</span></span><br><span class="line"><span class="keyword">if</span>(re == rt)&#123;</span><br><span class="line">    <span class="keyword">goto</span> L1; </span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#bne rs, rt, L1</span></span><br><span class="line"><span class="keyword">if</span>(re != rt)&#123;</span><br><span class="line">    <span class="keyword">goto</span> L1; </span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#j          L1，无条件跳转</span></span><br><span class="line"><span class="keyword">goto</span> L1;</span><br></pre></td></tr></table></figure>
-<p>跳转的目标指令，与当前的beq/bne之间，不能超过正负<span class="math inline">\(2^{15}\)</span>，同时，在写C和C++的时候除特殊情况外应当避免/减少goto语句的使用，因为使用goto语句不当可能会让程序表意不明，更加混乱。</p>
-<h3 id="一个小例子选择结构">一个小例子（选择结构）</h3>
+<p>跳转的目标指令，与当前的beq/bne之间，不能超过正负$2^{15}$，同时，在写C和C++的时候除特殊情况外应当避免/减少goto语句的使用，因为使用goto语句不当可能会让程序表意不明，更加混乱。</p>
+<h3 id="一个小例子（选择结构）">一个小例子（选择结构）</h3>
 <p>老规矩，先看C/C++</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(i==j)&#123;</span><br><span class="line">    f = g + h;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    f = g - h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对应的MIPS</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">          <span class="comment">#s3 is i, s4 is j, s0 is f, s1 is g, s2 is h.</span></span><br><span class="line">          <span class="keyword">bne </span>$<span class="built_in">s3</span>, $<span class="built_in">s4</span>, Else<span class="comment">#判断i,j是否相等，若不等就直接跳过下面两行</span></span><br><span class="line">          <span class="keyword">add </span>$<span class="built_in">s0</span>, $<span class="built_in">s1</span>, $<span class="built_in">s2</span><span class="comment">#若相等，就继续执行到这一行，完成f=g+h</span></span><br><span class="line">          <span class="keyword">j </span>Exit<span class="comment">#执行完f = g - h之后跳过下一条语句直接退出</span></span><br><span class="line"><span class="symbol">Else:</span> <span class="keyword">sub </span>$<span class="built_in">s0</span>, $<span class="built_in">s1</span>, $<span class="built_in">s2</span><span class="comment">#执行f = g - h</span></span><br><span class="line"><span class="symbol">Exit:</span></span><br></pre></td></tr></table></figure>
-<p>从上面的代码中可以看出，MIPS的标记本身并没有改变代码的执行顺序，仅仅是对某行代码做了标记而已，如果没有<span class="math inline">\(j,bne,beq\)</span>三条语句的话，就算程序中有标记，MIPS还是会顺序执行的。</p>
-<h3 id="第二个例子循环结构">第二个例子（循环结构）</h3>
+<p>从上面的代码中可以看出，MIPS的标记本身并没有改变代码的执行顺序，仅仅是对某行代码做了标记而已，如果没有$j,bne,beq$三条语句的话，就算程序中有标记，MIPS还是会顺序执行的。</p>
+<h3 id="第二个例子（循环结构）">第二个例子（循环结构）</h3>
 <p>Ccode</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(save[i] == k) i += <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 <p>MIPS Code</p>
@@ -703,12 +744,15 @@
 <p>这个语句可以和beq一起用，来进行在大于、小于等情况下的选择结构。</p>
 <h3 id="小练习">小练习</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(i&gt;=j)&#123;</span><br><span class="line">    i = i + <span class="number">1</span>;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    j = j + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将上述代码转化成mips指令集中的code，i,j–&gt;$s1,$s2 我的答案：</p>
+<p>将上述代码转化成mips指令集中的code，i,j–&gt;$s1,$s2<br>
+我的答案：</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">           <span class="keyword">slt </span>   $<span class="built_in">t0</span>, i, <span class="keyword">j </span><span class="comment"># if i&gt;=j 0</span></span><br><span class="line">           <span class="keyword">beq </span>$<span class="built_in">t0</span>, $<span class="built_in">zero</span>, Else <span class="comment">#if t0==zero --&gt; i&gt;=j goto Else:j=j+1,else go on</span></span><br><span class="line">           <span class="keyword">addi </span>$<span class="built_in">s1</span>, $<span class="built_in">s1</span>, <span class="number">1</span></span><br><span class="line">           <span class="keyword">j </span>        Exit</span><br><span class="line"><span class="symbol">Else:</span> <span class="keyword">addi </span>$<span class="built_in">s2</span>, $<span class="built_in">s2</span>, <span class="number">1</span></span><br><span class="line"><span class="symbol">Exit:</span> ...</span><br></pre></td></tr></table></figure>
 <h3 id="有符号和无符号数字的比较">有符号和无符号数字的比较</h3>
-<p>无符号数进行比较： sltu,sltui，其实说白了就是后面加个u就是无符号数操作，再加个i就是常数操作。</p>
+<p>无符号数进行比较：<br>
+sltu,sltui，其实说白了就是后面加个u就是无符号数操作，再加个i就是常数操作。</p>
 <h2 id="函数的调用和函数的返回">函数的调用和函数的返回</h2>
-<p><strong>基本块</strong>，是一个指令序列，在这个序列中是<strong>没有分支指令</strong>的，也<strong>没有其他分支指令的跳转指令</strong>。 <img src="https://img-blog.csdnimg.cn/20200329231201446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+<p><strong>基本块</strong>，是一个指令序列，在这个序列中是<strong>没有分支指令</strong>的，也<strong>没有其他分支指令的跳转指令</strong>。<br>
+<img src="https://img-blog.csdnimg.cn/20200329231201446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>函数调用的基本步骤：</p>
 <ul>
 <li>将函数相关的参数放入寄存器中(load 指令或者是逻辑运算指令)</li>
@@ -719,28 +763,33 @@
 <li>将结果返回到调用的地址中</li>
 </ul>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">jal </span>ProcedureLabel</span><br></pre></td></tr></table></figure>
-<p>将寄存器控制权交给相关的进程： 将ProcedureLabel的下一个地址放到$ra中，然后跳转到目标地址。（这里$ra用于记录返回值返回到哪里）</p>
+<p>将寄存器控制权交给相关的进程：<br>
+将ProcedureLabel的下一个地址放到$ra中，然后跳转到目标地址。（这里$ra用于记录返回值返回到哪里）</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">jr </span>$<span class="built_in">ra</span></span><br></pre></td></tr></table></figure>
 <p>将$ra复制到程序计数器中，这条语句也可以用于其他的跳转用途。</p>
-<p>这段他讲的好抽象，我有点没听懂。 下面有一个实例。</p>
-<h3 id="leaf-procedure-example不调用其它函数的函数">Leaf Procedure Example（不调用其它函数的函数）</h3>
+<p>这段他讲的好抽象，我有点没听懂。<br>
+下面有一个实例。</p>
+<h3 id="Leaf-Procedure-Example（不调用其它函数的函数）">Leaf Procedure Example（不调用其它函数的函数）</h3>
 <p>C Code</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leaf_example</span><span class="params">(<span class="keyword">int</span> g, <span class="keyword">int</span> h, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f;</span><br><span class="line">    f = (g + h) - (i + j);</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我就直接贴最后的代码了：</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">leaf_example：</span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">sp</span>, $<span class="built_in">sp</span>, -<span class="number">4</span><span class="comment">#压栈，往下压四个字节</span></span><br><span class="line">    <span class="keyword">sw </span>$<span class="built_in">s0</span>, <span class="number">0</span>($<span class="built_in">sp</span>)<span class="comment">#将s0放入压好的栈中</span></span><br><span class="line">    <span class="keyword">add </span>$<span class="built_in">t0</span>, $<span class="built_in">a0</span>, $<span class="built_in">a1</span></span><br><span class="line">    <span class="keyword">add </span>$<span class="built_in">t1</span>, $<span class="built_in">a2</span>, $<span class="built_in">a3</span></span><br><span class="line">    <span class="keyword">sub </span>$<span class="built_in">s0</span>, $<span class="built_in">t0</span>, $<span class="built_in">t1</span></span><br><span class="line">    <span class="keyword">add </span>$<span class="built_in">v0</span>, $<span class="built_in">s0</span>, $<span class="built_in">zero</span><span class="comment">#将结果放入用于返回的参数$v0中</span></span><br><span class="line">    <span class="keyword">lw </span>$<span class="built_in">s0</span>, <span class="number">0</span>($<span class="built_in">sp</span>)<span class="comment">#恢复$s0</span></span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">sp</span>, $<span class="built_in">sp</span>, <span class="number">4</span><span class="comment">#恢复堆栈位置</span></span><br><span class="line">    <span class="keyword">jr </span>$<span class="built_in">ra</span><span class="comment">#返回</span></span><br></pre></td></tr></table></figure>
 <p>说实话，除了jr都看懂了，那个确实没看懂。</p>
-<h2 id="none-leaf-procedures函数的嵌套调用">None-Leaf Procedures（函数的嵌套调用）</h2>
+<h2 id="None-Leaf-Procedures（函数的嵌套调用）">None-Leaf Procedures（函数的嵌套调用）</h2>
 <p>调用者需要将一些信息存储到堆栈中：</p>
 <ul>
 <li>被使用的寄存器($s0-$s7)</li>
 <li>他的返回地址</li>
-<li>在函数、过程中用到的临时变量 在返回之前，将堆栈中数据取出进行恢复。</li>
+<li>在函数、过程中用到的临时变量<br>
+在返回之前，将堆栈中数据取出进行恢复。</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">if</span> <span class="title">fact</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">       <span class="keyword">return</span> n*fact(n<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对应的mips,参数n放到$a0中，结果放到$v0</p>
 <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">fact:</span></span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">sp</span>, $<span class="built_in">sp</span>, -<span class="number">8</span></span><br><span class="line">    <span class="keyword">sw </span>$<span class="built_in">ra</span>, <span class="number">4</span>($<span class="built_in">sp</span>)</span><br><span class="line">    <span class="keyword">sw </span>$<span class="built_in">a0</span>, <span class="number">0</span>($<span class="built_in">sp</span>)</span><br><span class="line">    <span class="keyword">slti </span>$<span class="built_in">t0</span>, $<span class="built_in">a0</span>, <span class="number">1</span><span class="comment">#判断是否小于1</span></span><br><span class="line">    <span class="keyword">beq </span>$<span class="built_in">t0</span>, $<span class="built_in">zero</span>, L1<span class="comment">#如果大于等于1，那么跳到后面去</span></span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">v0</span>, $<span class="built_in">zero</span>, <span class="number">1</span><span class="comment">#如果小于1，那么将1付给v0</span></span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">sp</span>, $<span class="built_in">sp</span>, <span class="number">8</span><span class="comment">#从栈空间中出栈两个</span></span><br><span class="line">    <span class="keyword">jr </span>$<span class="built_in">ra</span><span class="comment">#返回</span></span><br><span class="line"><span class="symbol">L1:</span></span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">a0</span>, $<span class="built_in">a0</span>, -<span class="number">1</span><span class="comment">#减一</span></span><br><span class="line">    <span class="keyword">jal </span>fact<span class="comment"># 从新跳转到fact部分去执行</span></span><br><span class="line">    <span class="keyword">lw </span>$<span class="built_in">a0</span>, <span class="number">0</span>($<span class="built_in">sp</span>)<span class="comment">#将堆栈中把两个参数取出</span></span><br><span class="line">    <span class="keyword">lw </span>$<span class="built_in">ra</span>, <span class="number">4</span>($<span class="built_in">sp</span>)</span><br><span class="line">    <span class="keyword">addi </span>$<span class="built_in">sp</span>, $<span class="built_in">sp</span>, <span class="number">8</span><span class="comment">#恢复堆栈</span></span><br><span class="line">    <span class="keyword">mul </span>$<span class="built_in">v0</span>, $<span class="built_in">a0</span>, $<span class="built_in">v0</span><span class="comment">#相乘</span></span><br><span class="line">    <span class="keyword">jr </span>$<span class="built_in">ra</span><span class="comment">#返回</span></span><br></pre></td></tr></table></figure>
 <h2 id="栈上的变量">栈上的变量</h2>
-<p><img src="https://img-blog.csdnimg.cn/20200329231237290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 堆栈用于存储临时变量。 图中$sp指向堆栈可用地址，申请栈的时候，向下申请。$fp的存在使得便于恢复栈。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200329231237290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+堆栈用于存储临时变量。<br>
+图中$sp指向堆栈可用地址，申请栈的时候，向下申请。$fp的存在使得便于恢复栈。</p>
 <p>内存中一个程序分为不同的段：</p>
 <ul>
 <li><strong>代码段</strong>：用于存放指令</li>
@@ -753,7 +802,8 @@
 <li>递归能否转循环
 <ul>
 <li>答案是可以的，就直接模拟它的栈</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
       
@@ -882,7 +932,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -953,7 +1003,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机指令"><span class="nav-number">1.</span> <span class="nav-text">计算机指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算术运算指令"><span class="nav-number">1.1.</span> <span class="nav-text">算术运算指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#立即数"><span class="nav-number">1.2.</span> <span class="nav-text">立即数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字的类型"><span class="nav-number">1.2.1.</span> <span class="nav-text">数字的类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有符号数和无符号数的表示"><span class="nav-number">1.3.</span> <span class="nav-text">有符号数和无符号数的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令的表示"><span class="nav-number">1.4.</span> <span class="nav-text">指令的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mips32中指令集架构的格式"><span class="nav-number">1.4.1.</span> <span class="nav-text">mips32中指令集架构的格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#i-format"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">I format</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#j-format"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">J format</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冯诺依曼计算机设计的两个关键特性"><span class="nav-number">1.4.2.</span> <span class="nav-text">冯诺依曼计算机设计的两个关键特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指令和数据都是二进制串无法区分"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">１．指令和数据都是二进制串，无法区分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序时能够被改写的"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">２．程序时能够被改写的</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑运算指令"><span class="nav-number">1.5.</span> <span class="nav-text">逻辑运算指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移位运算shift-operations"><span class="nav-number">1.5.1.</span> <span class="nav-text">移位运算(Shift Operations)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与或运算andor-operations"><span class="nav-number">1.5.2.</span> <span class="nav-text">与、或运算(And&#x2F;Or Operations)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nor运算"><span class="nav-number">1.5.3.</span> <span class="nav-text">NOR运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件指令分支与循环"><span class="nav-number">1.6.</span> <span class="nav-text">条件指令（分支与循环）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个小例子选择结构"><span class="nav-number">1.6.1.</span> <span class="nav-text">一个小例子（选择结构）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二个例子循环结构"><span class="nav-number">1.6.2.</span> <span class="nav-text">第二个例子（循环结构）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多条件指令"><span class="nav-number">1.6.3.</span> <span class="nav-text">更多条件指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小练习"><span class="nav-number">1.6.4.</span> <span class="nav-text">小练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有符号和无符号数字的比较"><span class="nav-number">1.6.5.</span> <span class="nav-text">有符号和无符号数字的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的调用和函数的返回"><span class="nav-number">1.7.</span> <span class="nav-text">函数的调用和函数的返回</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#leaf-procedure-example不调用其它函数的函数"><span class="nav-number">1.7.1.</span> <span class="nav-text">Leaf Procedure Example（不调用其它函数的函数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#none-leaf-procedures函数的嵌套调用"><span class="nav-number">1.8.</span> <span class="nav-text">None-Leaf Procedures（函数的嵌套调用）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈上的变量"><span class="nav-number">1.9.</span> <span class="nav-text">栈上的变量</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">计算机指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算术运算指令"><span class="nav-number">1.1.</span> <span class="nav-text">算术运算指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#立即数"><span class="nav-number">1.2.</span> <span class="nav-text">立即数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字的类型"><span class="nav-number">1.2.1.</span> <span class="nav-text">数字的类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有符号数和无符号数的表示"><span class="nav-number">1.3.</span> <span class="nav-text">有符号数和无符号数的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令的表示"><span class="nav-number">1.4.</span> <span class="nav-text">指令的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mips32中指令集架构的格式"><span class="nav-number">1.4.1.</span> <span class="nav-text">mips32中指令集架构的格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R-format"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">R format</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I-format"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">I format</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#J-format"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">J format</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冯诺依曼计算机设计的两个关键特性"><span class="nav-number">1.4.2.</span> <span class="nav-text">冯诺依曼计算机设计的两个关键特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#１．指令和数据都是二进制串，无法区分"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">１．指令和数据都是二进制串，无法区分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#２．程序时能够被改写的"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">２．程序时能够被改写的</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑运算指令"><span class="nav-number">1.5.</span> <span class="nav-text">逻辑运算指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#移位运算-Shift-Operations"><span class="nav-number">1.5.1.</span> <span class="nav-text">移位运算(Shift Operations)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与、或运算-And-Or-Operations"><span class="nav-number">1.5.2.</span> <span class="nav-text">与、或运算(And&#x2F;Or Operations)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NOR运算"><span class="nav-number">1.5.3.</span> <span class="nav-text">NOR运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件指令（分支与循环）"><span class="nav-number">1.6.</span> <span class="nav-text">条件指令（分支与循环）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个小例子（选择结构）"><span class="nav-number">1.6.1.</span> <span class="nav-text">一个小例子（选择结构）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二个例子（循环结构）"><span class="nav-number">1.6.2.</span> <span class="nav-text">第二个例子（循环结构）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多条件指令"><span class="nav-number">1.6.3.</span> <span class="nav-text">更多条件指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小练习"><span class="nav-number">1.6.4.</span> <span class="nav-text">小练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有符号和无符号数字的比较"><span class="nav-number">1.6.5.</span> <span class="nav-text">有符号和无符号数字的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的调用和函数的返回"><span class="nav-number">1.7.</span> <span class="nav-text">函数的调用和函数的返回</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Leaf-Procedure-Example（不调用其它函数的函数）"><span class="nav-number">1.7.1.</span> <span class="nav-text">Leaf Procedure Example（不调用其它函数的函数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#None-Leaf-Procedures（函数的嵌套调用）"><span class="nav-number">1.8.</span> <span class="nav-text">None-Leaf Procedures（函数的嵌套调用）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈上的变量"><span class="nav-number">1.9.</span> <span class="nav-text">栈上的变量</span></a></li></ol></li></ol></div>
             
 
           </div>
