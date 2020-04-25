@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="图像处理,python," />
 
 
 
@@ -79,14 +79,30 @@
 
 
 
+<meta name="description" content="python图像处理笔记-八-针孔照相机模型与照相机标定 前几天去忙别的事情了，大概有一个周没有更新了，周末有时间了赶紧学一手。这里对应的是书中的第四章 ，能坚持到这里的话，就已经啃完了书的三分之一了。 参考教材：  python计算机视觉编程 视觉SLAM十四讲，从理论到实践 ## 针孔照相机模型 针孔摄像机模型（有时称作摄影照相机模型），是计算机视觉中广泛应用的照相机模型。原因是： 简单 精度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python图像处理笔记-八-针孔照相机模型与照相机标定">
 <meta property="og:url" content="http://yoursite.com/2020/04/24/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E5%85%AB-%E9%92%88%E5%AD%94%E7%85%A7%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%85%A7%E7%9B%B8%E6%9C%BA%E6%A0%87%E5%AE%9A/index.html">
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
+<meta property="og:description" content="python图像处理笔记-八-针孔照相机模型与照相机标定 前几天去忙别的事情了，大概有一个周没有更新了，周末有时间了赶紧学一手。这里对应的是书中的第四章 ，能坚持到这里的话，就已经啃完了书的三分之一了。 参考教材：  python计算机视觉编程 视觉SLAM十四讲，从理论到实践 ## 针孔照相机模型 针孔摄像机模型（有时称作摄影照相机模型），是计算机视觉中广泛应用的照相机模型。原因是： 简单 精度">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190613212423453.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0R1amluZzIwMTk=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200424184444567.png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vMjAyMDA0MjQyMDQ4MzEucG5n?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vMjAyMDA0MjQyMTM5NDMucG5n?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vaW1hZ2UtMjAyMDA0MjQyMjUxNDA3MjAucG5n?x-oss-process=image/format,png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/20200424230717.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190412202442196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwMzY5OTI2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190412203408957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwMzY5OTI2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190412203544463.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/24/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E5%85%AB-%E9%92%88%E5%AD%94%E7%85%A7%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%85%A7%E7%9B%B8%E6%9C%BA%E6%A0%87%E5%AE%9A/upload/image-20200425072805831.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200425073514780.png">
 <meta property="article:published_time" content="2020-04-24T01:12:46.000Z">
-<meta property="article:modified_time" content="2020-04-24T01:12:46.141Z">
+<meta property="article:modified_time" content="2020-04-25T08:16:32.224Z">
 <meta property="article:author" content="Saiyu Wang">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190613212423453.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0R1amluZzIwMTk=,size_16,color_FFFFFF,t_70">
 
 
 
@@ -322,6 +338,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -354,7 +392,362 @@
       
 
       
-        
+        <h1 id="python图像处理笔记-八-针孔照相机模型与照相机标定">python图像处理笔记-八-针孔照相机模型与照相机标定</h1>
+<p>前几天去忙别的事情了，大概有一个周没有更新了，周末有时间了赶紧学一手。这里对应的是书中的第四章 ，能坚持到这里的话，就已经啃完了书的三分之一了。</p>
+<h2 id="参考教材">参考教材：</h2>
+<ul>
+<li><p>python计算机视觉编程</p></li>
+<li><p>视觉SLAM十四讲，从理论到实践 ## 针孔照相机模型 <strong>针孔摄像机模型</strong>（有时称作<strong>摄影照相机模型</strong>），是计算机视觉中广泛应用的照相机模型。原因是：</p></li>
+<li><p>简单</p></li>
+<li><p>精度足够</p></li>
+</ul>
+<p>这个名字来源于一种简单的照相机，他利用小孔成像原理进行成像，换句话说就是：<strong>在光线投影到图像平面前，从唯一一个点经过</strong>，这个经过的点就叫做：<strong>照相机中心</strong>，记做C，如下图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190613212423453.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0R1amluZzIwMTk=,size_16,color_FFFFFF,t_70" style="zoom:67%;" /></p>
+<p>（这张图来自于他人博客：https://blog.csdn.net/Dujing2019/article/details/91691202）</p>
+<p>不同之处在于，在现实世界中，我们的图像平面在相机中心之后，而这里，我们为了方便理解，将 点放在了成像平面之前。如果图像坐标轴和三维坐标系中中x、y轴对齐、平行的话，可以得出针孔照相机的投影性质。照相机的光学坐标轴和z轴一致，该投影几何可以简化成相似三角形。在头硬质前通过旋转和平移变换，对该坐标系加入三维点，会出现完整的投影变换。</p>
+<p>在针孔照相机中，三维点X为图像点x，它们之间的关系如下所示（都是其次坐标）： <span class="math display">\[
+\lambda x = PX
+\]</span> 这里，3*4的矩阵P是照相机矩阵（投影矩阵），齐次坐标中，三维点X的坐标由四个元素组成，<span class="math inline">\(X = [X,Y,Z,W]\)</span>，这里的标量<span class="math inline">\(\lambda\)</span>为三维点的逆深度。如果我们想要在齐次坐标中将最后一个值归一化为1那么我们需要他。</p>
+<h3 id="照相机矩阵">照相机矩阵</h3>
+<p>也就是上面说的P，这个P可以再一步分解： <span class="math display">\[
+P=K[R|t]
+\]</span> 在上一个章节中我们对此也有所接触，我们知道，在射影变换矩阵中，左上角四个元素负责控制图像的旋转、缩放等，而右边的两个元素负责控制图像的平移。这里也是同理。</p>
+<p>但不同的是，这里同的是，这里多出了一个矩阵K，这个矩阵K叫做内标定矩阵，它描述的是照相机投影的性质，标定矩阵仅和照相机自身的情况有关，通常可以写作： <span class="math display">\[
+K = 
+\left[
+\begin{matrix}
+af&amp;s&amp;c_x\\
+0&amp;f&amp;c_y\\
+0&amp;0&amp;1   
+\end{matrix}
+\right]
+\]</span></p>
+<p>图像平面和照相机之间的焦距为f，当像素数组在传感器上偏斜的时候，需要用到倾斜参数s。大多数情况下，s可以设置为0，也就是说: <span class="math display">\[
+K = 
+\left[
+\begin{matrix}
+f_x&amp;0&amp;c_x\\
+0&amp;f_y&amp;c_y\\
+0&amp;0&amp;1   
+\end{matrix}
+\right]
+\]</span> 其中，s被我们定成了0，<span class="math inline">\(f_x = af_y\)</span>，那么话再说回来，<span class="math inline">\(f_x,f_y\)</span>的不同是用a来度量的，它叫做：纵横比例参数。a是在像素元素非正方形的时候使用的，通常情况下，我们可以设置<span class="math inline">\(a= 1\)</span>，经过了这些假设，矩阵变成了： <span class="math display">\[
+K = 
+\left[
+\begin{matrix}
+f&amp;0&amp;c_x\\
+0&amp;f&amp;c_y\\
+0&amp;0&amp;1   
+\end{matrix}
+\right]
+\]</span> 除了焦距之外，标定矩阵中剩余的唯一参数为<strong>光心</strong>（也叫<strong>主点</strong>），他的坐标是：<span class="math inline">\((c_x,c_y)\)</span>，它代表着光线坐标轴和图像平面的交点。因为光心通常在图像的中心，并且图像的坐标是从左上角开始的，所以光心的坐标非常接近于图像宽度和高度的一半。</p>
+<h3 id="三维点的投影">三维点的投影</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    表示针孔照相机的类</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, P)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        初始化照相机模型</span></span><br><span class="line"><span class="string">        :param P: P = K[R| t]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.P = P</span><br><span class="line">        self.K = <span class="literal">None</span> <span class="comment"># 标定矩阵</span></span><br><span class="line">        self.R = <span class="literal">None</span> <span class="comment"># 旋转</span></span><br><span class="line">        self.t = <span class="literal">None</span> <span class="comment"># 平移</span></span><br><span class="line">        self.c = <span class="literal">None</span> <span class="comment"># 照相机中心</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">project</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        返回投影到图像视图的点</span></span><br><span class="line"><span class="string">        :param X:X (4*n数组)的投影点</span></span><br><span class="line"><span class="string">        :return:并且进行坐标归一化</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        x = dot(self.P, X)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            x[i] /= x[<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 载入点</span></span><br><span class="line">    points = loadtxt(<span class="string">"house.p3d"</span>)</span><br><span class="line">    <span class="comment"># 交换维度以读取</span></span><br><span class="line">    points = points.swapaxes(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 齐次坐标</span></span><br><span class="line">    points = vstack((points,ones(points.shape[<span class="number">1</span>])))</span><br><span class="line">    <span class="comment"># 设置照相机参数</span></span><br><span class="line">    P = hstack((eye(<span class="number">3</span>), array([[<span class="number">0</span>],[<span class="number">0</span>],[<span class="number">-10</span>]])))</span><br><span class="line">    cam = Camera(P)</span><br><span class="line">    x = cam.project(points)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 绘制投影</span></span><br><span class="line">    figure()</span><br><span class="line">    plot(x[<span class="number">0</span>], x[<span class="number">1</span>], <span class="string">'k.'</span>)</span><br><span class="line">    show()</span><br></pre></td></tr></table></figure>
+<p>我们使用牛津多视图数据集中的ModelHousing数据集来运行，原书中的下载地址已经过时，如果想要下载，可以在：http://www.robots.ox.ac.uk/~vgg/data/mview/ 进行下载。</p>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200424184444567.png" style="zoom:67%;" /></p>
+<p>为了研究照相机的移动会如何改变投影效果，我们围绕一个随机的三维向量进行增量旋转的投影：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    表示针孔照相机的类</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, P)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        初始化照相机模型</span></span><br><span class="line"><span class="string">        :param P: P = K[R| t]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.P = P</span><br><span class="line">        self.K = <span class="literal">None</span> <span class="comment"># 标定矩阵</span></span><br><span class="line">        self.R = <span class="literal">None</span> <span class="comment"># 旋转</span></span><br><span class="line">        self.t = <span class="literal">None</span> <span class="comment"># 平移</span></span><br><span class="line">        self.c = <span class="literal">None</span> <span class="comment"># 照相机中心</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">project</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        返回投影到图像视图的点</span></span><br><span class="line"><span class="string">        :param X:X (4*n数组)的投影点</span></span><br><span class="line"><span class="string">        :return:并且进行坐标归一化</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        x = np.dot(self.P, X)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            x[i] /= x[<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rotationMatrix</span><span class="params">(self, a)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        用于描述围绕a轴旋转的三维旋转矩阵</span></span><br><span class="line"><span class="string">        :param a: 旋转轴</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        R = np.eye(<span class="number">4</span>)</span><br><span class="line">        R[:<span class="number">3</span>, :<span class="number">3</span>] = linalg.expm([[<span class="number">0</span>, -a[<span class="number">2</span>], a[<span class="number">1</span>]], [a[<span class="number">2</span>], <span class="number">0</span>, -a[<span class="number">0</span>]], [-a[<span class="number">1</span>], a[<span class="number">0</span>], <span class="number">0</span>]])</span><br><span class="line">        <span class="keyword">return</span> R</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 载入点</span></span><br><span class="line">    points = np.loadtxt(<span class="string">"house.p3d"</span>)</span><br><span class="line">    <span class="comment"># 交换维度以读取</span></span><br><span class="line">    points = points.swapaxes(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 齐次坐标</span></span><br><span class="line">    points = np.vstack((points,np.ones(points.shape[<span class="number">1</span>])))</span><br><span class="line">    <span class="comment"># 设置照相机参数</span></span><br><span class="line">    P = np.hstack((np.eye(<span class="number">3</span>), np.array([[<span class="number">0</span>],[<span class="number">0</span>],[<span class="number">-10</span>]])))</span><br><span class="line">    cam = Camera(P)</span><br><span class="line">    x = cam.project(points)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 绘制投影</span></span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.plot(x[<span class="number">0</span>], x[<span class="number">1</span>], <span class="string">'k.'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建变换</span></span><br><span class="line">    r = <span class="number">0.05</span> * np.random.random(<span class="number">3</span>)</span><br><span class="line">    rot = cam.rotationMatrix(r)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 旋转矩阵和投影</span></span><br><span class="line">    plt.figure()</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">        cam.P = np.dot(cam.P, rot)</span><br><span class="line">        x = cam.project(points)</span><br><span class="line">        plt.plot(x[<span class="number">0</span>], x[<span class="number">1</span>], <span class="string">'k.'</span>)</span><br><span class="line">        plt.show()</span><br></pre></td></tr></table></figure>
+<p>最终模拟出的图片如下：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vMjAyMDA0MjQyMDQ4MzEucG5n?x-oss-process=image/format,png" /></p>
+<p>上面这张图代表点的运动轨迹，想画它非常简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.figure()</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">    cam.P = np.dot(cam.P, rot)</span><br><span class="line">    x = cam.project(points)</span><br><span class="line">    plt.plot(x[<span class="number">0</span>], x[<span class="number">1</span>], <span class="string">'k.'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>相当于我们每次都画，但是都不show，最后再一起show出来就可以了。</p>
+<h3 id="照相机矩阵的分解">照相机矩阵的分解</h3>
+<p>没啥好讲的，贴代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    表示针孔照相机的类</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, P)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        初始化照相机模型</span></span><br><span class="line"><span class="string">        :param P: P = K[R| t]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.P = P</span><br><span class="line">        self.K = <span class="literal">None</span> <span class="comment"># 标定矩阵</span></span><br><span class="line">        self.R = <span class="literal">None</span> <span class="comment"># 旋转</span></span><br><span class="line">        self.t = <span class="literal">None</span> <span class="comment"># 平移</span></span><br><span class="line">        self.c = <span class="literal">None</span> <span class="comment"># 照相机中心</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">project</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        返回投影到图像视图的点</span></span><br><span class="line"><span class="string">        :param X:X (4*n数组)的投影点</span></span><br><span class="line"><span class="string">        :return:并且进行坐标归一化</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        x = np.dot(self.P, X)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            x[i] /= x[<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rotationMatrix</span><span class="params">(self, a)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        用于描述围绕a轴旋转的三维旋转矩阵</span></span><br><span class="line"><span class="string">        :param a: 旋转轴</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        R = np.eye(<span class="number">4</span>)</span><br><span class="line">        R[:<span class="number">3</span>, :<span class="number">3</span>] = linalg.expm([[<span class="number">0</span>, -a[<span class="number">2</span>], a[<span class="number">1</span>]], [a[<span class="number">2</span>], <span class="number">0</span>, -a[<span class="number">0</span>]], [-a[<span class="number">1</span>], a[<span class="number">0</span>], <span class="number">0</span>]])</span><br><span class="line">        <span class="keyword">return</span> R</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">factor</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        将矩阵分解为kRt，P = K[R|t]</span></span><br><span class="line"><span class="string">        :return:KRt</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 分解前半部分</span></span><br><span class="line">        K, R = linalg.rq(self.P[:,:<span class="number">3</span>])</span><br><span class="line">        <span class="comment"># 将K的对角线元素设为正值</span></span><br><span class="line">        T = np.diag(np.sign(np.diag(K)))</span><br><span class="line">        <span class="keyword">if</span>(linalg.det(T)&lt;<span class="number">0</span>):</span><br><span class="line">            T[<span class="number">1</span>, <span class="number">1</span>] *= <span class="number">-1</span></span><br><span class="line">        self.K = np.dot(K, T)</span><br><span class="line">        self.R = np.dot(T, R)</span><br><span class="line">        self.t = np.dot(linalg.inv(self.K), self.P[:, <span class="number">3</span>])</span><br><span class="line">        <span class="keyword">return</span> self.K, self.R, self.t</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 载入点</span></span><br><span class="line">    points = np.loadtxt(<span class="string">"house.p3d"</span>)</span><br><span class="line">    <span class="comment"># 交换维度以读取</span></span><br><span class="line">    points = points.swapaxes(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 齐次坐标</span></span><br><span class="line">    points = np.vstack((points,np.ones(points.shape[<span class="number">1</span>])))</span><br><span class="line">    <span class="comment"># 设置照相机参数</span></span><br><span class="line">    P = np.hstack((np.eye(<span class="number">3</span>), np.array([[<span class="number">0</span>],[<span class="number">0</span>],[<span class="number">-10</span>]])))</span><br><span class="line">    cam = Camera(P)</span><br><span class="line">    x = cam.project(points)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 绘制投影</span></span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.plot(x[<span class="number">0</span>], x[<span class="number">1</span>], <span class="string">'k.'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建变换</span></span><br><span class="line">    r = <span class="number">0.05</span> * np.random.random(<span class="number">3</span>)</span><br><span class="line">    rot = cam.rotationMatrix(r)</span><br><span class="line">    <span class="comment"># 旋转矩阵和投影</span></span><br><span class="line">    plt.figure()</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">        cam.P = np.dot(cam.P, rot)</span><br><span class="line">        x = cam.project(points)</span><br><span class="line">        plt.plot(x[<span class="number">0</span>], x[<span class="number">1</span>], <span class="string">'k.'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试新写的函数</span></span><br><span class="line">    K = np.array([[<span class="number">1000</span>, <span class="number">0</span>, <span class="number">500</span>], [<span class="number">0</span>, <span class="number">1000</span>, <span class="number">300</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]])</span><br><span class="line">    tmp = cam.rotationMatrix([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>])[:<span class="number">3</span>, :<span class="number">3</span>]</span><br><span class="line">    Rt = np.hstack((tmp, np.array([[<span class="number">50</span>], [<span class="number">40</span>], [<span class="number">30</span>]])))</span><br><span class="line">    cam = Camera(np.dot(K, Rt))</span><br><span class="line"></span><br><span class="line">    print(K,Rt)</span><br><span class="line">    print(cam.factor())</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vMjAyMDA0MjQyMTM5NDMucG5n?x-oss-process=image/format,png" /></p>
+<p>你可以观测到，结果与输入并不相同，这是由于为了避免符号的二义性而导致的。</p>
+<h3 id="计算中心">计算中心</h3>
+<p>照相机的中心是一个三维点，满足约束：<span class="math inline">\(PC= 0\)</span>，又因为<span class="math inline">\(P = K[R|t]\)</span>，所以有:</p>
+<p><span class="math display">\[
+ \begin{align}
+    K [R|t] C = KRC+Kt =0\\
+    KRC+KT = 0\\
+    K^{-1}KRC+K^{-1}KT = K^{-1}0\\
+    RC+T = 0\\
+    C = -R^{-1}T
+\end{align} 
+\]</span></p>
+<p>实现起来就很简单了，当然我们也可以看出来照相机的中心和照相机的标定矩阵是无关的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">center</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">        计算、返回摄像机的中心</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">    <span class="keyword">if</span>(self.c <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>):</span><br><span class="line">        <span class="keyword">return</span> self.c</span><br><span class="line">    self.factor()</span><br><span class="line">    self.c = -np.dot(self.R.T, self.t)</span><br><span class="line">    <span class="keyword">return</span> self.c</span><br></pre></td></tr></table></figure>
+<h2 id="相机标定张正友标定法">相机标定（张正友标定法）</h2>
+<p>标定是非常重要的一步，它起到了减少误差的作用。</p>
+<p>传统的标定方法虽然可以用于任意的摄像机模型，并且精度较高。但其不足之处在于：过程过于复杂，需要高精度的已知结构信息，在实际应用中的很多场景下无法使用标定块，而基于主动视觉的摄像机自标定技术不能用于摄像机运动未知和无法控制的场景。</p>
+<p>张正友标定法是一种介于传统标定方法和自标定方法之间的一种简易标定方法。它的标定方法简单易做，只需要我们打印一张棋盘格就可以了。并且在标定过程中只需要将平面模板按任意角度在摄像机前放置即可。</p>
+<h3 id="研究的坐标系">研究的坐标系</h3>
+<figure>
+<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vaW1hZ2UtMjAyMDA0MjQyMjUxNDA3MjAucG5n?x-oss-process=image/format,png" alt="" /><figcaption>image-20200424225140720</figcaption>
+</figure>
+<p>我们主要研究四个坐标系：</p>
+<ul>
+<li>世界坐标系</li>
+<li>相机坐标系</li>
+<li>图像坐标系</li>
+<li>像素坐标系</li>
+</ul>
+<p>其中图像坐标系和像素坐标系非常相似，图像坐标系的原点是相机光轴与成像平面的角点，单位是毫米，而像素坐标系的原点是图像的左上角，像素坐标系的单位是像素。</p>
+<h4 id="世界坐标系到相机坐标系的变换">世界坐标系到相机坐标系的变换</h4>
+<p><span class="math display">\[
+\left[
+\begin{matrix}
+X_C\\
+Y_C\\
+Z_C\\
+1
+\end{matrix}
+\right]
+= =
+\left[
+\begin{matrix}
+R&amp;t\\
+0&amp;1
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+X_w\\
+Y_w\\
+Z_w\\
+1
+\end{matrix}
+\right]
+\]</span></p>
+<p>这个就很简单了，就是一个旋转平移</p>
+<h4 id="相机坐标系下的点转换到图像坐标系下">相机坐标系下的点转换到图像坐标系下</h4>
+<p><span class="math display">\[
+x = \frac{f}{Z_c}X_c
+\]</span></p>
+<p><span class="math display">\[
+y = \frac{f}{Z_c}Y_c
+\]</span></p>
+<p>这个也非常的简单，我们可以用矩阵的形式来进行表达： <span class="math display">\[
+\left[
+\begin{matrix}
+x\\
+y\\
+1
+\end{matrix}
+\right]
+=.
+\left[
+\begin{matrix}
+\frac{f}{Z_C}&amp;0&amp;0&amp;0\\
+0&amp;\frac{f}{Z_C}&amp;0&amp;0\\
+0&amp;0&amp;\frac{f}{Z_C}&amp;0\\
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+X_C\\
+Y_C\\
+Z_C\\
+1
+\end{matrix}
+\right]
+\]</span></p>
+<h4 id="图像坐标系到像素坐标系的变换">图像坐标系到像素坐标系的变换</h4>
+<p><span class="math display">\[
+u = c_x+xf_x
+\]</span></p>
+<p><span class="math display">\[
+v =c_y+yf_y
+\]</span></p>
+<p><span class="math display">\[
+\left[
+\begin{matrix}
+u\\
+v\\
+1
+\end{matrix}
+\right]
+= .
+\left[
+\begin{matrix}
+f_x&amp;0 &amp;c_x\\
+0&amp;f_y&amp;c_y\\
+0&amp;0&amp;1
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+x\\
+y\\
+1
+\end{matrix}
+\right]
+\]</span></p>
+<h3 id="相机畸变模型">相机畸变模型</h3>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/20200424230717.png" style="zoom: 67%;" /></p>
+<p><span class="math display">\[
+x_{distorted} = x(1+k_1r^2+k_2r^4+k_3r^6)+2p_1xy+p_2(r^2+2x^2)\\
+y_{distorted} = y(1+k_1r^2+k_2r^4+k_3r^6)+2p_2xy+p_1(r^2+2y^2)
+\]</span></p>
+<p>想要知道是枕型畸变的话，那么离中心点越远，偏移量越大，反之则反。</p>
+<h3 id="标定了什么">标定了什么？</h3>
+<p>标定了两个部分：</p>
+<ul>
+<li>内参：
+<ul>
+<li><span class="math inline">\(f_x,f_y\)</span>：相机焦距</li>
+<li><span class="math inline">\(c_x,c_y\)</span>：图像中心点</li>
+<li><span class="math inline">\(k_1,k_2,k_3,p_1,p_2\)</span>：畸变参数</li>
+</ul></li>
+<li>外参：
+<ul>
+<li><span class="math inline">\(Rt\)</span>：反映了相机和世界坐标的关系</li>
+</ul></li>
+</ul>
+<h3 id="标定任务">标定任务</h3>
+<p>我们可以将我们的标定结果用一个函数来衡量： <span class="math display">\[
+\Sigma_{i=1}^n\Sigma_{j=1}^m||m_{ij}-\hat{m}(A,R_i,t_i,M_j)||^2
+\]</span> 说人话就是，我们计算出来的参数得到的像素坐标与真实像素坐标的差的平方的和。但是非常遗憾的是我们无法直接对该目标函数进行优化，因为需要优化的参数过多，非常容易陷入局部最优。于是张正友便提出了<strong>张正友标定法</strong>，该方法通过数值方法找到了一个很好的起始点。</p>
+<h3 id="标定原理">标定原理</h3>
+<p>我们假设我们的平面处于世界坐标系下<span class="math inline">\(Z=0\)</span>的平面内。需要注意的是：如果想用张正友标定法，那么就必须尽量保证标定板（也就是那个棋盘格的纸）必须在一个平面上，这样才能满足假设，标定板（标定平面）在世界坐标系下<span class="math inline">\(Z=0\)</span>平面内。</p>
+<p>当然，在满足这个条件的时候，我们就有如下公式： <span class="math display">\[
+s
+\left[
+\begin{matrix}
+u\\
+v\\
+1
+\end{matrix}
+\right]
+= .
+A
+\left[
+\begin{matrix}
+r_1&amp;r_2&amp;r_3&amp;t
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+X\\
+Y\\
+0\\
+1
+\end{matrix}
+\right]
+\]</span> 其中: <span class="math display">\[
+A =
+\left[
+\begin{matrix}
+f_x&amp;0 &amp;c_x\\
+0&amp;f_y&amp;c_y\\
+0&amp;0&amp;1
+\end{matrix}
+\right]
+\]</span> 因为这个Z恒为0，所以r3是不会影响结果的，所以我们可以把式子写为： <span class="math display">\[
+s
+\left[
+\begin{matrix}
+u\\
+v\\
+1
+\end{matrix}
+\right]
+= .
+A
+\left[
+\begin{matrix}
+r_1&amp;r_2&amp;t
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+X\\
+Y\\
+1
+\end{matrix}
+\right]
+\]</span> 在前面的学习中我们知道，如果知道两个平面上的点的映射关系，我们是可以把两个平面之间的单应性变换关系求出来的（如果你不懂可以看看之前的博客，有专门讲单应性变换的）</p>
+<p>现在我们可以把式子写为： <span class="math display">\[
+s\widetilde{m}=
+A
+\left[
+\begin{matrix}
+r_1&amp;r_2&amp;t
+\end{matrix}
+\right]
+\widetilde{M}
+\]</span> 可以将右边的式子合并成： <span class="math display">\[
+s\widetilde{m}=
+H
+\widetilde{M}
+\]</span> 其中,<span class="math inline">\(H = A \left[ \begin{matrix} r_1&amp;r_2&amp;t \end{matrix} \right]\)</span>这里的H代表内参和外参的乘积构成的矩阵。我们可以通过反推单应性变换将H求出，那么现在的问题在于，如何通过已知的H反求出内参和外参。</p>
+<p>我们知道，内参、外参、H之间是知二推一的关系，所以我们就想，如果能将内参求出来，那么就可以很自然的知道外参了。 <span class="math display">\[
+\left[
+\begin{matrix}
+h_1&amp;h_2&amp;h_3
+\end{matrix}
+\right]
+= \lambda A
+\left[
+\begin{matrix}
+r_1&amp;r_2&amp;r_t
+\end{matrix}
+\right]
+\]</span> 有以下约束条件：</p>
+<ul>
+<li><span class="math inline">\(r_1,r_2\)</span>正交，也就是<span class="math inline">\(r_1r_2=0\)</span>。因为<span class="math inline">\(r_1,r_2\)</span>是分别绕<span class="math inline">\(x,y\)</span>轴得到的，而<span class="math inline">\(x,y\)</span>轴垂直<span class="math inline">\(z\)</span>轴。</li>
+<li>旋转向量的模为1，也就是说<span class="math inline">\(|r_1|,|r_2| = 1\)</span>，这是因为旋转不改变尺度。</li>
+</ul>
+<p>根据这两个约束条件，经过数学变换，可以得到: <span class="math display">\[
+h_1^TA^{-T}A^{-1}h_2 = 0
+\]</span></p>
+<p><span class="math display">\[
+h_1^TA^{-T}A^{-1}h_1 = h_2^TA^{-T}A^{-1}h_2
+\]</span></p>
+<p>实际上这两个式子在表达： <span class="math display">\[
+r_1r_2 = 0\\
+r_1r_1 = r_2 r_2
+\]</span> 我们用B来表示<span class="math inline">\(A^{-T}A^{-1}\)</span>，可以写作：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190412202442196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwMzY5OTI2,size_16,color_FFFFFF,t_70" style="zoom: 33%;" /></p>
+<p>可以看出来B是一个对称矩阵，所以B的有效元素只有六个： <span class="math display">\[
+b =
+\left[
+\begin{matrix}
+B_{11}&amp;B_{12}&amp;B_{22}&amp;B_{13}&amp;B_{23}&amp;B_{33}
+\end{matrix}
+\right]^T
+\]</span> 我们可以将b理解为有关于相机内参的未知量，进一步化简可以得到： <span class="math display">\[
+h_i^TBh_j = v_{ij}^Tb
+\]</span> 通过计算可以得到： <span class="math display">\[
+v_{ij} =
+\left[
+\begin{matrix}
+h_{i1}h{j1} &amp;h_{i1}h_{j2}+h_{i2}h_{j1}  &amp;h_{i2}h_{j2} &amp;h_{i3}h_{j2}+h_{i2}h_{j3} &amp; h_{i3}h_{j3} 
+\end{matrix}
+\right]^T
+\]</span> 那么综合上面的信息，我们现在的任务就变成解方程： <span class="math display">\[
+\left[
+\begin{matrix}
+v_{12}^T\\
+(V_{11}-v_{22})^T
+\end{matrix}
+\right]b =0
+\]</span> 那么我们至少需要拍三张照片才能将内参矩阵确定出来，当然我们拍的照片越多，我们的抗噪声的能力也就越强。最后，我们根据结果，将内参的值提取出来就可。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190412203408957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwMzY5OTI2,size_16,color_FFFFFF,t_70" style="zoom:50%;" /></p>
+<p>然后也可以获得外部参数:</p>
+<p><img src="https://img-blog.csdnimg.cn/20190412203544463.png" style="zoom:67%;" /></p>
+<h3 id="标定工具">标定工具</h3>
+<p>有两种：</p>
+<ul>
+<li>棋盘格</li>
+<li>圆靶</li>
+</ul>
+<p>理想状态下圆形的检测精度较高，因为它能避免特征检测时候的错误。也就是说：中心拟合精度高。但是圆形却存在着偏心差，如下图：</p>
+<p><img src="upload/image-20200425072805831.png" alt="image-20200425072805831" style="zoom:67%;" /></p>
+<p>但是相比之下，棋盘格却不存在偏心差。</p>
+<h3 id="标定的摄像机位置和数量">标定的摄像机位置和数量</h3>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/image-20200425073514780.png" alt="image-20200425073514780" style="zoom: 33%;" /></p>
+<p>可以从这张图中看出来：</p>
+<ul>
+<li>拍十张以上是比较好的，但是最少要拍三张</li>
+<li>正常角度、旋转拍</li>
+<li>从不同视角去拍标定板</li>
+<li>尽量将标定板放在相机中心</li>
+</ul>
+<p>等我写个程序再写一个标定的实操博客。</p>
 
       
     </div>
@@ -369,6 +762,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
       
 
       
@@ -439,8 +840,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -521,6 +931,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python图像处理笔记-八-针孔照相机模型与照相机标定"><span class="nav-number">1.</span> <span class="nav-text">python图像处理笔记-八-针孔照相机模型与照相机标定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考教材"><span class="nav-number">1.1.</span> <span class="nav-text">参考教材：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#照相机矩阵"><span class="nav-number">1.1.1.</span> <span class="nav-text">照相机矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三维点的投影"><span class="nav-number">1.1.2.</span> <span class="nav-text">三维点的投影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#照相机矩阵的分解"><span class="nav-number">1.1.3.</span> <span class="nav-text">照相机矩阵的分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算中心"><span class="nav-number">1.1.4.</span> <span class="nav-text">计算中心</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相机标定张正友标定法"><span class="nav-number">1.2.</span> <span class="nav-text">相机标定（张正友标定法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#研究的坐标系"><span class="nav-number">1.2.1.</span> <span class="nav-text">研究的坐标系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#世界坐标系到相机坐标系的变换"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">世界坐标系到相机坐标系的变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相机坐标系下的点转换到图像坐标系下"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">相机坐标系下的点转换到图像坐标系下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图像坐标系到像素坐标系的变换"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">图像坐标系到像素坐标系的变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相机畸变模型"><span class="nav-number">1.2.2.</span> <span class="nav-text">相机畸变模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标定了什么"><span class="nav-number">1.2.3.</span> <span class="nav-text">标定了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标定任务"><span class="nav-number">1.2.4.</span> <span class="nav-text">标定任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标定原理"><span class="nav-number">1.2.5.</span> <span class="nav-text">标定原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标定工具"><span class="nav-number">1.2.6.</span> <span class="nav-text">标定工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标定的摄像机位置和数量"><span class="nav-number">1.2.7.</span> <span class="nav-text">标定的摄像机位置和数量</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -548,9 +974,7 @@
   </script>
   
   
-  <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="noopener">鲁ICP备20014589号-1</a> 
 </div>
-
 
   <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
