@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="图像处理,python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="python图像处理笔记-十-外极几照相机和三维结构的计算 到这里就已经到书中的第五章了，进度大概是在50%。这一章介绍的如何处理多个视图，以及如何利用多个视图的几何关系来回复照相机位置信息和三维结构。通过在不同视点拍摄出的图像，可以使用特征匹配来计算出三维场景点以及照相机位置。 外极几何 多视图集合是利用在不同视点所拍摄图像间的关系，来研究照相机之间或特征之间关系的一门科学。图像的特征往往是兴趣">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python图像处理笔记-十-外极几照相机和三维结构的计算">
+<meta property="og:url" content="http://yoursite.com/2020/04/29/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E5%8D%81-%E5%A4%96%E6%9E%81%E5%87%A0%E7%85%A7%E7%9B%B8%E6%9C%BA%E5%92%8C%E4%B8%89%E7%BB%B4%E7%BB%93%E6%9E%84%E7%9A%84%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="SaiyuWang&#39;s Blog">
+<meta property="og:description" content="python图像处理笔记-十-外极几照相机和三维结构的计算 到这里就已经到书中的第五章了，进度大概是在50%。这一章介绍的如何处理多个视图，以及如何利用多个视图的几何关系来回复照相机位置信息和三维结构。通过在不同视点拍摄出的图像，可以使用特征匹配来计算出三维场景点以及照相机位置。 外极几何 多视图集合是利用在不同视点所拍摄图像间的关系，来研究照相机之间或特征之间关系的一门科学。图像的特征往往是兴趣">
+<meta property="og:image" content="http://www.ituring.com.cn/figures/2014/Python/09.d05z.001.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-28%2022-59-34.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-28%2023-19-58.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7Dx%5E1_2x%5E1_1%20&amp;%20x%5E1_2y%5E1_1%20&amp;%20x%5E1_2w%5E1_1%20&amp;%20%5Ccdots%20&amp;%20w%5E1_2w%5E1_1%5Cx%5E2_2x%5E2_1%20&amp;%20x%5E2_2y%5E2_1%20&amp;%20x%5E2_2w%5E2_1%20&amp;%20%5Ccdots%20&amp;%20w%5E2_2w%5E2_1%5C%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cddots%20&amp;%20%5Cvdots%5Cx%5En_2x%5En_1%20&amp;%20x%5En_2y%5En_1%20&amp;%20x%5En_2w%5En_1%20&amp;%20%5Ccdots%20&amp;%20w%5En_2w%5En_1%5Cend%7Bbmatrix%7D%5Cbegin%7Bbmatrix%7D%5Cboldsymbol%7BF%7D_%7B11%7D%5C%5Cboldsymbol%7BF%7D_%7B12%7D%5C%5Cboldsymbol%7BF%7D_%7B13%7D%5C%5Cvdots%5C%5Cboldsymbol%7BF%7D_%7B33%7D%5C%5Cend%7Bbmatrix%7D=%5Cboldsymbol%7BAf%7D=0">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-29%2001-49-22.png">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-29%2021-39-03.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%5Ctext%7BX%7D%5ET_1%20&amp;%200%20&amp;%200%20&amp;%20-x_1%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%5C0%20&amp;%20%5Ctext%7BX%7D%5ET_1%20&amp;%200%20&amp;%20-y_1%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%5C0%20&amp;%200%20&amp;%20%5Ctext%7BX%7D%5ET_1%20&amp;%20-1%20&amp;%200%20&amp;%200%20&amp;%20%5Ccdots%5C%5Ctext%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%20-x_2%20&amp;%200%20&amp;%20%5Ccdots%5C0%20&amp;%20%5Ctext%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%20-y_2%20&amp;%200%20&amp;%20%5Ccdots%5C0%20&amp;%200%20&amp;%20%5Ctext%7BX%7D%5ET_2%20&amp;%200%20&amp;%20-1%20&amp;%200%20&amp;%20%5Ccdots%5C%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%20&amp;%20%5Cvdots%5Cend%7Bbmatrix%7D%5Cbegin%7Bbmatrix%7D%5Ctext%7Bp%7D%5ET_1%5C%5Ctext%7Bp%7D%5ET_2%5C%5Ctext%7Bp%7D%5ET_3%5C%5Clambda_1%5C%5Clambda_2%5C%5Cvdots%5Cend%7Bbmatrix%7D=0">
+<meta property="og:image" content="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-29%2022-09-15.png">
+<meta property="article:published_time" content="2020-04-29T15:10:58.000Z">
+<meta property="article:modified_time" content="2020-04-29T15:11:40.896Z">
+<meta property="article:author" content="Saiyu Wang">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.ituring.com.cn/figures/2014/Python/09.d05z.001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/29/python图像处理笔记-十-外极几照相机和三维结构的计算/"/>
+
+
+
+
+
+  <title>python图像处理笔记-十-外极几照相机和三维结构的计算 | SaiyuWang's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SaiyuWang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">就当是一场梦，醒了很久还是很感动</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E5%8D%81-%E5%A4%96%E6%9E%81%E5%87%A0%E7%85%A7%E7%9B%B8%E6%9C%BA%E5%92%8C%E4%B8%89%E7%BB%B4%E7%BB%93%E6%9E%84%E7%9A%84%E8%AE%A1%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Saiyu Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SaiyuWang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python图像处理笔记-十-外极几照相机和三维结构的计算</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-29T23:10:58+08:00">
+                2020-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="python图像处理笔记-十-外极几照相机和三维结构的计算">python图像处理笔记-十-外极几照相机和三维结构的计算</h1>
+<p>到这里就已经到书中的第五章了，进度大概是在50%。这一章介绍的如何处理多个视图，以及如何利用多个视图的几何关系来回复照相机位置信息和三维结构。通过在不同视点拍摄出的图像，可以使用特征匹配来计算出三维场景点以及照相机位置。</p>
+<h2 id="外极几何">外极几何</h2>
+<p><strong>多视图集合</strong>是利用在不同视点所拍摄图像间的关系，来研究照相机之间或特征之间关系的一门科学。图像的特征往往是兴趣点，这一章使用的也是兴趣点特征，多视图几何中最重要的内容是双视图几何。</p>
+<h3 id="做什么">做什么？</h3>
+<p>有一个场景的两个视图以及视图中的对应图像点，根据照相机间的空间相对位置关系、照相机的性质以及三维场景点的位置，可以得到对这些图像点的一些几何关系约束。我们<strong>通过外极几何来描述这些几何关系</strong>。当然，按照惯例，书里讲的都是外极几何的基本内容。</p>
+<h3 id="外极几何-1">外极几何</h3>
+<p>没有关于照相机的先验知识，会出现固有二义性，因为三维场景点X<span class="math inline">\(经过4*4单应性矩阵H变换为HX后，\)</span>HX在照相机PH^{-1}里得到的图像点和X<span class="math inline">\(在照相机P\)</span>里得到的图像点相同。我们可以把上面的话用公式表示为：</p>
+<p><span class="math display">\[
+\lambda x = PX = PH^{-1}HX = \hat{P} \hat{X}
+\]</span></p>
+<p>说人话就是，我们现在只知道图像上面的点，并不知道点在三维空间中的分布情况，这就像是我们探究a+b=c的时候，只知道c<span class="math inline">\(的值一样，有很多组不同的a,b会得到同样的解，但是实际情况下，只有一组a,b\)</span>是正确的。</p>
+<p>因此，当我们分析双视图几何关系时，可以将照相机间的相对位置关系用单影行矩阵加以简化。这里的单应性矩阵通常只做刚体变换，即之通过单应矩阵变换了坐标系。一个比较好的做法是：将原点和坐标轴与第一个照相机对齐，即：</p>
+<p><span class="math display">\[
+P_1 = K_1[I|0]\\
+P_2 = K_2[R|t]
+\]</span></p>
+<p>其中，K_1,K_2是相机的标定矩阵，R是第二个照相机的旋转矩阵，t是第二个照相机的平移向量。利用这些参数矩阵，我们可以找到点X的投影点x_1,x_2的关系，这样我们就可以从图像出发，恢复照相机参数矩阵。</p>
+<p>同一个图像点经过不同投影矩阵产生的不同投影点必须满足：</p>
+<p><span class="math display">\[
+x_2^TFx_1=0
+\]</span></p>
+<p>其中:</p>
+<p><span class="math display">\[
+F = K_2^{-T}S_tRK_1^{-1}
+\]</span></p>
+<p>矩阵S_t为反对称矩阵：</p>
+<p><span class="math display">\[
+S_t = 
+\left[
+    \begin{matrix}
+        0&amp;t_3&amp;t_2\\
+        t_3&amp;0&amp;-t_1\\
+        -t_2&amp;t_1&amp;0
+    \end{matrix}
+\right]
+\]</span></p>
+<p>这个约束就是外极约束条件。矩阵F为基础矩阵，基础矩阵可以由两个照相机的参数矩阵表示。由于det(F) = 0所以基础矩阵的秩小于等于2。</p>
+<p>上面的公式表明，我们可以借助F<span class="math inline">\(来恢复出照相机参数，而F\)</span>可以从对应的图像点计算出。在已知照相机内参的情况下，重建是基于度量的，所谓<strong>度量重建</strong>，即能够在三维重建中正确的表示距离和角度。</p>
+<h3 id="一些其他的几何知识">一些其他的几何知识</h3>
+<p>给定图像中的一个点，例如第二个图中的x_2，我们可以找到对应第一幅图像的一条直线：</p>
+<p><span class="math display">\[
+x_2^TFx_1 = l_1^Tx_1 = 0
+\]</span></p>
+<p>其中：</p>
+<p><span class="math display">\[
+l_1^T = x_2^TF
+\]</span></p>
+<p>这条直线称为对应于点x_2的外极线，也就是说，点x_2在第一幅图像中的对应点一定在这条直线上。外极线都经过一点 <strong>e</strong>，称为外极点。实际上，外极点是另一个照相机光心对应的图像点。外极点可以在我们看到的图像外，这取决于照相机间的相对方向。</p>
+<p><img src="http://www.ituring.com.cn/figures/2014/Python/09.d05z.001.png" /></p>
+<h3 id="一个例子">一个例子</h3>
+<h4 id="读取数据并进行可视化">读取数据并进行可视化</h4>
+<p>从牛津数据集中下载数据，读入后进行可视化，由于书上的网址已经过期，所以在这里给出新的网址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.robots.ox.ac.uk/~vgg/data/mview/</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PCV.geometry <span class="keyword">import</span> cameraimport numpy <span class="keyword">as</span> npfrom PIL <span class="keyword">import</span> Image<span class="comment"># 载入一些图像im1 = np.array(Image.open('data/001.jpg'))im2 = np.array(Image.open('data/002.jpg'))# 载入每个视图的二维点到列表中points2D = [np.loadtxt('data/00'+str(i+1)+'.corners').T for i in range(3)]# 载入三维点points3D = np.loadtxt('data/p3d').T# 载入对应corr = np.genfromtxt('data/nview-corners',dtype='int',missing_values='*')# 载入照相机矩阵到Camera 对象列表中P = [camera.Camera(np.loadtxt('data/00'+str(i+1)+'.P')) for i in range(3)]</span></span><br></pre></td></tr></table></figure>
+<p>读入后进行数据可视化，在书中，作者使用了python2中的`</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">execfile(<span class="string">'loadData.py'</span>)`</span><br></pre></td></tr></table></figure>
+<p>来在别的程序中进行加载，loadData.py就是我们刚才写的脚本，但是该方法在python3中已经弃用，可以用下面的方法进行代替：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'loadData.py'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> f:    exec(f.read())</span><br></pre></td></tr></table></figure>
+<p>但是在pycharm中，loadData中声明的数据并没有被pycharm识别，这种调用方法影响了高亮显示，所以不是特别推荐，下面对2D数据进行可视化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pylab <span class="keyword">as</span> plimport numpy <span class="keyword">as</span> npwith open(<span class="string">'loadData.py'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> f:    exec(f.read())<span class="comment"># 将三维点转换成齐次坐标表示，并投影X = np.vstack( (points3D,np.ones(points3D.shape[1])) )x = P[0].project(X)# 在视图1 中绘制点pl.figure()pl.imshow(im1)pl.plot(points2D[0][0],points2D[0][1],'*')pl.axis('off')pl.figure()pl.imshow(im1)pl.plot(x[0],x[1],'r.')pl.axis('off')pl.show()</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-28%2022-59-34.png" /></p>
+<p>据作者所说，第二张图的点是比第一张图要多的，因为第二张图上的点是根据三张图重建出来的点根据照相机参数投影到图像中的。</p>
+<p>接下来我们对其中的3D点进行可视化，这个也是非常的简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制三维点from mpl_toolkits.mplot3d import axes3dfig = pl.figure()ax = fig.gca(projection='3d')ax.plot(points3D[0],points3D[1],points3D[2],'k.')pl.show()</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-28%2023-19-58.png" /></p>
+<h4 id="八点法">八点法</h4>
+<h5 id="原理">原理</h5>
+<p>在上面，我们知道有这样的式子：</p>
+<p><span class="math display">\[
+x_2^TFx_1=0
+\]</span></p>
+<p>目前我们知道：<span class="math inline">\(x_2,x_1\)</span>分别是两张图像上的点，他们都以其次座标表示，而<span class="math inline">\(F\)</span>是一个<span class="math inline">\(3*3\)</span>的基本矩阵。我们将它用完整形式再来写一遍：</p>
+<p><span class="math display">\[
+\left[
+    \begin{matrix}
+    x_2&amp;
+    y_2&amp;
+    1
+    \end{matrix}
+\right]
+\left[
+ \begin{matrix}
+ f_{11}&amp;f_{12}&amp;f_{13}\\
+ f_{21}&amp;f_{22}&amp;f_{23}\\
+ f_{31}&amp;f_{32}&amp;f_{33}
+ \end{matrix}
+\right]
+\left[
+ \begin{matrix}
+ x_1\\y_1\\1
+ \end{matrix}
+\right]
+=0
+\]</span></p>
+<p>将这个式子进行展开：</p>
+<p><span class="math display">\[
+\left[
+ \begin{matrix}
+   x_2f_{11}+y_2f_{12}+f_{13} &amp; x_2f_{21}+y_2f_{22}+f_{23} &amp; x_2f_{31}+y_2f_{32}+f_{33}
+ \end{matrix}
+\right]
+\left[
+ \begin{matrix}
+ x_1\\y_1\\1
+ \end{matrix}
+\right]
+=0
+\]</span></p>
+<p>进一步展开，可以得到下面的式子：</p>
+<p><span class="math display">\[
+x_1x_2f_{11} + x_1y_2f_{12}+x_1f_{13}+x_2y_1f_{21}+y_1y_2f_{22}+y_1f_{23}+x_2f_{31}+y_2f_{32}+f_{33}=0
+\]</span></p>
+<p>经过归纳后可以写成：</p>
+<p><span class="math display">\[
+\left[
+    \begin{matrix}
+    x_1x_2&amp;
+    x_1y_2&amp;
+    x_1&amp;
+    x_2y_1&amp;
+    y_1y_2&amp;
+    y_1&amp;
+    x_2&amp;
+    y_2&amp;
+    1
+    \end{matrix}
+\right]f=0
+\]</span></p>
+<p>其中，<span class="math inline">\(f\)</span>是之前的<span class="math inline">\(F\)</span>矩阵被打入一维后的矩阵。</p>
+<p>给定n组点的集合，我们就可以得到以下方程：</p>
+<p><img src="https://private.codecogs.com/gif.latex?\begin%7Bbmatrix%7Dx%5E1_2x%5E1_1%20&amp;%20x%5E1_2y%5E1_1%20&amp;%20x%5E1_2w%5E1_1%20&amp;%20\cdots%20&amp;%20w%5E1_2w%5E1_1\x%5E2_2x%5E2_1%20&amp;%20x%5E2_2y%5E2_1%20&amp;%20x%5E2_2w%5E2_1%20&amp;%20\cdots%20&amp;%20w%5E2_2w%5E2_1\\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\ddots%20&amp;%20\vdots\x%5En_2x%5En_1%20&amp;%20x%5En_2y%5En_1%20&amp;%20x%5En_2w%5En_1%20&amp;%20\cdots%20&amp;%20w%5En_2w%5En_1\end%7Bbmatrix%7D\begin%7Bbmatrix%7D\boldsymbol%7BF%7D_%7B11%7D\\boldsymbol%7BF%7D_%7B12%7D\\boldsymbol%7BF%7D_%7B13%7D\\vdots\\boldsymbol%7BF%7D_%7B33%7D\\end%7Bbmatrix%7D=\boldsymbol%7BAf%7D=0" /></p>
+<p>由于尺度是固定的，所以最少需要八个对应点来计算基础矩阵F，所以叫八点法。</p>
+<h5 id="代码">代码</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_fundamental</span><span class="params">(x1,x2)</span>:</span>    <span class="string">"""    使用归一化的八点算法，从对应点（x1，x2 3×n 的数组）中计算基础矩阵    每行由如下构成：    [x'*x，x'*y' x', y'*x, y'*y, y', x, y, 1]    """</span>    n = x1.shape    <span class="comment"># 如果两个形状不同，那么抛出异常    if(x2.shape != n):        raise ValueError("Number of points don't match.")    # 创建方程对应矩阵：    A = np.zeros((n, 9))    for i in range(n):        A[i] =  [x1[0,i]*x2[0,i], x1[0,i]*x2[1,i], x1[0,i]*x2[2,i],                 x1[1,i]*x2[0,i], x1[1,i]*x2[1,i], x1[1,i]*x2[2,i],                 x1[2,i]*x2[0,i], x1[2,i]*x2[1,i], x1[2,i]*x2[2,i] ]    # 计算线性最小二乘解    U, S, V = linalg.svd(A)    F = V[-1].reshape(3,3)    # 受限F    # 通过将最后一个奇异值置0，使秩为2    U, S, V = linalg.svd(F)    S[2] = 0    F = np.dot(U, np.dot(np.diag(S), V))    return F</span></span><br></pre></td></tr></table></figure>
+<h4 id="外极点和外极线"><strong>外极点和外极线</strong></h4>
+<p>sfm.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> npimport pylab <span class="keyword">as</span> plfrom scipy <span class="keyword">import</span> linalgdef computeFundamental(x1,x2):    <span class="string">"""    使用归一化的八点算法，从对应点（x1，x2 3×n 的数组）中计算基础矩阵    每行由如下构成：    [x'*x，x'*y' x', y'*x, y'*y, y', x, y, 1]    """</span>    n = x1.shape[<span class="number">1</span>]    <span class="comment"># 如果两个形状不同，那么抛出异常    if(x2.shape[1] != n):        raise ValueError("Number of points don't match.")    # 创建方程对应矩阵：    print(n)    A = np.zeros((n, 9))    for i in range(n):        A[i] =  [x1[0,i]*x2[0,i], x1[0,i]*x2[1,i], x1[0,i]*x2[2,i],                 x1[1,i]*x2[0,i], x1[1,i]*x2[1,i], x1[1,i]*x2[2,i],                 x1[2,i]*x2[0,i], x1[2,i]*x2[1,i], x1[2,i]*x2[2,i] ]    # 计算线性最小二乘解    U, S, V = linalg.svd(A)    F = V[-1].reshape(3,3)    # 受限F    # 通过将最后一个奇异值置0，使秩为2    U, S, V = linalg.svd(F)    S[2] = 0    F = np.dot(U, np.dot(np.diag(S), V))    return Fdef computeEpipole(F):    """ 从基础矩阵F 中计算右极点（可以使用F.T 获得左极点）"""    # 返回F 的零空间（Fx=0）    U,S,V = linalg.svd(F)    e = V[-1]    return e/e[2]def plotEpipolarLine(im, F, x, epipole = None, showEpipole = True):    """    在图像中，绘制外极点和外极线，FX=0    """    m, n = im.shape[:2]    line = np.dot(F, x)    # 外极线参数和值    t = np.linspace(0, n, 100)    lt = np.array([(line[2] + line[0] * tt)/ (-line[1]) for tt in t])    # 仅仅处理位于图像内部的点和线    ndx= (lt &gt;= 0) &amp; (lt &lt; m)    pl.plot(t[ndx], lt[ndx], linewidth = 2)    if(showEpipole):        if(epipole is None):            epipole = computeEpipole(F)        pl.plot(epipole[0]/ epipole[2], epipole[1] / epipole[2] , 'r*')</span></span><br></pre></td></tr></table></figure>
+<p>demo2.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sfmimport pylab <span class="keyword">as</span> plimport numpy <span class="keyword">as</span> npfrom loadData <span class="keyword">import</span> *<span class="comment"># 在前两个视图中点的索引ndx = (corr[:, 0] &gt;= 0) &amp; (corr[:, 1] &gt;= 0)# 获得坐标，并将其用其次座标表示x1 = points2D[0][:, corr[ndx, 0]]x1 = np.vstack((x1, np.ones(x1.shape[1])))x2 = points2D[1][:, corr[ndx, 1]]x2 = np.vstack((x2, np.ones(x2.shape[1])))# 计算FF = sfm.computeFundamental(x1, x2)# 计算极点e = sfm.computeEpipole(F)# 绘制图像pl.figure()pl.imshow(im1)# 分别绘制每条线，这样颜色不一样for i in range(5):    sfm.plotEpipolarLine(im1, F, x2[:, i], e, False)pl.axis('off')pl.figure()pl.imshow(im2)# 分别绘制每个点，这样会绘制出和线同样的颜色for i in range(5):    pl.plot(x2[0,i],x2[1,i],'o')pl.axis('off')pl.show()</span></span><br></pre></td></tr></table></figure>
+<p>最终的结果：</p>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-29%2001-49-22.png" /></p>
+<p>这就是一个极点在画面外面的例子。</p>
+<p>在这一过程中，我们选择两幅图像的对应点，然后将它们转换为齐次坐标。这里的对应点是从一个文本文件中读取得到的；而实际上，我们可以按照第 2 章的方法提取图像特征，然后通过匹配来找到它们。由于缺失的数据在对应列表 <code>corr</code> 中为 -1，所以程序中有可能 选取这些点。因此，上面的程序通过数组操作符 <code>&amp;</code> 只选取了索引大于等于 0 的点。</p>
+<h2 id="照相机和三维结构的计算">照相机和三维结构的计算</h2>
+<h3 id="三角剖分">三角剖分</h3>
+<p>给定照相机模型，图像的点可以通过三角剖分获得其三维位置。对于两个照相机<span class="math inline">\(P_1,P_2\)</span>的视图，三维实物点<span class="math inline">\(X\)</span>的投影点为<span class="math inline">\(x_1,x_2\)</span>，照相机方程定义了下面的关系：</p>
+<p><span class="math display">\[
+\left[
+    \begin{matrix}
+    P_1 &amp; -x_1 &amp; 0\\
+    P_2 &amp; 0 &amp; -x_2
+    \end{matrix}
+\right]
+\left[
+ \begin{matrix}
+   X\\
+   \lambda_1\\
+   \lambda_2
+ \end{matrix}
+\right] = 0
+\]</span></p>
+<p>由于图像噪声、照相机参数误差和其他系统误差等，上面的方程可能没有精确解。我们可以通过ＳＶＤ来得到三维点的最小二乘估计。</p>
+<p>进行三角剖分的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triangulatePoint</span><span class="params">(x1,x2,P1,P2)</span>:</span>    <span class="string">"""    使用最小二乘解，绘制点对的三角剖分    """</span>    M = np.zeros((<span class="number">6</span>, <span class="number">6</span>))    M[:<span class="number">3</span>, :<span class="number">4</span>] = P1    M[<span class="number">3</span>:, :<span class="number">4</span>] = P2    M[:<span class="number">3</span>, <span class="number">4</span>] = -x1    M[<span class="number">3</span>:, <span class="number">5</span>] = -x2    U, S, V = linalg.svd(M)    X = V[<span class="number">-1</span>, :<span class="number">4</span>]    <span class="keyword">return</span> X / X[<span class="number">3</span>]<span class="function"><span class="keyword">def</span> <span class="title">triangulate</span><span class="params">(x1,x2,P1,P2)</span>:</span>    <span class="string">""" x1 和x2（3×n 的齐次坐标表示）中点的二视图三角剖分"""</span>    n = x1.shape[<span class="number">1</span>]    <span class="keyword">if</span> x2.shape[<span class="number">1</span>] != n:        <span class="keyword">raise</span> ValueError(<span class="string">"Number of points don't match."</span>)    X = [ triangulatePoint(x1[:,i],x2[:,i],P1,P2) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]    <span class="keyword">return</span> np.array(X).T</span><br></pre></td></tr></table></figure>
+<p>还是老亚子，写个Ｄｅｍｏ用之前的数据集把它跑起来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sfmimport pylab <span class="keyword">as</span> plfrom loadData <span class="keyword">import</span> *<span class="comment"># 前两个视图中点的索引ndx = (corr[:, 0] &gt;= 0) &amp; (corr[:, 1] &gt;= 0)# 获取坐标并且用其次座标表示x1 = points2D[0][:, corr[ndx, 0]]x1 = np.vstack((x1, np.ones(x1.shape[1])))x2 = points2D[1][:, corr[ndx, 1]]x2 = np.vstack((x2, np.ones(x2.shape[1])))Xtrue = points3D[:, ndx]Xtrue = np.vstack((Xtrue, np.ones(Xtrue.shape[1])))# 检查前三个点Xest = sfm.triangulate(x1, x2, P[0].P, P[1].P)print(Xest[:, :3])print(Xtrue[:, :3])# 绘制三维点from mpl_toolkits.mplot3d import axes3dfig = pl.figure()ax = fig.gca(projection='3d')ax.plot(Xest[0],Xest[1],Xest[2],'ko', c = 'g')ax.plot(Xtrue[0],Xtrue[1],Xtrue[2],'r.')pl.show()</span></span><br></pre></td></tr></table></figure>
+<p>最终的结果如下：</p>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-29%2021-39-03.png" /></p>
+<p>估计点和实际点能够很好的匹配。</p>
+<h3 id="由三维点计算照相机矩阵"><strong>由三维点计算照相机矩阵</strong></h3>
+<p>和上一个是一个理论：</p>
+<p><img src="https://private.codecogs.com/gif.latex?\begin%7Bbmatrix%7D\text%7BX%7D%5ET_1%20&amp;%200%20&amp;%200%20&amp;%20-x_1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\0%20&amp;%20\text%7BX%7D%5ET_1%20&amp;%200%20&amp;%20-y_1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\0%20&amp;%200%20&amp;%20\text%7BX%7D%5ET_1%20&amp;%20-1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%20-x_2%20&amp;%200%20&amp;%20\cdots\0%20&amp;%20\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%20-y_2%20&amp;%200%20&amp;%20\cdots\0%20&amp;%200%20&amp;%20\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%20-1%20&amp;%200%20&amp;%20\cdots\\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots\end%7Bbmatrix%7D\begin%7Bbmatrix%7D\text%7Bp%7D%5ET_1\\text%7Bp%7D%5ET_2\\text%7Bp%7D%5ET_3\\lambda_1\\lambda_2\\vdots\end%7Bbmatrix%7D=0" /></p>
+<p>用ＳＶＤ来做就可以了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_P</span><span class="params">(x,X)</span>:</span>    <span class="string">""" 由二维- 三维对应对（齐次坐标表示）计算照相机矩阵"""</span>    n = x.shape[<span class="number">1</span>]    <span class="keyword">if</span> X.shape[<span class="number">1</span>] != n:        <span class="keyword">raise</span> ValueError(<span class="string">"Number of points don't match."</span>)    <span class="comment"># 创建用于计算DLT 解的矩阵    M = np.zeros((3*n,12+n))    for i in range(n):        M[3*i,0:4] = X[:,i]        M[3*i+1,4:8] = X[:,i]        M[3*i+2,8:12] = X[:,i]        M[3*i:3*i+3,i+12] = -x[:,i]    U,S,V = linalg.svd(M)    return V[-1,:12].reshape((3,4))</span></span><br></pre></td></tr></table></figure>
+<p>老亚子，写个Ｄｅｍｏ跑一下试试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sfmfrom PCV.geometry <span class="keyword">import</span> cameraimport numpy <span class="keyword">as</span> npimport pylab <span class="keyword">as</span> plfrom scipy <span class="keyword">import</span> linalgfrom loadData <span class="keyword">import</span> *<span class="comment"># 视图１corr = corr[:, 0]# 丢失的数值为-1，这样就把丢失的给去掉了ndx3D = np.where(corr &gt;= 0)[0]# 进行筛选ndx2D = corr[ndx3D]# 选取可见点，使用其次座标表示# 小ｘ表示二维其次座标x = points2D[0][:, ndx2D]x = np.vstack( (x, np.ones(x.shape[1])))# 大Ｘ是三维的X = points3D[:,ndx3D]X = np.vstack( (X, np.ones(X.shape[1])))# 估计ＰPest = camera.Camera(sfm.compute_P(x, X))# 绘制图像进行比较xest = Pest.project(X)pl.figure()pl.imshow(im1)pl.plot(x[0], x[1], 'bo')pl.plot(xest[0], xest[1], 'r.')pl.axis('off')pl.show()</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-29%2022-09-15.png" /></p>
+<h3 id="由基础矩阵计算照相机矩阵"><strong>由基础矩阵计算照相机矩阵</strong></h3>
+<h4 id="未标定的情况下">未标定的情况下：</h4>
+<p>在没有任何照相机内参数的情况下，照相机矩阵只能通过摄影变换恢复出來。也就是说，如果利用照相机信息来重建三维点，那么该重建只能由摄影变换计算出来。在这里，我们不考虑角度和距离。因此，在无标定的情况下，可以通过一个摄影变换得出，一个方法是：</p>
+<p><span class="math display">\[
+P_2 = \left[S_eF|e\right]
+\]</span></p>
+<p>其中，<span class="math inline">\(e\)</span>是左极点，满足<span class="math inline">\(e^TF=0\)</span>，<span class="math inline">\(S_e\)</span>是一个反对称矩阵，但是值得注意的是，用该矩阵做出的三角形剖分很有可能会发生畸变。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">skew</span><span class="params">(a)</span>:</span>    <span class="string">""" 反对称矩阵A，使得对于每个v 有a×v=Av """</span>    <span class="keyword">return</span> np.array([[<span class="number">0</span>,-a[<span class="number">2</span>],a[<span class="number">1</span>]],[a[<span class="number">2</span>],<span class="number">0</span>,-a[<span class="number">0</span>]],[-a[<span class="number">1</span>],a[<span class="number">0</span>],<span class="number">0</span>]])<span class="function"><span class="keyword">def</span> <span class="title">compute_P_from_fundamental</span><span class="params">(F)</span>:</span>    <span class="string">""" 从基础矩阵中计算第二个照相机矩阵（假设 P1 = [I 0]）"""</span>    e = computeEpipole(F.T) <span class="comment"># 左极点    Te = skew(e)    return np.vstack((np.dot(Te,F.T).T,e)).T</span></span><br></pre></td></tr></table></figure>
+<h4 id="已标定情况下">已标定情况下：</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_P_from_essential</span><span class="params">(E)</span>:</span>    <span class="string">""" 从本质矩阵中计算第二个照相机矩阵（假设 P1 = [I 0]）    输出为4 个可能的照相机矩阵列表"""</span>    <span class="comment"># 保证E 的秩为2    U,S,V = linalg.svd(E)    if np.det(np.dot(U,V))&lt;0:        V = -V    E = np.dot(U,np.dot(np.diag([1,1,0]),V))    # 创建矩阵（Hartley）    Z = skew([0,0,-1])    W = np.array([[0,-1,0],[1,0,0],[0,0,1]])    # 返回所有（4 个）解    P2 = [np.vstack((np.dot(U,np.dot(W,V)).T,U[:,2])).T,       np.vstack((np.dot(U,np.dot(W,V)).T,-U[:,2])).T,       np.vstack((np.dot(U,np.dot(W.T,V)).T,U[:,2])).T,       np.vstack((np.dot(U,np.dot(W.T,V)).T,-U[:,2])).T]    return P2</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/28/python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%AC%94%E8%AE%B0-%E4%B9%9D-%E7%AE%80%E5%8D%95%E6%A0%87%E5%AE%9A%E3%80%81%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1%E4%B8%8E%E5%A2%9E%E5%BC%BA%E7%8E%B0%E5%AE%9E/" rel="next" title="python图像处理笔记-九-简单标定、姿态估计与增强现实">
+                <i class="fa fa-chevron-left"></i> python图像处理笔记-九-简单标定、姿态估计与增强现实
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://s1.ax1x.com/2020/03/29/GZ3vOe.jpg"
+                alt="Saiyu Wang" />
+            
+              <p class="site-author-name" itemprop="name">Saiyu Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wang-sy" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangsaiyu@cqu.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python图像处理笔记-十-外极几照相机和三维结构的计算"><span class="nav-number">1.</span> <span class="nav-text">python图像处理笔记-十-外极几照相机和三维结构的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#外极几何"><span class="nav-number">1.1.</span> <span class="nav-text">外极几何</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#做什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">做什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外极几何-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">外极几何</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些其他的几何知识"><span class="nav-number">1.1.3.</span> <span class="nav-text">一些其他的几何知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个例子"><span class="nav-number">1.1.4.</span> <span class="nav-text">一个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数据并进行可视化"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">读取数据并进行可视化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#八点法"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">八点法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#原理"><span class="nav-number">1.1.4.2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码"><span class="nav-number">1.1.4.2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外极点和外极线"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">外极点和外极线</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#照相机和三维结构的计算"><span class="nav-number">1.2.</span> <span class="nav-text">照相机和三维结构的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三角剖分"><span class="nav-number">1.2.1.</span> <span class="nav-text">三角剖分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#由三维点计算照相机矩阵"><span class="nav-number">1.2.2.</span> <span class="nav-text">由三维点计算照相机矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#由基础矩阵计算照相机矩阵"><span class="nav-number">1.2.3.</span> <span class="nav-text">由基础矩阵计算照相机矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#未标定的情况下"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">未标定的情况下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#已标定情况下"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">已标定情况下：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Saiyu Wang</span>
+  
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+  
+  
+</div>
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
+
