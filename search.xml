@@ -7,6 +7,11 @@
 <p>由于在做组成原理实验的时候，碰到了流水线这个概念，感觉什么都不懂，所以从头开始做做试验来理解一下这个概念，其中的Demo来自于<strong>重庆大学组成原理实验指导书Lab1</strong>，它的作者是</p>
 <p>lvyufeng@cqu.edu.cn</p>
 <p>我在作者提供的代码、描述的基础上进行了仿真实验，结合个人理解写下了这篇博客，这个博客以实验、代码为基础，根据行为仿真结果来进行讨论。</p>
+<h2 id="错误说明">错误说明</h2>
+<ul>
+<li><p>在最终的实现中，rst与流水线的刷新不应融合到一起，流水线的刷新应当用于流水线的部分刷新，而rst应该用于整体刷新。</p></li>
+<li><p>vivado 有相应的免费版本，官网提供免费下载。</p></li>
+</ul>
 <h2 id="环境">环境</h2>
 <p>顺便吐槽一下这个HEXO，我用typora编辑出来的代码，他给我隔一行隔一行的放，我用makrtext编辑的代码他直接给我搞成一行了，这咋办呢？</p>
 <p>使用的环境是Vivado 2019.1 ，如果你也想用这个环境的话，你可以：</p>
@@ -114,9 +119,9 @@ piprData3 --> dataout</pre>
         <category>组成原理</category>
       </categories>
       <tags>
+        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -1630,9 +1635,9 @@ F = 1.xxxxxxxxxxxxxxxxxxx\ G \ R \ S
         <category>组成原理</category>
       </categories>
       <tags>
+        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -2010,9 +2015,9 @@ G --> |否,小于33次|B</pre>
         <category>组成原理</category>
       </categories>
       <tags>
+        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -3162,9 +3167,9 @@ B^{-1}b\\
         <category>最优化技术</category>
       </categories>
       <tags>
-        <tag>最优化技术</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>最优化技术</tag>
       </tags>
   </entry>
   <entry>
@@ -3258,9 +3263,9 @@ B^{-1}b\\
         <category>最优化技术</category>
       </categories>
       <tags>
-        <tag>最优化技术</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>最优化技术</tag>
       </tags>
   </entry>
   <entry>
@@ -3356,9 +3361,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
+        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -3771,9 +3776,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
+        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -4138,9 +4143,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
+        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
