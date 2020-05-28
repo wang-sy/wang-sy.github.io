@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200407233841758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200407233849490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-04-07T15:41:18.000Z">
-<meta property="article:modified_time" content="2020-04-25T08:16:20.530Z">
+<meta property="article:modified_time" content="2020-04-25T08:16:20.000Z">
 <meta property="article:author" content="Saiyu Wang">
 <meta property="article:tag" content="图像处理">
 <meta property="article:tag" content="python">
@@ -402,7 +402,7 @@
 <h3 id="讲解">讲解</h3>
 <h4 id="解决的问题">解决的问题</h4>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>通常，暗图像直方图的分量集中在灰度较低的一端，而亮图像直方图分量偏向于灰度较高的一端。</p>
 <p>从图中可以得到这样的结论：如果一幅图像的灰度直方图几乎覆盖了整个灰度的取值范围，并且除了个别灰度值的个数较为突出，整个灰度值分布近似于均匀分布，那么这幅图像就具有较大的灰度动态范围和较高的对比度，同时图像的细节更为丰富。已经证明，仅仅依靠输入图像的直方图信息，就可以得到一个变换函数，利用该变换函数可以将输入图像达到上述效果，该过程就是直方图均衡化。</p>
@@ -468,7 +468,7 @@ a = \left[
 <p>对这些特征值进行归一化，将他们映射到1~100的区间中。</p></li>
 </ul>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>可以看到，后两个特征值都太小了，而且我们的任务是把这个100*4的矩阵转化成100*2的矩阵，所以我们需要选取两个特征向量，所以呢我们就去选最大的两个特征值所对应的特征向量，也就是特征向量0和1。</p>
 <p>将他们合成一个4*2的矩阵，计算原矩阵与他们的矩阵乘法，就可以得到新的特征矩阵了。</p>
@@ -526,32 +526,32 @@ B =
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>).convert(<span class="string">"L"</span>))</span><br><span class="line">im2 = filters.gaussian_filter(im, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">compare(im, im2)</span><br></pre></td></tr></table></figure>
 <p>主体就只有下面两行，filters.gaussian_filter(im, 5)，这里的第一个参数代表需要进行高斯模糊的矩阵，第二个代表标准差，这个大家都懂，最后的效果如下:</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233741180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233741180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>我们将标准差从5降低到2进行观察，发现果然模糊的程度降低了。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233749131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233749131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>如果要对一张彩色图像进行高斯模糊（彩色图形就是多通道图形，我们的灰度图只有一个通道，而通常彩色图形是由RGB三个通道组成的），我们只需要对他的每一层进行高斯模糊即可。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>))</span><br><span class="line">im2 = zeros(im.shape)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    im2[:, :, i] = filters.gaussian_filter(im[:, :, i], <span class="number">5</span>)</span><br><span class="line">im2 = uint8(im2)</span><br><span class="line">compare(im, im2)</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233757627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233757627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>将标准差降低到2，效果如下</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233804321.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233804321.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>对于三通道，我产生了一种很奇葩的想法， 那就是如果每一层用于模糊的标准差不一样会发生什么？我将模糊的值从全都是五改为了i*3：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im2[:, :, i] = filters.gaussian_filter(im[:, :, i], i*<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
 <p>模糊后的图片变成了这样：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233812348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233812348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>我们可以理解，因为图像中的红色被模糊的较少，比较强烈，而蓝色和绿色被模糊的程度较大，无法保持原来的亚子，所以红色的框架被显现出来。</p>
 <p>将模糊值调节到i*20，我们会发现， 这变成了一张具有魔幻现实主义的图片😂</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/2020040723382746.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/2020040723382746.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <h3 id="图像导数">图像导数</h3>
 <h5 id="参考资料-1">参考资料</h5>
@@ -603,7 +603,7 @@ D_y = \left[
 <p>下面看一下效果:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>).convert(<span class="string">"L"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sobel</span></span><br><span class="line">imx = zeros(im.shape)</span><br><span class="line">filters.sobel(im,<span class="number">1</span>,imx)</span><br><span class="line"></span><br><span class="line">imy = zeros(im.shape)</span><br><span class="line">filters.sobel(im,<span class="number">0</span>,imy)</span><br><span class="line"></span><br><span class="line">magnitude = sqrt(imx**<span class="number">2</span> + imy**<span class="number">2</span>)</span><br><span class="line">compare(im, magnitude)</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233841758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233841758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>上面展示的是最后提取的X轴和Y轴综合的梯度图</p>
 <p><img src="https://img-blog.csdnimg.cn/20200407233849490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 上面两张分别是X轴和Y轴检测的。</p>
@@ -733,7 +733,7 @@ D_y = \left[
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

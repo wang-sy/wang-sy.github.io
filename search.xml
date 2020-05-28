@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>初次使用git记录</title>
+    <url>/2020/05/28/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8git%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h1 id="初次使用git简单记录">初次使用GIT简单记录</h1>
+<p>之前一直听说过git，但是一直没有直接使用git来管理自己的代码，现在随着需要coding的科目的增多，再加上自己有了一台阿里云服务器，于是想到使用远程git来管理自己的代码，于是就有了这篇博客，最近事情有点多，实在没时间更新图形学的博客了，等期末考试结束了，我必更新。</p>
+<p>本文内容主要参考：<a href="https://www.bootcss.com/p/git-guide/" target="_blank" rel="noopener">git - 简易指南</a></p>
+<p>上面这篇文章，看起来非常舒服，比我写的好多了，推荐大家直接看上面这个，下面些属于我自己探索路上写的一些笔记。</p>
+<h2 id="git的安装">git的安装</h2>
+<p>以我为例，我的环境是本地<code>deepinv20</code>，服务器<code>centos7</code>，安装命令如下（deepin和debian系的都一样）：</p>
+<p><code>deepinv20</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<p><code>centos7</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure>
+<h2 id="简单使用">简单使用</h2>
+<p>在服务器端新建文件夹：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir ~\test.git</span><br></pre></td></tr></table></figure>
+<p>进入该文件夹，并且执行<code>git init</code>，这一步中我们新建了一个仓库。</p>
+<p>接着，我们就可以从本地下载该仓库了</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone git@xxx.xxx.xxx.xxx:/home/git/test.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>正克隆到 'test'... git@xxx.xxx.xxx.xxx password: warning: 您似乎克隆了一个空仓库。</p>
+</blockquote>
+<p>这样，我们就可以把我们的仓库克隆下来了。</p>
+<h2 id="工作流">工作流</h2>
+<p>git的工作流由三个部分组成：</p>
+<ul>
+<li>工作目录：实际文件</li>
+<li>缓存区：临时保存我的改动</li>
+<li>HEAD：指向我最近一次提交后的结果</li>
+</ul>
+<p>工作目录中的实际文件通过<code>add</code>方法加入到缓存区，最后通过<code>commit</code>方法实际提交改动，这两个方法的使用方法如下：</p>
+<p>首先我们新建一个文本文件:<code>touch test.py</code>，并对其进行简单的编辑。</p>
+<p>随后使用<code>git add test.py</code>指令，将改动添加到缓存区。</p>
+<p>再使用<code>git commit -m &quot;create a python file.&quot;</code>来将更改提交到HEAD。</p>
+<p>最终，使用<code>git push origin master</code>提交到远端</p>
+<p>如果你在这一步出错，你可以尝试在远端仓库中使用：<code>git config receive.denyCurrentBranch ignore</code>来允许push。</p>
+<h2 id="分支">分支</h2>
+<p>我们之前使用的指令：<code>git push origin master</code>指的是将master推送到远端，这里的master指的是默认的分支即<code>主分支</code>。我们可以新建一个分支，并在该分支进行开发，完成后再将其合并到主分支上。</p>
+<p><img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E6%88%AA%E5%9B%BE%E5%BD%95%E5%B1%8F_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20200528085251.png" /></p>
+<p><a href="https://www.bootcss.com/p/git-guide/" target="_blank" rel="noopener">图片链接</a></p>
+<p>首先，我们创建一个叫做feature_x的分支，并且切换过去：<code>git checkout -b feature_x</code></p>
+<blockquote>
+<p>切换到一个新分支 'feature_x'</p>
+</blockquote>
+<p>我们对他进行一些更改，并且进行更改提交：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">touch temp2.py</span><br><span class="line">git add temp2.py</span><br><span class="line">git commit -m "add a python file for feature_x"</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[feature_x b711439] add a python file for feature_x 1 file changed, 0 insertions(+), 0 deletions(-) create mode 100644 temp2.py</p>
+</blockquote>
+<p>接下来，我们将该分支提交到远端。<code>git push origin feature_x</code></p>
+<p>我们在远端进行查看：</p>
+<p>首先我们切换到主分支进行查看：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p>返回的结果如下：</p>
+<blockquote>
+<p>README.md temp.py</p>
+</blockquote>
+<p>这是第一次我创建的文件</p>
+<p>切换到分支进行查看：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout feature_x</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>README.md temp2.py temp.py</p>
+</blockquote>
+<p>这里就有我们刚才对这个分支的修改。</p>
+<p>接下来，我们将feature_x分支合并到master分支上，这里先使用<code>git checkout master</code>切换到主分支上，然后<code>git merge feature_x</code>，就可以将刚才分支上的改动合并到主分支上了，这时我们使用<code>dir</code>指令对当前文件夹进行查看：</p>
+<blockquote>
+<p>README.md temp2.py temp.py</p>
+</blockquote>
+<p>说明合并正常。但是这时又有一个新的问题：<code>feature_x</code>分支我已經不需要了，如何把它删掉呢？其实很简单：<code>git branch -d feature_x</code>，就可以了。当然，在合并之前，可以使用指令<code>git diff master feature_x</code>就可以查看两条分支的不同</p>
+<h2 id="其他">其他</h2>
+<h3 id="添加标签">添加标签</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git tag 1.0.0 1b2e1d63ff</span><br></pre></td></tr></table></figure>
+<p>后面这个十六进制数字，可以通过<code>git log</code>语句获得已经使用的编码，我们需要保证后方的编码与已有的不同。当然，也可以通过<code>git tag 1.0.0</code>语句直接添加这个tag</p>
+<h3 id="替换本地改动">替换本地改动</h3>
+<p>如果我们对本地文件不慎进行了错误的修改，可以通过<code>git checkout -- &lt;filename&gt;</code>从远端下载并覆盖本地文件。比如，我将本地的temp.py进行了修改后，再使用<code>git checkout temp.py</code>就可以从远端下载<code>temp.py</code>文件，并且对其进行覆盖。</p>
+]]></content>
+      <categories>
+        <category>乱搞</category>
+      </categories>
+      <tags>
+        <tag>乱搞</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>组成原理-lab1难点之流水线</title>
     <url>/2020/05/11/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-lab1%E9%9A%BE%E7%82%B9%E4%B9%8B%E6%B5%81%E6%B0%B4%E7%BA%BF/</url>
     <content><![CDATA[<h1 id="流水线理解笔记">流水线理解笔记</h1>
@@ -119,9 +202,9 @@ piprData3 --> dataout</pre>
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -417,7 +500,7 @@ x_1x_2f_{11} + x_1y_2f_{12}+x_1f_{13}+x_2y_1f_{21}+y_1y_2f_{22}+y_1f_{23}+x_2f_{
 \]</span></p>
 <p>其中，<span class="math inline">\(f\)</span>是之前的<span class="math inline">\(F\)</span>矩阵被打入一维后的矩阵。</p>
 <p>给定n组点的集合，我们就可以得到以下方程：</p>
-<p><img src="https://private.codecogs.com/gif.latex?\begin%7Bbmatrix%7Dx%5E1_2x%5E1_1%20&amp;%20x%5E1_2y%5E1_1%20&amp;%20x%5E1_2w%5E1_1%20&amp;%20\cdots%20&amp;%20w%5E1_2w%5E1_1\x%5E2_2x%5E2_1%20&amp;%20x%5E2_2y%5E2_1%20&amp;%20x%5E2_2w%5E2_1%20&amp;%20\cdots%20&amp;%20w%5E2_2w%5E2_1\\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\ddots%20&amp;%20\vdots\x%5En_2x%5En_1%20&amp;%20x%5En_2y%5En_1%20&amp;%20x%5En_2w%5En_1%20&amp;%20\cdots%20&amp;%20w%5En_2w%5En_1\end%7Bbmatrix%7D\begin%7Bbmatrix%7D\boldsymbol%7BF%7D_%7B11%7D\\boldsymbol%7BF%7D_%7B12%7D\\boldsymbol%7BF%7D_%7B13%7D\\vdots\\boldsymbol%7BF%7D_%7B33%7D\\end%7Bbmatrix%7D=\boldsymbol%7BAf%7D=0" /></p>
+<p><embed src="https://private.codecogs.com/gif.latex?\begin%7Bbmatrix%7Dx%5E1_2x%5E1_1%20&amp;%20x%5E1_2y%5E1_1%20&amp;%20x%5E1_2w%5E1_1%20&amp;%20\cdots%20&amp;%20w%5E1_2w%5E1_1\x%5E2_2x%5E2_1%20&amp;%20x%5E2_2y%5E2_1%20&amp;%20x%5E2_2w%5E2_1%20&amp;%20\cdots%20&amp;%20w%5E2_2w%5E2_1\\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\ddots%20&amp;%20\vdots\x%5En_2x%5En_1%20&amp;%20x%5En_2y%5En_1%20&amp;%20x%5En_2w%5En_1%20&amp;%20\cdots%20&amp;%20w%5En_2w%5En_1\end%7Bbmatrix%7D\begin%7Bbmatrix%7D\boldsymbol%7BF%7D_%7B11%7D\\boldsymbol%7BF%7D_%7B12%7D\\boldsymbol%7BF%7D_%7B13%7D\\vdots\\boldsymbol%7BF%7D_%7B33%7D\\end%7Bbmatrix%7D=\boldsymbol%7BAf%7D=0" /></p>
 <p>由于尺度是固定的，所以最少需要八个对应点来计算基础矩阵F，所以叫八点法。</p>
 <h5 id="代码">代码</h5>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_fundamental</span><span class="params">(x1,x2)</span>:</span>    <span class="string">"""    使用归一化的八点算法，从对应点（x1，x2 3×n 的数组）中计算基础矩阵    每行由如下构成：    [x'*x，x'*y' x', y'*x, y'*y, y', x, y, 1]    """</span>    n = x1.shape    <span class="comment"># 如果两个形状不同，那么抛出异常    if(x2.shape != n):        raise ValueError("Number of points don't match.")    # 创建方程对应矩阵：    A = np.zeros((n, 9))    for i in range(n):        A[i] =  [x1[0,i]*x2[0,i], x1[0,i]*x2[1,i], x1[0,i]*x2[2,i],                 x1[1,i]*x2[0,i], x1[1,i]*x2[1,i], x1[1,i]*x2[2,i],                 x1[2,i]*x2[0,i], x1[2,i]*x2[1,i], x1[2,i]*x2[2,i] ]    # 计算线性最小二乘解    U, S, V = linalg.svd(A)    F = V[-1].reshape(3,3)    # 受限F    # 通过将最后一个奇异值置0，使秩为2    U, S, V = linalg.svd(F)    S[2] = 0    F = np.dot(U, np.dot(np.diag(S), V))    return F</span></span><br></pre></td></tr></table></figure>
@@ -458,7 +541,7 @@ x_1x_2f_{11} + x_1y_2f_{12}+x_1f_{13}+x_2y_1f_{21}+y_1y_2f_{22}+y_1f_{23}+x_2f_{
 <p>估计点和实际点能够很好的匹配。</p>
 <h3 id="由三维点计算照相机矩阵"><strong>由三维点计算照相机矩阵</strong></h3>
 <p>和上一个是一个理论：</p>
-<p><img src="https://private.codecogs.com/gif.latex?\begin%7Bbmatrix%7D\text%7BX%7D%5ET_1%20&amp;%200%20&amp;%200%20&amp;%20-x_1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\0%20&amp;%20\text%7BX%7D%5ET_1%20&amp;%200%20&amp;%20-y_1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\0%20&amp;%200%20&amp;%20\text%7BX%7D%5ET_1%20&amp;%20-1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%20-x_2%20&amp;%200%20&amp;%20\cdots\0%20&amp;%20\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%20-y_2%20&amp;%200%20&amp;%20\cdots\0%20&amp;%200%20&amp;%20\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%20-1%20&amp;%200%20&amp;%20\cdots\\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots\end%7Bbmatrix%7D\begin%7Bbmatrix%7D\text%7Bp%7D%5ET_1\\text%7Bp%7D%5ET_2\\text%7Bp%7D%5ET_3\\lambda_1\\lambda_2\\vdots\end%7Bbmatrix%7D=0" /></p>
+<p><embed src="https://private.codecogs.com/gif.latex?\begin%7Bbmatrix%7D\text%7BX%7D%5ET_1%20&amp;%200%20&amp;%200%20&amp;%20-x_1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\0%20&amp;%20\text%7BX%7D%5ET_1%20&amp;%200%20&amp;%20-y_1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\0%20&amp;%200%20&amp;%20\text%7BX%7D%5ET_1%20&amp;%20-1%20&amp;%200%20&amp;%200%20&amp;%20\cdots\\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%20-x_2%20&amp;%200%20&amp;%20\cdots\0%20&amp;%20\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%200%20&amp;%20-y_2%20&amp;%200%20&amp;%20\cdots\0%20&amp;%200%20&amp;%20\text%7BX%7D%5ET_2%20&amp;%200%20&amp;%20-1%20&amp;%200%20&amp;%20\cdots\\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots%20&amp;%20\vdots\end%7Bbmatrix%7D\begin%7Bbmatrix%7D\text%7Bp%7D%5ET_1\\text%7Bp%7D%5ET_2\\text%7Bp%7D%5ET_3\\lambda_1\\lambda_2\\vdots\end%7Bbmatrix%7D=0" /></p>
 <p>用ＳＶＤ来做就可以了：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_P</span><span class="params">(x,X)</span>:</span>    <span class="string">""" 由二维- 三维对应对（齐次坐标表示）计算照相机矩阵"""</span>    n = x.shape[<span class="number">1</span>]    <span class="keyword">if</span> X.shape[<span class="number">1</span>] != n:        <span class="keyword">raise</span> ValueError(<span class="string">"Number of points don't match."</span>)    <span class="comment"># 创建用于计算DLT 解的矩阵    M = np.zeros((3*n,12+n))    for i in range(n):        M[3*i,0:4] = X[:,i]        M[3*i+1,4:8] = X[:,i]        M[3*i+2,8:12] = X[:,i]        M[3*i:3*i+3,i+12] = -x[:,i]    U,S,V = linalg.svd(M)    return V[-1,:12].reshape((3,4))</span></span><br></pre></td></tr></table></figure>
 <p>老亚子，写个Ｄｅｍｏ跑一下试试：</p>
@@ -559,7 +642,7 @@ f_x = 2951,f_y = 2652
 </blockquote>
 <p>发现该错误后，我在程序的头部加上了<code>glutInit()</code>，但是仍然报错：</p>
 <blockquote>
-<p>Current thread 0x00007f9484371700 (most recent call first): File "AR.py", line 139 in drawTeapot File "AR.py", line 161 in <module> zsh: abort (core dumped) python AR.py</p>
+<p>Current thread 0x00007f9484371700 (most recent call first): File &quot;AR.py&quot;, line 139 in drawTeapot File &quot;AR.py&quot;, line 161 in <module> zsh: abort (core dumped) python AR.py</p>
 </blockquote>
 <p>上网搜了很多方法（几乎都用了），都没有解决，最终发现，将<code>glutSolidTeapot(size)</code>方法更改为<code>glutWireTeapot(size)</code>就可以运行无误了，最终结果如下： <img src="https://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/Screenshot%20from%202020-04-28%2010-35-06.png" /></p>
 ]]></content>
@@ -578,9 +661,9 @@ f_x = 2951,f_y = 2652
 <p>前几天去忙别的事情了，大概有一个周没有更新了，周末有时间了赶紧学一手。这里对应的是书中的第四章 ，能坚持到这里的话，就已经啃完了书的三分之一了。</p>
 <h2 id="参考教材">参考教材：</h2>
 <ul>
-<li><p>python计算机视觉编程</p></li>
+<li>python计算机视觉编程</li>
 <li><p>视觉SLAM十四讲，从理论到实践 ## 针孔照相机模型 <strong>针孔摄像机模型</strong>（有时称作<strong>摄影照相机模型</strong>），是计算机视觉中广泛应用的照相机模型。原因是：</p></li>
-<li><p>简单</p></li>
+<li>简单</li>
 <li><p>精度足够</p></li>
 </ul>
 <p>这个名字来源于一种简单的照相机，他利用小孔成像原理进行成像，换句话说就是：<strong>在光线投影到图像平面前，从唯一一个点经过</strong>，这个经过的点就叫做：<strong>照相机中心</strong>，记做C，如下图所示：</p>
@@ -658,7 +741,7 @@ f&amp;0&amp;c_x\\
 <p>张正友标定法是一种介于传统标定方法和自标定方法之间的一种简易标定方法。它的标定方法简单易做，只需要我们打印一张棋盘格就可以了。并且在标定过程中只需要将平面模板按任意角度在摄像机前放置即可。</p>
 <h3 id="研究的坐标系">研究的坐标系</h3>
 <figure>
-<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vaW1hZ2UtMjAyMDA0MjQyMjUxNDA3MjAucG5n?x-oss-process=image/format,png" alt="" /><figcaption>image-20200424225140720</figcaption>
+<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9zYWl5dXdhbmctYmxvZy5vc3MtY24tYmVpamluZy5hbGl5dW5jcy5jb20vaW1hZ2UtMjAyMDA0MjQyMjUxNDA3MjAucG5n?x-oss-process=image/format,png" alt="image-20200424225140720" /><figcaption>image-20200424225140720</figcaption>
 </figure>
 <p>我们主要研究四个坐标系：</p>
 <ul>
@@ -1160,7 +1243,7 @@ A =
 <p>我们展示三组配准前后图像的区别：</p>
 <p>配准前：</p>
 <figure>
-<img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%867%E5%90%8E/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%867/image-20200419142724185.png" alt="" /><figcaption>image-20200419142724185</figcaption>
+<img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%867%E5%90%8E/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%867/image-20200419142724185.png" alt="image-20200419142724185" /><figcaption>image-20200419142724185</figcaption>
 </figure>
 <p>配准后：</p>
 <p><img src="http://saiyuwang-blog.oss-cn-beijing.aliyuncs.com/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%867%E5%90%8E/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%867/image-20200419142545586.png" /></p>
@@ -1340,8 +1423,8 @@ y\\
 <p>这样我们就得到了下面的：</p>
 <p>这样我们就得到了一个8*16的向量，用于描述这个区域。但是在做这些之前，我们需要先将区域内的点旋转到主方向上，然后再进行统计。</p>
 <p>代码 下面这个代码是从网上copy的，用cv2直接掉的包，下面还有一个b站up主自己写的，大家可以去学习一下。</p>
-<p>""" Created on Sat Sep 29 14:43:02 2018</p>
-<p><span class="citation" data-cites="author">@author</span>: qgl """</p>
+<p>&quot;&quot;&quot; Created on Sat Sep 29 14:43:02 2018</p>
+<p><span class="citation" data-cites="author">@author</span>: qgl &quot;&quot;&quot;</p>
 <p>import numpy as np import cv2 from matplotlib import pyplot as plt</p>
 <p>imgname = 'C:/Users/qgl/Desktop/articles/test1.jpg'</p>
 <p>sift = cv2.xfeatures2d.SIFT_create()</p>
@@ -1619,7 +1702,7 @@ F = 1.xxxxxxxxxxxxxxxxxxx\ G \ R \ S
 </ul>
 <h3 id="舍入方式">舍入方式</h3>
 <figure>
-<img src="https://imgconvert.csdnimg.cn/aHR0cDovL3NhaXl1d2FuZy1ibG9nLm9zcy1jbi1iZWlqaW5nLmFsaXl1bmNzLmNvbS8lRTclQkIlODQlRTYlODglOTAlRTUlOEUlOUYlRTclOTAlODYlRTclQUMlQUMlRTQlQjglODklRTclQUIlQTAlRTQlQjglOEIvaW1hZ2UtMjAyMDA0MTQwODU0NTc1MTAucG5n?x-oss-process=image/format,png" alt="" /><figcaption>image-20200414085457510</figcaption>
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL3NhaXl1d2FuZy1ibG9nLm9zcy1jbi1iZWlqaW5nLmFsaXl1bmNzLmNvbS8lRTclQkIlODQlRTYlODglOTAlRTUlOEUlOUYlRTclOTAlODYlRTclQUMlQUMlRTQlQjglODklRTclQUIlQTAlRTQlQjglOEIvaW1hZ2UtMjAyMDA0MTQwODU0NTc1MTAucG5n?x-oss-process=image/format,png" alt="image-20200414085457510" /><figcaption>image-20200414085457510</figcaption>
 </figure>
 <ul>
 <li>一、就近舍入：舍入为最近可表示的数</li>
@@ -1635,9 +1718,9 @@ F = 1.xxxxxxxxxxxxxxxxxxx\ G \ R \ S
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -1790,7 +1873,7 @@ halfAdder --> carry</pre>
 <ul>
 <li><p>两个正数相减或两个负数相减：不会溢出，因为结果的绝对值一定比两者绝对值一定比两者绝对值的最大值小，人话听不懂，但是用数学语言描述就看得懂了：</p>
 <p>$$</p>
-<p>if (A B)(A B):\</p>
+<p>if (A0 B0)(A0 B0):\</p>
 <p>|A-B|max(|A|,|B|)</p>
 <p>$$</p></li>
 <li><p>正数减负数：可能发生溢出</p></li>
@@ -2015,9 +2098,9 @@ G --> |否,小于33次|B</pre>
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -2262,7 +2345,7 @@ finalScore = \frac{det({M})}{trace({M})^2}
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 <p>在C++中不允许(void*)类型进行隐式转换，所以在C语言中，NULL被定义为(void*)0,而在C++语言中，NULL则被定义为整数0，也就是说，NULL是一个整型变量，这样的设计带来了如下的问题:</p>
 <ul>
-<li><p>```C++ char* a =" Hello"; void foo(void* p){} foo(a); <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  上方这种调用会出现问题</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;C++</span><br><span class="line">  void func(int data);</span><br><span class="line">   </span><br><span class="line">  void func(char* data);</span><br></pre></td></tr></table></figure></p>
+<li><p>```C++ char* a =&quot; Hello&quot;; void foo(void* p){} foo(a); <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  上方这种调用会出现问题</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;C++</span><br><span class="line">  void func(int data);</span><br><span class="line">   </span><br><span class="line">  void func(char* data);</span><br></pre></td></tr></table></figure></p>
 <p>在上面这种情况中，无法将NULL和整形区分，调用的结果与想象中不符。</p></li>
 </ul>
 <p>nullptr在C++11被引入用于解决这一问题，nullptr可以明确区分整型和指针类型，能够根据环境自动转换成相应的指针类型，但不会被转换为任何整型，所以不会造成参数传递错误。</p>
@@ -2399,7 +2482,7 @@ finalScore = \frac{det({M})}{trace({M})^2}
 <h3 id="继承">继承</h3>
 <ul>
 <li><p>父类、子类。就是子类继承父类的<strong>属性</strong>和<strong>行为</strong>，使得子类对象具有与父类相同的属性、相同的行为。子类可以直接 访问父类中的<strong>非私有</strong>的属性和行为</p></li>
-<li><p>好处：</p>
+<li>好处：
 <ul>
 <li>避免代码重复，提高<strong>代码的复用性。</strong></li>
 <li>类与类之间产生了关系，是<strong>多态的前提。</strong></li>
@@ -2482,7 +2565,7 @@ finalScore = \frac{det({M})}{trace({M})^2}
 <h3 id="shared_ptr">shared_ptr</h3>
 <p>shared_ptr 是一个标准的共享所有权的智能指针，允许多个 shared_ptr 智能指针指向同一个指针对象，shared_ptr 利用引用计数的方式实现了对所管理的对象的所有权的分享，即允许多个 shared_ptr 共同管理同一个对象</p>
 <h3 id="weak_ptr">weak_ptr</h3>
-<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符"*"和运算符"-&gt;"，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
+<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符&quot;*&quot;和运算符&quot;-&gt;&quot;，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
 <pre class="mermaid">graph LR
 普通指针 --自动delete--> auto_ptr
 auto_ptr --禁止所有权转移-->unique_ptr-治标不治本
@@ -2765,7 +2848,7 @@ unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
 <h3 id="讲解">讲解</h3>
 <h4 id="解决的问题">解决的问题</h4>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233710618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>通常，暗图像直方图的分量集中在灰度较低的一端，而亮图像直方图分量偏向于灰度较高的一端。</p>
 <p>从图中可以得到这样的结论：如果一幅图像的灰度直方图几乎覆盖了整个灰度的取值范围，并且除了个别灰度值的个数较为突出，整个灰度值分布近似于均匀分布，那么这幅图像就具有较大的灰度动态范围和较高的对比度，同时图像的细节更为丰富。已经证明，仅仅依靠输入图像的直方图信息，就可以得到一个变换函数，利用该变换函数可以将输入图像达到上述效果，该过程就是直方图均衡化。</p>
@@ -2831,7 +2914,7 @@ a = \left[
 <p>对这些特征值进行归一化，将他们映射到1~100的区间中。</p></li>
 </ul>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233729395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>可以看到，后两个特征值都太小了，而且我们的任务是把这个100*4的矩阵转化成100*2的矩阵，所以我们需要选取两个特征向量，所以呢我们就去选最大的两个特征值所对应的特征向量，也就是特征向量0和1。</p>
 <p>将他们合成一个4*2的矩阵，计算原矩阵与他们的矩阵乘法，就可以得到新的特征矩阵了。</p>
@@ -2889,32 +2972,32 @@ B =
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>).convert(<span class="string">"L"</span>))</span><br><span class="line">im2 = filters.gaussian_filter(im, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">compare(im, im2)</span><br></pre></td></tr></table></figure>
 <p>主体就只有下面两行，filters.gaussian_filter(im, 5)，这里的第一个参数代表需要进行高斯模糊的矩阵，第二个代表标准差，这个大家都懂，最后的效果如下:</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233741180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233741180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>我们将标准差从5降低到2进行观察，发现果然模糊的程度降低了。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233749131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233749131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>如果要对一张彩色图像进行高斯模糊（彩色图形就是多通道图形，我们的灰度图只有一个通道，而通常彩色图形是由RGB三个通道组成的），我们只需要对他的每一层进行高斯模糊即可。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>))</span><br><span class="line">im2 = zeros(im.shape)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    im2[:, :, i] = filters.gaussian_filter(im[:, :, i], <span class="number">5</span>)</span><br><span class="line">im2 = uint8(im2)</span><br><span class="line">compare(im, im2)</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233757627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233757627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>将标准差降低到2，效果如下</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233804321.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233804321.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>对于三通道，我产生了一种很奇葩的想法， 那就是如果每一层用于模糊的标准差不一样会发生什么？我将模糊的值从全都是五改为了i*3：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">im2[:, :, i] = filters.gaussian_filter(im[:, :, i], i*<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
 <p>模糊后的图片变成了这样：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233812348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233812348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>我们可以理解，因为图像中的红色被模糊的较少，比较强烈，而蓝色和绿色被模糊的程度较大，无法保持原来的亚子，所以红色的框架被显现出来。</p>
 <p>将模糊值调节到i*20，我们会发现， 这变成了一张具有魔幻现实主义的图片😂</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/2020040723382746.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/2020040723382746.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <h3 id="图像导数">图像导数</h3>
 <h5 id="参考资料-1">参考资料</h5>
@@ -2966,7 +3049,7 @@ D_y = \left[
 <p>下面看一下效果:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage <span class="keyword">import</span> filters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(im1, im2, module = <span class="string">'gray'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    在一张图里面显示两个图片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">12</span>,<span class="number">8</span>),ncols=<span class="number">2</span>,nrows=<span class="number">1</span>)</span><br><span class="line">    ax[<span class="number">0</span>].imshow(im1, module)</span><br><span class="line">    ax[<span class="number">1</span>].imshow(im2, module)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">im = array(Image.open(<span class="string">"C:\\Users\\wangsy\\Desktop\\learning\\timg.jpg"</span>).convert(<span class="string">"L"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sobel</span></span><br><span class="line">imx = zeros(im.shape)</span><br><span class="line">filters.sobel(im,<span class="number">1</span>,imx)</span><br><span class="line"></span><br><span class="line">imy = zeros(im.shape)</span><br><span class="line">filters.sobel(im,<span class="number">0</span>,imy)</span><br><span class="line"></span><br><span class="line">magnitude = sqrt(imx**<span class="number">2</span> + imy**<span class="number">2</span>)</span><br><span class="line">compare(im, magnitude)</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200407233841758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200407233841758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>上面展示的是最后提取的X轴和Y轴综合的梯度图</p>
 <p><img src="https://img-blog.csdnimg.cn/20200407233849490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 上面两张分别是X轴和Y轴检测的。</p>
@@ -3090,7 +3173,7 @@ D_y = \left[
 <p><span class="math display">\[x_i \geq 0,j=1,3,5,6,7,8,9\]</span></p>
 <h2 id="概念之凸集">概念之凸集</h2>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192222776.png" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192222776.png" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <ul>
 <li>凸集：如果集合C中任意两点<span class="math display">\[X_1,X_2\]</span>，其连线上的所有点也都是集合C中的点，称C为凸集。</li>
@@ -3148,11 +3231,11 @@ B^{-1}b\\
 <h3 id="图解法">图解法</h3>
 <p>假设解以下问题</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192119676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192119676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>我们可以用图解法的方法解决（初中生就会的那种）</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192207733.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192207733.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>关于图解法的一些定理：</p>
 <ul>
@@ -3167,9 +3250,9 @@ B^{-1}b\\
         <category>最优化技术</category>
       </categories>
       <tags>
+        <tag>最优化技术</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>最优化技术</tag>
       </tags>
   </entry>
   <entry>
@@ -3180,7 +3263,7 @@ B^{-1}b\\
 <p>这个文章的大部分内容（几乎全部）都来自于我最优化课程的课程笔记。主要来源是重庆大学文静老师的PPT，个人主要用于整理、归纳，如果有侵权等问题，我会在第一时间将博客撤销。</p>
 <h2 id="单纯形法的流程介绍">单纯形法的流程介绍</h2>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192453767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192453767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>直观的去看这个流程，有一点点像前面的一些函数的优化方法。但是在枚举的过程中，有一些问题值得关注：</p>
 <ul>
@@ -3192,7 +3275,7 @@ B^{-1}b\\
 <p>通过一个例子来讲解单纯形法的基本原理</p>
 <p>我们这样一个线性规划问题：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192500440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192500440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>因为这里主要讨论单纯形法，所以我们不再纠结怎么化成标准型。</p>
 <ol type="1">
@@ -3235,7 +3318,7 @@ B^{-1}b\\
 <h2 id="单纯形表">单纯形表</h2>
 <h3 id="单纯形表的构建">单纯形表的构建</h3>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192511691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192511691.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>这里我们不再关注怎么加松弛变量之类的问题了</p>
 <p><img src="https://img-blog.csdnimg.cn/20200402192518476.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 单纯形表中：</p>
@@ -3263,9 +3346,9 @@ B^{-1}b\\
         <category>最优化技术</category>
       </categories>
       <tags>
+        <tag>最优化技术</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
-        <tag>最优化技术</tag>
       </tags>
   </entry>
   <entry>
@@ -3289,7 +3372,7 @@ B^{-1}b\\
 <li>ASCII码：现在已经很少使用，一共可以表示128个字符</li>
 </ul>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192710902.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192710902.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <ul>
 <li>Latin-1: 256个字符，这个是对ASCII码的拓展</li>
@@ -3298,7 +3381,7 @@ B^{-1}b\\
 </ul>
 <p>为了处理这些不同的编码，MIPS准备了以下指令：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192716366.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192716366.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>完成字符串的复制功能：</p>
 <p>以C的代码为例</p>
@@ -3315,7 +3398,7 @@ B^{-1}b\\
 <h2 id="分支的地址">分支的地址</h2>
 <p>以beq语句为例</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192729479.png" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192729479.png" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>可以看到跳转的地址长度只有十六位，那是不是就表明我们程序的长度仅能在<span class="math inline">\(2^{16}\)</span>以内呢？</p>
 <p>并不，其实跳转的地址是<span class="math display">\[Target\_address=PC + offset *4\]</span>，这样可以在这个指令前后<span class="math inline">\(2^{16}\)</span>之内进行转移如果还不够用呢？回想一下还有一个更短的语句，叫做<span class="math inline">\(j\)</span>。</p>
@@ -3345,7 +3428,7 @@ B^{-1}b\\
 <h2 id="高级语言的编译程序的启动机制">高级语言的编译、程序的启动机制</h2>
 <h3 id="总体结构">总体结构</h3>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200402192745824.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200402192745824.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <h3 id="伪指令">伪指令</h3>
 <p>查看下面的语句</p>
@@ -3361,9 +3444,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -3639,7 +3722,7 @@ B^{-1}b\\
 <h4 id="指令和数据都是二进制串无法区分">１．指令和数据都是二进制串，无法区分</h4>
 <h4 id="程序时能够被改写的">２．程序时能够被改写的</h4>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329231127317.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329231127317.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>存储程序相关的基本概念：</p>
 <ul>
@@ -3776,9 +3859,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>
@@ -3816,7 +3899,7 @@ B^{-1}b\\
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd blog#进入你定义的博客文件夹</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
 <p>等待一段时间后，在浏览器中输入，你自己的xxx.github.io，即可查看博客，如下：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/2020032921370616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/2020032921370616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>值得注意的是，<strong>将内容push到GitHub后需要等待一段时间后，你的改动才能有效</strong>。所以说如果到了这步，你不能通过xxx.github.io访问自己的博客的话，不妨稍等片刻（不超过五分钟）再重新尝试一下。</p>
 <p>到此为止我们部署的博客，不仅可以在本地供自己查看，也可以在云端供所有人查看，博客的基础搭建完成，在后面的章节中我们会引入nexT对博客进行美化。</p>
@@ -3838,13 +3921,13 @@ B^{-1}b\\
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/blog</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br><span class="line">hexo s</span><br><span class="line">ehco "ok"</span><br></pre></td></tr></table></figure>
 <p>运行完成后我们打开 http://localhost:4000 查看使用next主题的博客，效果如下</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213805633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213805633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>emmm，为什么感觉还不如原来的好看呢（逃</p>
 <h3 id="五让它变得好看">五、让它变得好看</h3>
 <p>我们同样是Next，别人的长这个样子：从这里进入，<a href="http://blog.maroom.cn/" target="_blank" rel="noopener">我的next安装就是借鉴的他的</a></p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213726210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213726210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>那肯定不得行，我们也要把自己的博客搞漂亮点，我们先对未来进行规划，以我自己为例：</p>
 <ul>
@@ -3870,7 +3953,7 @@ B^{-1}b\\
 <figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">:/<span class="built_in">string</span></span><br></pre></td></tr></table></figure>
 <p>语句来对相应字符串进行搜索。更改完成后我们进行更新查看。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213832142.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213832142.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>这样的布局基本上符合我们的要求。</p>
 <h4 id="设置语言">设置语言</h4>
@@ -3888,7 +3971,7 @@ B^{-1}b\\
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="comment">#tags: /tags/ || tags</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
 <p>保存后重新开始服务，可以看到网页变成了中文版，并且左边框中有了主页和归档两个选项。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213856960.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213856960.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>归档即我们博客更新的时间线，如下： <img src="https://img-blog.csdnimg.cn/20200329213905278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
 <p>接下来我们添加剩下的两个界面：</p>
@@ -3904,11 +3987,11 @@ B^{-1}b\\
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">INFO  Created: ~/blog/source/categories/index.md</span><br></pre></td></tr></table></figure>
 <p>这段提示中告诉我们在~/blog/source/categories/文件夹下生成了一个index.md（其实也生成了categories文件夹），我们现在进入这个路径下的index.md进行更改：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim ~/blog/source/categories/index.md</span><br></pre></td></tr></table></figure>
-<p>在原有的基础上，增加type属性，type: "categories"</p>
+<p>在原有的基础上，增加type属性，type: &quot;categories&quot;</p>
 <figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-03-29 19:11:59</span><br><span class="line">type: "categories"</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 <p>完成这些操作后，我们重启服务，进行查看，发现新的网站左边出现了标签、分类两个新的选项，点击进入分类，我们可以看到：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213924379.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213924379.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>而进入还没有定义的界面“标签”后，会报错。</p>
 <p>分类功能已经基本完成，接下来我们新建一篇文章来进行测试。我将之前写好的文章放入其中，这是一篇关于计算机组成原理的文章，我们通过命令：</p>
@@ -3922,7 +4005,7 @@ B^{-1}b\\
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 组成原理第一章</span><br><span class="line">date: 2020-03-29 19:31:12</span><br><span class="line">tags:</span><br><span class="line">categories: </span><br><span class="line"><span class="bullet">- </span>组成原理</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">feff</span>&gt;</span></span># <span class="strong">**引言**</span></span><br><span class="line"></span><br><span class="line">自己看计组，顺便写个markdown玩玩，</span><br><span class="line">bulabula</span><br></pre></td></tr></table></figure>
 <p>在这里我们要给文章分类的话，就需要在categories属性下注明他的分类，我们这里规定他的分类为：“组成原理”，我们重新生成博客，进行查看。再次进入分类，我们就发现多出来一个组成原理类，组成原理类中也有一片我们新建的文档。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213941340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213941340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>接下来我们仿制上面的思路，将tag列表加入，下面只贴代码：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page "tags",</span><br></pre></td></tr></table></figure>
@@ -3935,7 +4018,7 @@ B^{-1}b\\
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 组成原理第一章</span><br><span class="line">date: 2020-03-29 19:31:12</span><br><span class="line">tags: </span><br><span class="line">- 组成原理</span><br><span class="line">- 大二下</span><br><span class="line">- 课内学习</span><br><span class="line">categories: </span><br><span class="line">- 组成原理</span><br><span class="line">---</span><br><span class="line">&lt;feff&gt;# **引言**</span><br><span class="line"></span><br><span class="line">自己看计组，顺便写个markdown玩玩</span><br></pre></td></tr></table></figure>
 <p>重启，进入标签页面，我们可以看到新做出的改变。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329213953608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329213953608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>进入相应标签就可以找到相应的文章了。</p>
 <h5 id="添加图标">添加图标</h5>
@@ -3948,7 +4031,7 @@ B^{-1}b\\
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/||</span> <span class="string">home</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/||</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/||</span> <span class="string">th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
 <p>原来这是因为在新版的next中，图标也在menu一栏进行设置，重启服务后，效果如下：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200329214008348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200329214008348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <h5 id="给自己的博客换名字写标题等等">给自己的博客换名字、写标题等等</h5>
 <p>首先先准备好图片，我在网上找了只皮卡丘，并且放到了图床中，使用的是<a href="https://imgchr.com/" target="_blank" rel="noopener">路过图床</a>，这只皮卡丘图像的连接是：https://imgchr.com/i/GZ3vOe</p>
@@ -3971,7 +4054,7 @@ B^{-1}b\\
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">social:</span></span><br><span class="line">  <span class="attr">GitHub:</span> <span class="string">https://github.com/wang-sy</span> <span class="string">||</span> <span class="string">github</span></span><br><span class="line">  <span class="attr">E-Mail:</span> <span class="string">mailto:wangsaiyu@cqu.edu.cn</span> <span class="string">||</span> <span class="string">envelope</span></span><br><span class="line">  <span class="comment">#Google: https://plus.google.com/yourname || goo</span></span><br></pre></td></tr></table></figure>
 <p>重启查看</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/2020032921402096.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/2020032921402096.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <h3 id="六未完成部分">六、未完成部分</h3>
 <p>好了，至此位置，美化的部分基本上全部结束，接下来再加一些其他的功能，如评论、流量监测等等功能，这些功能我会在以后慢慢加。</p>
@@ -4028,7 +4111,7 @@ B^{-1}b\\
 <h3 id="软件层次"><strong>软件层次</strong></h3>
 <p>计算机中的硬件只能执行极为低级的简单指令，从复杂的应用程序，到简单的指令需要经过几个软件层次来将复杂的高层次操作<strong>逐步解释或翻译</strong>成简单的计算机指令。下面的图中给出了这些软件的层次结构，外层是应用软件，中心是硬件，系统软件位于两者之间：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/2020030211255338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/2020030211255338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>操作软件有很多种，其中两种对于今天的计算机来说是必需的：</p>
 <ul>
@@ -4056,7 +4139,7 @@ B^{-1}b\\
 <p>从06年起，所有桌面和服务器公司都在单片位处理器中加入了多个处理器，以求更大的吞吐率，而不再继续追求降低单个程序运行在单个处理器上的响应时间。</p>
 <p>那么为什么要才用多核的设计呢？</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200302112700248.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200302112700248.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>对于一个大核，为了达到两份的效率，需要付出4份的功耗 <img src="https://img-blog.csdnimg.cn/20200302112707482.png" alt="在这里插入图片描述" /></p>
 <p>对于一个小核，为了达到一份效率，只需要付出一份的功耗即可。小核达到大核<span class="math inline">\(\frac{1}{2}\)</span>的效率，却只花费了<span class="math inline">\(\frac{1}{4}\)</span>的功耗。 <img src="https://img-blog.csdnimg.cn/20200302112713327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
@@ -4064,7 +4147,7 @@ B^{-1}b\\
 <p>可以看到，在红线处， 小核的效能和大核的一样，但是小核的功耗确实大核的一半，如果一个手机的内部同时有一个小核、一个大核，那么在处理日常事项时，使用小核，关闭大核。而在处理繁杂任务时使用大核，就可以极大的延长待机时间。</p>
 <p>为什么大核的功耗是小核的四倍，效率却只有小核的两倍呢？</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200302112726473.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200302112726473.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>大核的功能单元多，流水线深度也较深，所以效率较高，但也正因如此，如果分支预测出错，需要进行回滚，那么浪费的能量也较多，相同情况下， 小核浪费掉的能量也少很多，所以小核可以具有更高的性能/功耗比。</p>
 <h2 id="计算机性能的评价">1.6计算机性能的评价</h2>
@@ -4114,7 +4197,7 @@ B^{-1}b\\
 <p>对于1982年的程序员来说，写好一个程序之后什么都不用干，到了今天，他的程序性能会比当年高一千倍不止，这是因为计算机<strong>硬件的不断发展</strong>，但是今天，计算机不再追求降低单个程序运行在单个处理器上的响应时间，也就是说我们想要改善计算机运行速度，应当着重从软件层次入手，优化算法、优化编译程序、指令集架构等。</p>
 <h3 id="综合评价cpu性能方法spec-cpu">综合评价CPU性能方法——SPEC CPU</h3>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200302112750759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200302112750759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>在这个测试表中，对CPU在固定环境下，进行了不同应用场景的测试，如字符串处理、围棋游戏、视频压缩等，并且记录下来了完成任务的时间：<span class="math inline">\(Exce\_time\)</span>，将其与<span class="math inline">\(Ref\_time\)</span>进行对比，得到了<span class="math inline">\(SPECratio\)</span>有公式:<span class="math inline">\(SPECratio = \frac{Ref\_time}{Exce\_time}\)</span></p>
 <p>总体性能评价使用了几何平均公式：</p>
@@ -4132,7 +4215,7 @@ B^{-1}b\\
 <p>现如今，计算资源消耗的能量占了全世界能耗的2%， 如今能耗问题成为了一个受关注的点。</p>
 <h3 id="spec功耗评价">SPEC功耗评价</h3>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20200302112757684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="" /><figcaption>在这里插入图片描述</figcaption>
+<img src="https://img-blog.csdnimg.cn/20200302112757684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE3ODUzNjEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /><figcaption>在这里插入图片描述</figcaption>
 </figure>
 <p>SPEC采用单个的数字来进行归纳，称为<span class="math inline">\(overall \ ssj\_ops\ per\ watt\)</span></p>
 <p><span class="math display">\[overall\ ssj\_ops\ per\ watt = \frac{\Sigma_{i=0}^{10}ssj\_ops_i}{\Sigma_{i=0}^{10}{power_i}}\]</span></p>
@@ -4143,9 +4226,9 @@ B^{-1}b\\
         <category>组成原理</category>
       </categories>
       <tags>
-        <tag>组成原理</tag>
         <tag>大二下</tag>
         <tag>课内学习</tag>
+        <tag>组成原理</tag>
       </tags>
   </entry>
   <entry>

@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
 <meta property="og:description" content="图形学笔记（五）——SIFT（尺度不变特征变换） SIFT(Scale-Invariant Feature Transform)的中文名字是尺度不变特征变换。SIFT描述子具有非常强的稳健性，自从SIFT出现，许多其他本质上使用相同描述子的方法也相继出现。它可以用于三维视角和噪声的可靠匹配。 参考资料 Jan Erik Solem. Python计算机视觉编程 (图灵程序设计丛书) (p. 39)">
 <meta property="article:published_time" content="2020-04-16T00:50:27.000Z">
-<meta property="article:modified_time" content="2020-04-22T03:38:59.826Z">
+<meta property="article:modified_time" content="2020-04-22T03:38:59.000Z">
 <meta property="article:author" content="Saiyu Wang">
 <meta property="article:tag" content="图像处理">
 <meta property="article:tag" content="python">
@@ -445,8 +445,8 @@
 <p>这样我们就得到了下面的：</p>
 <p>这样我们就得到了一个8*16的向量，用于描述这个区域。但是在做这些之前，我们需要先将区域内的点旋转到主方向上，然后再进行统计。</p>
 <p>代码 下面这个代码是从网上copy的，用cv2直接掉的包，下面还有一个b站up主自己写的，大家可以去学习一下。</p>
-<p>""" Created on Sat Sep 29 14:43:02 2018</p>
-<p><span class="citation" data-cites="author">@author</span>: qgl """</p>
+<p>&quot;&quot;&quot; Created on Sat Sep 29 14:43:02 2018</p>
+<p><span class="citation" data-cites="author">@author</span>: qgl &quot;&quot;&quot;</p>
 <p>import numpy as np import cv2 from matplotlib import pyplot as plt</p>
 <p>imgname = 'C:/Users/qgl/Desktop/articles/test1.jpg'</p>
 <p>sift = cv2.xfeatures2d.SIFT_create()</p>
@@ -572,7 +572,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

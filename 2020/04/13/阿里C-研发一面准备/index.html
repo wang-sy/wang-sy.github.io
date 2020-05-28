@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="SaiyuWang&#39;s Blog">
 <meta property="og:description" content="阿里C++面试文档 4月8做完笔试，做的稀烂，还以为直接凉凉了，就没管这事了，没想到今天接到约面试的电话，约到了明天下午，然鹅我已经半年多没写过C++了，于是今天下午赶紧恶补一下，许个愿，等过几天看看能不能回来还愿。 先说结果： 我是18级的，他们不招，所以这些准备的今年是用不上了，但是还是可以分享一下的。 NULL 和 nullptr 参考资料： this one nullptr是在C++11中">
 <meta property="article:published_time" content="2020-04-12T17:19:09.000Z">
-<meta property="article:modified_time" content="2020-04-22T03:38:59.822Z">
+<meta property="article:modified_time" content="2020-04-22T03:38:59.000Z">
 <meta property="article:author" content="Saiyu Wang">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="找实习">
@@ -389,7 +389,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULL ((void *)0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 <p>在C++中不允许(void*)类型进行隐式转换，所以在C语言中，NULL被定义为(void*)0,而在C++语言中，NULL则被定义为整数0，也就是说，NULL是一个整型变量，这样的设计带来了如下的问题:</p>
 <ul>
-<li><p>```C++ char* a =" Hello"; void foo(void* p){} foo(a); <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  上方这种调用会出现问题</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;C++</span><br><span class="line">  void func(int data);</span><br><span class="line">   </span><br><span class="line">  void func(char* data);</span><br></pre></td></tr></table></figure></p>
+<li><p>```C++ char* a =&quot; Hello&quot;; void foo(void* p){} foo(a); <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  上方这种调用会出现问题</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;C++</span><br><span class="line">  void func(int data);</span><br><span class="line">   </span><br><span class="line">  void func(char* data);</span><br></pre></td></tr></table></figure></p>
 <p>在上面这种情况中，无法将NULL和整形区分，调用的结果与想象中不符。</p></li>
 </ul>
 <p>nullptr在C++11被引入用于解决这一问题，nullptr可以明确区分整型和指针类型，能够根据环境自动转换成相应的指针类型，但不会被转换为任何整型，所以不会造成参数传递错误。</p>
@@ -526,7 +526,7 @@
 <h3 id="继承">继承</h3>
 <ul>
 <li><p>父类、子类。就是子类继承父类的<strong>属性</strong>和<strong>行为</strong>，使得子类对象具有与父类相同的属性、相同的行为。子类可以直接 访问父类中的<strong>非私有</strong>的属性和行为</p></li>
-<li><p>好处：</p>
+<li>好处：
 <ul>
 <li>避免代码重复，提高<strong>代码的复用性。</strong></li>
 <li>类与类之间产生了关系，是<strong>多态的前提。</strong></li>
@@ -609,7 +609,7 @@
 <h3 id="shared_ptr">shared_ptr</h3>
 <p>shared_ptr 是一个标准的共享所有权的智能指针，允许多个 shared_ptr 智能指针指向同一个指针对象，shared_ptr 利用引用计数的方式实现了对所管理的对象的所有权的分享，即允许多个 shared_ptr 共同管理同一个对象</p>
 <h3 id="weak_ptr">weak_ptr</h3>
-<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符"*"和运算符"-&gt;"，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
+<p>weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载解引用运算符&quot;*&quot;和运算符&quot;-&gt;&quot;，它的最大作用在于协助 shared_ptr 工作，像旁观者那样观测资源的使用情况</p>
 <pre class="mermaid">graph LR
 普通指针 --自动delete--> auto_ptr
 auto_ptr --禁止所有权转移-->unique_ptr-治标不治本
@@ -804,7 +804,7 @@ unique_ptr-治标不治本 --共享所有权--> shared_ptr</pre>
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
