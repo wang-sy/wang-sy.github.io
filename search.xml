@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>最优化技术——牛顿法</title>
+    <url>/2020/05/28/%E6%9C%80%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E2%80%94%E2%80%94%E7%89%9B%E9%A1%BF%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="最优化技术牛顿法">最优化技术——牛顿法</h1>
+<p>没错，到期末了，我又开始学最优化了</p>
+<h2 id="参考目录">参考目录</h2>
+<ul>
+<li><a href="https://blog.csdn.net/itplus/article/details/21896453" target="_blank" rel="noopener">牛顿法与拟牛顿法学习笔记（一）牛顿法</a></li>
+</ul>
+<h2 id="解决的问题">解决的问题</h2>
+<p>解决的是无约束的极小化问题，用数学语言描述如下： <span class="math display">\[
+\mathop{min}\limits_{x}f(x) \tag{0}
+\]</span></p>
+<h2 id="简单一维牛顿法">简单一维牛顿法</h2>
+<p>从现有极小值估计点出发，对<span class="math inline">\(f(x)\)</span>做泰勒展开，进而找到极小值的下一个估计值。设<span class="math inline">\(x_k\)</span>是当前极小值的估计值，有： <span class="math display">\[
+\varphi (x) = f(x_k) +f&#39;(x_k)(x - x_k) + \frac{1}{2}f&#39;&#39;(x_k)(x-x_k)^2 \tag{1}
+\]</span> <span class="math inline">\(\varphi\)</span>表示的是<span class="math inline">\(f(x)\)</span> 在<span class="math inline">\(x\)</span>附近的二阶泰勒展开式，由于求的是最值由极值条件可知:<span class="math inline">\(\varphi\)</span>应当满足: <span class="math display">\[
+\varphi&#39;(x) = 0 \tag{2}
+\]</span> 将1、2两个式子整合可知： <span class="math display">\[
+f&#39;(x_k) + f&#39;&#39;(x_k)(x - x_k) = 0
+\]</span> 所以可以求得： <span class="math display">\[
+x = x_k - \frac{f&#39;(x_k)}{f&#39;&#39;(x_k)}
+\]</span> 于是，一直这样迭代下去就可以得到我们的极值了。当然，我们也可以看出来牛顿法的局限性，那就是：如果牛顿法的优化目标是一个复杂的函数，那么我们很难手推出它的一阶导数和二阶导数，甚至有时候，函数可能并不存在一阶导数和二阶导数。</p>
+<p>当然了，这并不影响我们写个程序实现它：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sympy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用牛顿法去找一个一维函数的极小值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Newton</span><span class="params">(aimFunc, verb, stPoint = None, step = <span class="number">10</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用牛顿法确定一个函数的最小值</span></span><br><span class="line"><span class="string">    @param aimFunc 目标函数，sympy对象</span></span><br><span class="line"><span class="string">    @param verb    变量，也是求导对象</span></span><br><span class="line"><span class="string">    @param stPoint 初始位置，如果没有就随机一个</span></span><br><span class="line"><span class="string">    @param step    迭代次数</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(stPoint <span class="keyword">is</span> <span class="literal">None</span>):</span><br><span class="line">        stPoint = ( np.random.random() - <span class="number">0.5</span> ) * <span class="number">1e5</span></span><br><span class="line">    curPoint = stPoint</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(step):</span><br><span class="line">        <span class="comment"># 一阶导数值</span></span><br><span class="line">        onP = diff(aimFunc, verb).evalf(subs =&#123;<span class="string">'x1'</span>:curPoint&#125;)</span><br><span class="line">        <span class="comment"># 二阶导数值</span></span><br><span class="line">        twP = diff(diff(aimFunc, verb), verb).evalf(subs =&#123;<span class="string">'x1'</span>:curPoint&#125;)</span><br><span class="line">        curPoint -= onP / twP</span><br><span class="line">    <span class="keyword">return</span> curPoint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = symbols(<span class="string">'x1'</span>)</span><br><span class="line"><span class="comment"># 定义目标函数</span></span><br><span class="line">aimFunction = x ** <span class="number">2</span> + <span class="number">2</span> * x + <span class="number">1</span></span><br><span class="line">print(Newton(aimFunction, x))</span><br></pre></td></tr></table></figure>
+<p>我们的目标函数是 <span class="math display">\[
+f(x)  = (x + 1 )^2
+\]</span> 即使我们把初始值定在了<span class="math inline">\(1*10^9\)</span>，但是牛顿法依然能在10次迭代后算到极值<code>-1.00000000000000</code>，说明牛顿发收敛很快。</p>
+<h2 id="多维牛顿法">多维牛顿法</h2>
+<p>很显然，现实世界中，基本上没有什么需要使用nb优化算法的一维问题，现实世界中的问题一般维度很高，在这一小节，我们介绍二维的牛顿法，以此为例，你可以把它推广到<span class="math inline">\(n\)</span>维。</p>
+<p>首先看，对于一维函数，他有导数来代表因变量随自变量变换的趋势。那么多维函数有什么？没错，就是梯度，那么我们就可以将泰勒展开推广到<span class="math inline">\(n\)</span>维的函数上去了： <span class="math display">\[
+\varphi(x) = f(x_k)+\nabla f(x_k)(x - x_k) + \frac{1}{2}(x - x_k)^T \nabla^2f(x_k)(x-x_k)
+\]</span> 其中，<span class="math inline">\(\nabla f\)</span>称为<span class="math inline">\(f\)</span>的<strong>梯度向量</strong>，<span class="math inline">\(\nabla^2 f\)</span>称为<span class="math inline">\(f\)</span>的海森矩阵，他们的定义是： <span class="math display">\[
+\nabla f= \left[\begin{matrix}\frac{\partial f}{\partial x_1} \\\frac{\partial f}{\partial x_2} \\... \\\frac{\partial f}{\partial x_n}\end{matrix}\right],\nabla^2 f= \left[\begin{matrix}\frac{\partial f}{\partial x_1\partial x_1} &amp; \frac{\partial f}{\partial x_1\partial x_2} &amp; ...&amp;\frac{\partial f}{\partial x_1\partial x_n}\\\frac{\partial f}{\partial x_2\partial x_1} &amp; \frac{\partial f}{\partial x_2\partial x_2} &amp; ...&amp;\frac{\partial f}{\partial x_2\partial x_n}\\... &amp; ... &amp; &amp; ...\\\frac{\partial f}{\partial x_n\partial x_1} &amp; \frac{\partial f}{\partial x_n\partial x_2} &amp; ...&amp;\frac{\partial f}{\partial x_n\partial x_n}\end{matrix}\right]
+\]</span> 那么同理，需要求极值，所以需要是驻点，所以: <span class="math display">\[
+\nabla\varphi(x) = 0
+\]</span> 解得： <span class="math display">\[
+x_{k+1} = x_k - {\nabla^2 f}^{-1}*\nabla f
+\]</span> 最后，迭代就完事了。</p>
+<p>下面来看代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sympy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用牛顿法去找一个一维函数的极小值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">NDimNewton</span><span class="params">(aimFunc, verbs, stPoint = None, step = <span class="number">10</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用牛顿法确定一个函数的最小值</span></span><br><span class="line"><span class="string">    @param aimFunc 目标函数，sympy对象</span></span><br><span class="line"><span class="string">    @param verbs   变量，也是求导对象</span></span><br><span class="line"><span class="string">    @param stPoint 初始位置，如果没有就随机一个</span></span><br><span class="line"><span class="string">    @param step    迭代次数</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(stPoint <span class="keyword">is</span> <span class="literal">None</span>):</span><br><span class="line">        stPoint = ( np.random.random(verbs.shape) - <span class="number">0.5</span> ) * <span class="number">1e5</span></span><br><span class="line">    curPoint = stPoint</span><br><span class="line">    <span class="comment"># 一阶梯度向量</span></span><br><span class="line">    alpha = np.zeros(curPoint.shape[<span class="number">0</span>])</span><br><span class="line">    <span class="comment"># 黑塞矩阵</span></span><br><span class="line">    H     = np.zeros((curPoint.shape[<span class="number">0</span>], curPoint.shape[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据迭代次数进行迭代</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(step):</span><br><span class="line">        print(curPoint)</span><br><span class="line">        <span class="comment"># 计算偏导数梯度向量</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(curPoint.shape[<span class="number">0</span>]):</span><br><span class="line">            alpha[j] = diff(aimFunc, verbs[j]).evalf(subs =&#123;<span class="string">'x1'</span>:curPoint[<span class="number">0</span>], <span class="string">'x2'</span>:curPoint[<span class="number">1</span>]&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算黑塞矩阵</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(curPoint.shape[<span class="number">0</span>]):</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(curPoint.shape[<span class="number">0</span>]):</span><br><span class="line">                H[j][k] = diff(diff(aimFunc, verbs[j]), verbs[k]).evalf(subs =&#123;<span class="string">'x1'</span>:curPoint[<span class="number">0</span>], <span class="string">'x2'</span>:curPoint[<span class="number">1</span>]&#125;)</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">        print(H)</span><br><span class="line">        <span class="comment"># 更新点</span></span><br><span class="line">        curPoint -= np.dot(np.array(np.linalg.inv(H), dtype=np.float), np.array(alpha, dtype=np.float))</span><br><span class="line">    <span class="keyword">return</span> curPoint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x1, x2 = symbols(<span class="string">'x1 x2'</span>)</span><br><span class="line"><span class="comment"># 定义目标函数</span></span><br><span class="line">aimFunction = <span class="number">60</span> - <span class="number">10</span> * x1 - <span class="number">4</span> * x2 + x1 ** <span class="number">2</span> + x2 ** <span class="number">2</span> - x1 * x2</span><br><span class="line">print(NDimNewton(aimFunction, np.array([x1, x2]), np.array([<span class="number">1e9</span>, <span class="number">1e9</span>])))</span><br></pre></td></tr></table></figure>
+<p>可以看到，下降路径中，一次就下降到最终结果了。。。那我实验报告怎么写呢？？？</p>
+]]></content>
+      <categories>
+        <category>最优化技术</category>
+      </categories>
+      <tags>
+        <tag>最优化技术</tag>
+        <tag>大二下</tag>
+        <tag>课内学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>初次使用git记录</title>
     <url>/2020/05/28/%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8git%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h1 id="初次使用git简单记录">初次使用GIT简单记录</h1>
