@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>最优化技术——阅读报告</title>
+    <url>/2020/05/30/%E6%9C%80%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E2%80%94%E2%80%94%E9%98%85%E8%AF%BB%E6%8A%A5%E5%91%8A/</url>
+    <content><![CDATA[<h1 id="梯度下降从批量下降到nesterov加速法">梯度下降——从批量下降到Nesterov加速法</h1>
+<p>如今，在神经网络魔性的训练过程中梯度下降被广泛的使用，它主要用于权重的更新，即对参数向某一方向进行更新和调整，来最小化损失函数。其主要原理是：</p>
+<blockquote>
+<p>通过寻找最小值，控制方差，更新模型参数，最终使模型收敛。</p>
+</blockquote>
+<p><strong>什么是梯度？</strong>梯度是一个向量。函数在各个方向的斜率是方向导数，而斜率最大的方向是梯度，梯度的方向方向导数变化最快的方向。传统的梯度下降法对模型进行多次迭代，在迭代的过程中对模型参数进行更新，更新过程如下： <span class="math display">\[
+\theta=\theta−\alpha \frac{\partial J(\theta)}{\partial\theta} \tag{1}
+\]</span> 其中，<span class="math inline">\(\alpha\)</span>是学习率，<span class="math inline">\(J(θ)\)</span>是损失函数，<span class="math inline">\(\frac{\partial J(\theta)}{\partial\theta}\)</span>是梯度。学习率决定了权重更新的快慢，并且可以在凸面误差曲面中收敛到全局最优值，在非凸曲面中可能陷入局部最优值。</p>
+<p>这篇文章会对梯度下降的发展进行简要概述，介绍该算法是如何从传统的梯度下降，逐步发展到Nesterov梯度下降加速法的。本文将以<strong>基本原理、代码实现、算法比较</strong>的流程进行展开。</p>
+<h2 id="小批量梯度下降">小批量梯度下降</h2>
+<p>在文章最开始所说的梯度下降方法又被称为<strong>批量梯度下降算法</strong>将计算整个数据集梯度，但只会进行一次更新，因此在处理大数据集时迭代速度很慢且难以控制，甚至导致内存溢出。为解决这一问题，随机梯度下降方法诞生了。<strong>随机梯度下降（Stochastic Gradient Descent, SGD）</strong>每次从训练样本中随机抽取一个样本计算loss和梯度并对参数进行更新。</p>
+<p>随机梯度下降算法解决了批量梯度下降算法中执行速度慢、内存消耗大的问题。但与此同时频繁的更新使得参数间具有高方差，损失函数会以不同的强度波动。与此同时，该方法受到异常数据影响较大。<strong>小批量梯度下降（Mini Batch Gradient Descent）</strong>可以避免SGD和标准梯度下降中存在的问题，因为对每个批次中的n个训练样本，这种方法只执行一次更新，它有如下优点：</p>
+<ul>
+<li>可以减少参数更新的波动</li>
+<li>可以通过矩阵优化来加速计算</li>
+<li>每次使用一个batch可以大大减小收敛所需要的迭代次数</li>
+<li>可以并行</li>
+</ul>
+<h2 id="动量momentum">动量（Momentum）</h2>
+<p>在前面的工作中，人们将关注点放在梯度下降的<strong>训练方式</strong>，即通过改变每次训练的数据的大小的方法，来均衡计算效率与计算的准确程度。但在迭代过程中，其更新方式都如1式所示。在这个方向上，小批量梯度下降已经非常优秀，想要继续对梯度下降法进行改进，就需要从别的方面进行考量。换句话说，就是如何利用现有的数据更好的更新参数？从公式上看，可以从<strong>梯度、学习率</strong>两个方面下手。</p>
+<p><strong>动量梯度下降法（Momentum）</strong>的基本的想法就是计算梯度的指数加权平均数，并利用该梯度更新你的权重。要想理解这一过程，我们需要从下面这张图来入手。</p>
+<figure>
+<img src="https://upload-images.jianshu.io/upload_images/13692432-468005aaf8245cb7?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp" alt="吴恩达" /><figcaption>吴恩达</figcaption>
+</figure>
+<p>图中[1]的线条表示了梯度下降法在训练的过程中的路径，从初始点到终点的过程中，我们当然希望它能够直接向右进行平移，因为这样可以快速的到达目标点。但遗憾的是，由于梯度方向的影响，训练的过程如图所示，出现了非常严重的抖动现象。这种上下波动减慢了梯度下降法的速度，你就无法使用更大的学习率，如果你要用较大的学习率（紫色箭头），结果可能会偏离函数的范围，为了避免摆动过大，你要用一个<strong>较小的学习率</strong>。</p>
+<p>从另外一个角度来看，你希望在纵轴方向上学习的慢一点，因为你不需要这些摆动；你还希望在横轴上学习的快一些，因为你希望快一点到达红点。想要做到这一点，我们需要做的事，对梯度进行修改，修改后的梯度如下： <span class="math display">\[
+v_d\theta=βv_d\theta+(1-β)d\theta \tag{2}
+\]</span> 在更新时，使用<span class="math inline">\(v_dW\)</span>进行更新，即： <span class="math display">\[
+\theta=\theta−\alpha v_d\theta \tag{3}
+\]</span> 这样的方法能够将训练过程的中前面的训练信息与现在的训练信息进行综合，以提高训练速度。通常，其中的<span class="math inline">\(\beta\)</span>常取0.9，使用动量法能够较快的到达终点，如下图[2]所示。</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/1015018/201904/1015018-20190413155412946-637342786.png" alt="《An overview of gradient descent optimization algorithms》" /><figcaption>《<a href="http://link.zhihu.com/?target=http%3A//sebastianruder.com/optimizing-gradient-descent/index.html">An overview of gradient descent optimization algorithms</a>》</figcaption>
+</figure>
+<h2 id="nesterov梯度加速法"><strong>Nesterov梯度加速法</strong></h2>
+<p>一位名叫Yurii Nesterov研究员，认为动量方法存在一个问题：</p>
+<p>如果一个滚下山坡的球，盲目沿着斜坡下滑，这是非常不合适的。一个更聪明的球应该要注意到它将要去哪，因此在上坡再次向上倾斜时小球应该进行减速。实际上，当小球达到曲线上的最低点时，动量相当高。由于高动量可能会导致其完全地错过最小值，因此小球不知道何时进行减速，故继续向上移动。简单的说，就是由于物体存在惯性，所以物体的动量不会在到达最优点时直接消失，这就导致即使到了最优点还是会继续向错误的方向更新。</p>
+<p><strong>Nesterov梯度下降</strong>在动量法的基础上，又前进了一步，它的基本思想是：既然我都知道我这一次一定会走<img src="https://www.zhihu.com/equation?tex=%5Calpha%5Cbeta+d_%7Bi-1%7D" alt="d_{i-1}" />的量，那么我何必还用现在这个位置的梯度呢？我直接先走到<img src="https://www.zhihu.com/equation?tex=%5Calpha%5Cbeta+d_%7Bi-1%7D" alt="d_{i-1}" />之后的地方，然后再根据那里的梯度进行前进，于是就有了下面的公式： <span class="math display">\[
+d_i =\beta d_{i-1}+g(\theta_{i-1}-\alpha \beta d_{i-1}) \tag{4}
+\]</span></p>
+<p><span class="math display">\[
+\theta_i=\theta_{i-1}-\alpha d_{i} \tag{5}
+\]</span></p>
+<h2 id="算法代码">算法代码</h2>
+<p>在这个分区中，我们以minist数据集为例，分别使用批量梯度下降、动量梯度下降、Nesterov梯度加速法进行训练，设置的模型较为简单，模型如下： <span class="math display">\[
+y = softmax(xW+b)
+\]</span> 在模型的训练过程中，使用了批量一度下降的方法，将数据以100为单位进行分块，每次训练100条数据。以0.1的学习率训练150轮，通过观察下降的速度来评判算法。同时，为了避免随机数对算法的影响，我使用<code>tf.set_random_seed(1)</code>方法将训练过程中的随机种子固定。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ[<span class="string">"TF_CPP_MIN_LOG_LEVEL"</span>] = <span class="string">"1"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">tf.set_random_seed(<span class="number">1</span>)</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data/"</span>, one_hot=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">sess = tf.InteractiveSession()</span><br><span class="line">x = tf.placeholder(tf.float32,[<span class="literal">None</span>, <span class="number">784</span>])</span><br><span class="line">W = tf.Variable(tf.zeros([<span class="number">784</span>, <span class="number">10</span>]))</span><br><span class="line">b = tf.Variable(tf.zeros([<span class="number">10</span>]))</span><br><span class="line"></span><br><span class="line">y = tf.nn.softmax(tf.matmul(x,W)+b)</span><br><span class="line"></span><br><span class="line">y_ = tf.placeholder(tf.float32,[<span class="literal">None</span>, <span class="number">10</span>])</span><br><span class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y),</span><br><span class="line">                                              reduction_indices=[<span class="number">1</span>]))</span><br><span class="line"><span class="comment">#train_step = tf.train.GradientDescentOptimizer(0.1).minimize(cross_entropy)</span></span><br><span class="line"><span class="comment">#train_step = tf.train.MomentumOptimizer(0.1, momentum = 0.9, use_nesterov=True).minimize(cross_entropy)</span></span><br><span class="line"><span class="comment">#train_step = tf.train.MomentumOptimizer(0.1, momentum = 0.9).minimize(cross_entropy)</span></span><br><span class="line">tf.global_variables_initializer().run()</span><br><span class="line">acc = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">150</span>):</span><br><span class="line">    batch_xs, batch_ys = mnist.train.next_batch(<span class="number">100</span>)</span><br><span class="line">    train_step.run(&#123;x:batch_xs,y_:batch_ys&#125;)</span><br><span class="line">    correct_prediction = tf.equal(tf.argmax(y,<span class="number">1</span>),tf.argmax(y_,<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_prediction,tf.float32))</span><br><span class="line">    acc.append(accuracy.eval(&#123;x:mnist.test.images, y_:mnist.test.labels&#125;))</span><br><span class="line">print(accuracy.eval(&#123;x:mnist.test.images, y_:mnist.test.labels&#125;))</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pylab <span class="keyword">as</span> pl</span><br><span class="line">pl.plot(acc)</span><br><span class="line">pl.show()</span><br></pre></td></tr></table></figure>
+<h2 id="对比">对比</h2>
+<p><strong>使用小批量梯度下降进行训练：</strong></p>
+<p><img src="/home/wangsy/.config/Typora/typora-user-images/image-20200529155946624.png" alt="image-20200529155946624" style="zoom: 33%;" /></p>
+<p><strong>使用动量梯度下降进行训练</strong></p>
+<p><img src="/home/wangsy/.config/Typora/typora-user-images/image-20200529160041216.png" alt="image-20200529160041216" style="zoom: 33%;" /></p>
+<p><strong>使用带有Nesterov梯度加速法的动量梯度下降进行训练</strong></p>
+<p><img src="/home/wangsy/.config/Typora/typora-user-images/image-20200529160144255.png" alt="image-20200529160144255" style="zoom: 33%;" /></p>
+<p>可以看到，三种方法相比较下，小批量梯度下降的收敛速度明显低于另两种方法，这是由于其下降方向不准确，波动大而导致的。而使用简单的动量法时，在最优解附近发生了明显的正确率下降的情况，这是由于其惯性而导致的，通过对比，我们发现Nesterov梯度加速法的动量梯度下降进行训练的结果最优，其优秀主要体现在两个方面：</p>
+<ul>
+<li>收敛速度快</li>
+<li>在极值附近不会发生剧烈抖动</li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<p>[1] 吴恩达机器学习</p>
+<p>[2] 《<a href="http://link.zhihu.com/?target=http%3A//sebastianruder.com/optimizing-gradient-descent/index.html">An overview of gradient descent optimization algorithms</a>》</p>
+]]></content>
+      <categories>
+        <category>最优化技术</category>
+      </categories>
+      <tags>
+        <tag>最优化技术</tag>
+        <tag>大二下</tag>
+        <tag>课内学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>最优化技术——牛顿法</title>
     <url>/2020/05/28/%E6%9C%80%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E2%80%94%E2%80%94%E7%89%9B%E9%A1%BF%E6%B3%95/</url>
     <content><![CDATA[<h1 id="最优化技术牛顿法">最优化技术——牛顿法</h1>
